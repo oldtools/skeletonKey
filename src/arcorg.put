@@ -1,0 +1,25 @@
+[GLOBAL]
+CLOUDLOC=
+HOSTINGURL=[HOSTINGURL]
+IMAGEDATS=[IMAGEDB]
+ROMDATS=[ROMDB]
+ALTHOST=[ALTHOST]
+SOURCEHOST=https://github.com/oldtools/skeletonKey
+IP_LOOKUP=[IPLK]
+UPDATEFILE=[UPDATEFILE]
+RASTABLE=1.10.3
+
+[SOURCES]
+
+[REPOSITORIES]
+buildBotCore=http://buildbot.libretro.com
+BLDBOT= http://buildbot.libretro.com/nightly/windows/x86%ARCHR%
+imgrepo= http://raw.githubusercontent.com/libretro/libretro-thumbnails/master
+SHADERHOST= http://raw.githubusercontent.com/libretro/shader-previews/master/
+curlobby= http://lobby.libretro.com/list|http://playarch.online/list
+[BINARIES]
+originalBinary=https://github.com/oldtools/skeletonKey/releases/download/portable/portable.zip|
+[GOBAL]
+Version=2022-04-16 7:29 AM
+UPDATEFILE=https://github.com/oldtools/skeletonKey/releases/download/portable/portable.zip
+HOSTINGURL=

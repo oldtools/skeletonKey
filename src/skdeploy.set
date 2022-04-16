@@ -1,0 +1,138 @@
+!ifdef NOCOMPRESS
+SetCompress on
+!endif
+
+Name "[RJ_PROJ]"
+Caption "Universal ROM-Library Interface Kit"
+Icon "[SOURCE]\img\Install.ico"
+OutFile "[DBP]\[RJ_PROJ][INSTYP].exe"
+AllowRootDirInstall true
+AutoCloseWindow true
+SetDateSave on
+SetDatablockOptimize on
+SilentInstall normal
+BGGradient off
+InstallColors /windows
+XPStyle off
+
+VIAddVersionKey "ProductName" "[RJ_PROJ]"
+VIAddVersionKey "Comments" "unified ROM environment"
+VIAddVersionKey "CompanyName" "oldtools"
+VIAddVersionKey "LegalTrademarks" "All Rights Reserved"
+VIAddVersionKey "LegalCopyright" "© [GIT_USER]"
+VIAddVersionKey "FileDescription" "[RJ_PROJ] Binary"
+VIAddVersionKey "FileVersion" "[CURV]"
+VIProductVersion [CURV]
+VIFileVersion [CURV]
+
+InstallDir "$DOCUMENTS\[RJ_PROJ]"
+InstallDirRegKey HKLM "Software\[RJ_PROJ]" "Install_Dir"
+
+
+LicenseText "Anon, I" "I Agree"
+LicenseData "[SOURCE]\ReadMe.md"
+
+RequestExecutionLevel none
+
+Function .onInit
+System::Call 'kernel32::CreateMutex(p 0, i 0, t "[RJ_PROJ]-installer") p .r1 ?e'
+ Pop $R0
+ 
+ StrCmp $R0 0 +3
+   MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
+   Abort
+   NoAbort:
+ FunctionEnd
+		
+Page license
+Page components
+Page directory
+Page instfiles
+
+UninstPage uninstConfirm
+UninstPage instfiles
+
+!ifndef NOINSTTYPES ; only if not defined
+  ;InstType /NOCUSTOM
+  InstType /COMPONENTSONLYONCUSTOM
+!endif
+
+AutoCloseWindow true
+ShowInstDetails show
+
+
+Section "" ; empty string makes it hidden, so would starting with -
+
+  ; write reg info
+  StrCpy $1 "Installation"
+  DetailPrint "Installing... $1"
+  WriteRegStr HKLM "SOFTWARE\[RJ_PROJ]" "Install_Dir" "$INSTDIR"
+
+  ; write uninstall strings
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\[RJ_PROJ]" "[RJ_PROJ]" "[RJ_PROJ] (remove only)"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\[RJ_PROJ]" "UninstallString" '"$INSTDIR\[RJ_PROJ]-uninst.exe"'
+
+  SetOutPath $INSTDIR
+
+  File "[DBP]\[RJ_PROJ].exe"
+  WriteUninstaller "[RJ_PROJ]-uninst.exe"  
+  Nop ; for fun
+
+SectionEnd
+
+Section "Desktop Shortcuts"
+
+  CreateShortCut "$DESKTOP\[RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ].exe" "" "$INSTDIR\site\key.ico"
+
+SectionEnd
+
+Section "![RJ_PROJ]"
+
+SectionIn RO
+
+Call CSCTest
+
+  ExecWait '"$INSTDIR\[RJ_PROJ].exe"'
+  Sleep 500
+  BringToFront
+
+SectionEnd
+
+Function "CSCTest"
+  
+  CreateDirectory "$SMPROGRAMS\[RJ_PROJ]"
+  SetOutPath $INSTDIR ; for working directory
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\Uninstall [RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ]-uninst.exe" ; use defaults for parameters, icon, etc.
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\[RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ].exe"
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\Update.lnk" "$INSTDIR\Update.exe"
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\PortableUtil.lnk" "$INSTDIR\bin\PortableUtil.exe"
+
+FunctionEnd
+
+
+;--------------------------------
+
+; Uninstaller
+
+UninstallText "This will uninstall [RJ_PROJ]. Hit next to continue."
+;UninstallIcon "${NSISDIR}\Contrib\Graphics\Icons\nsis1-uninstall.ico"
+
+Section "Uninstall"
+
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\[RJ_PROJ]"
+  DeleteRegKey HKLM "SOFTWARE\[RJ_PROJ]"
+  Delete "$DESKTOP\[RJ_PROJ].lnk"
+    Delete "$SMPROGRAMS\[RJ_PROJ]\*.*"
+  RMDir "$SMPROGRAMS\[RJ_PROJ]"
+  
+  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to remove the directory $INSTDIR?" IDNO NoDelete
+    Delete "$INSTDIR\*.*"
+    RMDir /r "$INSTDIR" ; skipped if no
+  NoDelete:
+  
+
+  IfFileExists "$INSTDIR" 0 NoErrorMsg
+    MessageBox MB_OK "Note: $INSTDIR could not be removed!" IDOK 0 ; skipped if file doesn't exist
+  NoErrorMsg:
+
+SectionEnd
