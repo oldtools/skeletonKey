@@ -51,10 +51,10 @@ ifnotexist,%ARCORG%
 		fileCopy,%source%\arcorg.set,%home%\arcorg.ini
 	}
 IniRead,BLDBOT,%ARCORG%,GLOBAL,BLDBOT
-IniRead,IMAGEDATS,%ARCORG%,GLOBAL,IMAGEDATS
+IniRead,IMGDATS,%ARCORG%,GLOBAL,IMGDATS
 IniRead,HOSTINGURL,%ARCORG%,GLOBAL,HOSTINGURL
 IniRead,ROMDATS,%ARCORG%,GLOBAL,ROMDATS
-IniRead,DATSRC,%ARCORG%,GLOBAL,DATSOURCE
+IniRead,REPODATS,%ARCORG%,GLOBAL,DATSOURCE
 tmpcvpth:
 Loop %0%
 	{
@@ -16435,7 +16435,7 @@ Loop,parse,incldats,|
 		stringsplit,datcl,datjn,([
 		SYS_K= %datcl1%
 		SB_SetText("Parsing " SYS_K " datfile")
-		dat_in= dats\%A_LoopField%
+		dat_in= %home%\dats\%A_LoopField%
 		ifinstring,sysllst,=%SYS_K%`n
 			{
 				goto, SYS_FND
@@ -16997,7 +16997,7 @@ return
 GETDATREP:
 gui,submit,nohide
 guicontrolget,hubtget,,ROMDBARC
-URLFILE= %DATSRC%/%hubtget%/%hubtget%.zip
+URLFILE= %REPODATS%/%hubtget%/%hubtget%.zip
 save= %cacheloc%\%hubtget%.zip
 splitpath,save,svaf,svap
 exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -20022,7 +20022,7 @@ if (SK_MODE = "")
 	{
 		;filedelete,%indvcp%\mednafen.cf*
 		RVLKUP= %RJSYSDD%
-		indvcp= rj\sysCfgs\%curjf%
+		indvcp= %home%\rj\sysCfgs\%curjf%
 		if (EXEMODE = 1)
 			{
 				indvcp= %home%\executable\emu\%curjf%
@@ -20030,7 +20030,7 @@ if (SK_MODE = "")
 	}
 if (SK_MODE = 2)
 		{
-			indvcp= rj\sysCfgs\%curjf%
+			indvcp= %home%\rj\sysCfgs\%curjf%
 			RVLKUP= %curjf%
 		}
 if (SK_MODE = 1)
@@ -20792,7 +20792,7 @@ if (URLFILE = "ERROR")
 		gosub,pgenable
 		return
 	}
-save= rj\PG\%FEDDLD%.7z
+save= %home%\rj\PG\%FEDDLD%.7z
 extractpath= %PGHOME%\themes
 splitpath,save,svaf,svap
 exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -24466,7 +24466,7 @@ if (URLFILE = "ERROR")
 		gosub,enablerfgui
 		return
 	}
-save= rj\RF\%FEDDLD%.7z
+save= %home%\rj\RF\%FEDDLD%.7z
 extractpath= %RFHOME%\%extractpthadd%
 splitpath,save,svaf,svap
 exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -28199,7 +28199,7 @@ if (URLFILE = "ERROR")
 		gosub,esguitog
 		return
 	}
-save= rj\ES\%FEDDLD%.zip
+save= %home%\rj\ES\%FEDDLD%.zip
 extractpath= %ESHOME%\themes
 splitpath,save,svaf,svap
 exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -33093,7 +33093,7 @@ if (FERAD2A = 1)
 						if (FECHKA = 1)
 							{
 								URLFILE= %bckdrpd%/%A_LoopField%.png
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\Backdrops\%A_LoopField%.png
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\Backdrops\%A_LoopField%.png
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Backdrops
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Backdrops
 								splitpath,save,svaf,svap
@@ -33122,7 +33122,7 @@ if (FERAD2A = 1)
 						if (FECHKP = 1)
 							{
 								URLFILE= %photod%/%A_LoopField%.png
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\Photos\%A_LoopField%.png
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\Photos\%A_LoopField%.png
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Photos
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Photos
 								splitpath,save,svaf,svap
@@ -33151,7 +33151,7 @@ if (FERAD2A = 1)
 						if (FECHKB = 1)
 							{
 								URLFILE= %icnld%/%A_LoopField%.png
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\Icons\%A_LoopField%.png
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\Icons\%A_LoopField%.png
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Icons
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Icons
 								splitpath,save,svaf,svap
@@ -33180,7 +33180,7 @@ if (FERAD2A = 1)
 						if (FECHKC = 1)
 							{
 								URLFILE= %logold%/%A_LoopField%.png
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\Logos\%A_LoopField%.png
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\Logos\%A_LoopField%.png
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Logos
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Logos
 								splitpath,save,svaf,svap
@@ -33209,7 +33209,7 @@ if (FERAD2A = 1)
 						if (FECHKD = 1)
 							{
 								URLFILE= %videold%/%A_LoopField%/%A_LoopField%.mp4
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\Videos\%A_LoopField%.mp4
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\Videos\%A_LoopField%.mp4
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Videos
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\Videos
 								splitpath,save,svaf,svap
@@ -33238,7 +33238,7 @@ if (FERAD2A = 1)
 						if (FECHKE = 1)
 							{
 								URLFILE= %metld%/%A_LoopField%.xml
-								save= rj\netArt\%FEDDLD%\%A_LoopField%\MetaData\%A_LoopField%.xml
+								save= %home%\rj\netArt\%FEDDLD%\%A_LoopField%\MetaData\%A_LoopField%.xml
 								ifnotexist,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\MetaData
 								FileCreateDir,%home%\rj\netArt\%FEDDLD%\%A_LoopField%\MetaData
 								splitpath,save,svaf,svap
@@ -33276,7 +33276,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %bckdrp%
 						splitpath,URLFILE,bdfile
-						save= rj\netArt\%FEDDLD%\%bdfile%
+						save= %home%\rj\netArt\%FEDDLD%\%bdfile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%
 						splitpath,save,svaf,svap
@@ -33300,7 +33300,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %photop%
 						splitpath,URLFILE,pdfile
-						save= rj\netArt\%FEDDLD%\%pdfile%
+						save= %home%\rj\netArt\%FEDDLD%\%pdfile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%
 						splitpath,save,svaf,svap
@@ -33324,7 +33324,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %icnl%
 						splitpath,URLFILE,icfile
-						save= rj\netArt\%FEDDLD%\%icfile%
+						save= %home%\rj\netArt\%FEDDLD%\%icfile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%
 						splitpath,save,svaf,svap
@@ -33348,7 +33348,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %logol%
 						splitpath,URLFILE,lgfile
-						save= rj\netArt\%FEDDLD%\%lgfile%
+						save= %home%\rj\netArt\%FEDDLD%\%lgfile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%
 						splitpath,save,svaf,svap
@@ -33371,7 +33371,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %videol%
 						splitpath,URLFILE,vefile
-						save= rj\netArt\%FEDDLD%\%vefile%
+						save= %home%\rj\netArt\%FEDDLD%\%vefile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%\Videos
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%\Videos
 						splitpath,save,svaf,svap
@@ -33395,7 +33395,7 @@ if (FERAD2A = 1)
 					{
 						URLFILE= %metl%
 						splitpath,URLFILE,mtfile
-						save= rj\netArt\%FEDDLD%\%mtfile%
+						save= %home%\rj\netArt\%FEDDLD%\%mtfile%
 						ifnotexist,%home%\rj\netArt\%FEDDLD%
 						FileCreateDir,%home%\rj\netArt\%FEDDLD%
 						splitpath,save,svaf,svap
@@ -33915,16 +33915,16 @@ if (FERAD2B = 1)
 					{
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
-								IniRead,dlprfx,%ARCORG%,GLOBAL,IMAGEDATS
+								IniRead,dlprfx,%ARCORG%,GLOBAL,IMGDATS
 								;;filereadline,dlprfx,%source%\arcorg.set,2
-								URLFILE= %dlprfx%/IMAGEDATS/%SYSLKUP%.7z
+								URLFILE= %dlprfx%/%SYSLKUP%.7z
 								ifinstring,dlprfx,github
 									{
-										urloc1= IMAGEDATS
+										urloc1= IMGDATS
 										urloc2= %SYSLKUP%.7z
-										URLFILE= %dlprfx%/%urloc1%/raw/master/%urloc2%
+										URLFILE= %dlprfx%/%urloc2%
 									}
-								save= rj\scrapeArt\%SYSLKUP%.7z
+								save= %home%\rj\scrapeArt\%SYSLKUP%.7z
 								SB_SetText("Downloading " SYSLKUP " Metadata")
 								splitpath,save,svaf,svap
 								exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -33938,19 +33938,6 @@ if (FERAD2B = 1)
 									gosub, cleanprgb
 									break
 								}
-						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
-							{
-								IniRead,dlprfx,%ARCORG%,GLOBAL,SOURCEHOST
-								;;filereadline,dlprfx,%source%\arcorg.set,5
-								URLFILE= %dlprfx%/rj/scrapeart/%SYSLKUP%.7z
-								save= rj\scrapeArt\%SYSLKUP%.7z
-								SB_SetText("Downloading " SYSLKUP " Metadata")
-								splitpath,save,svaf,svap
-								exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
-								;;DownloadFile(URLFILE,save, True, True)
-								SB_SetText("Download Complete")
-								gosub, cleanprgb
-							}
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
 									SB_SetText(" Metadata was not downloaded ")
@@ -34083,16 +34070,16 @@ if (FERAD2C = 1)
 						filecreatedir,%home%\rj\scrapeArt\%SYSLKUP%
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
-								IniRead,dlprfx,%ARCORG%,GLOBAL,IMAGEDATS
+								IniRead,dlprfx,%ARCORG%,GLOBAL,IMGDATS
 								;;filereadline,dlprfx,%source%\arcorg.set,2
-								URLFILE= %dlprfx%/IMAGEDATS/%SYSLKUP%.7z
+								URLFILE= %dlprfx%/%SYSLKUP%.7z
 								ifinstring,dlprfx,github
 									{
-										urloc1= IMAGEDATS
+										urloc1= IMGDATS
 										urloc2= %SYSLKUP%.7z
-										URLFILE= %dlprfx%/%urloc1%/raw/master/%urloc2%
+										URLFILE= %dlprfx%/%urloc2%
 									}
-								save= rj\scrapeArt\%SYSLKUP%.7z
+								save= %home%\rj\scrapeArt\%SYSLKUP%.7z
 								SB_SetText("Downloading " SYSLKUP " Metadata")
 								splitpath,save,svaf,svap
 								exe_get(ARIA,URLFILE,svap,svaf,CURPID,cacheloc)
@@ -41232,7 +41219,7 @@ Loop,%home%\rj\*.jak
 							{
 								gosub, PEREMUINJ
 							}
-						vbp= rj\sysCfgs\%curjf%
+						vbp= %home%\rj\sysCfgs\%curjf%
 						if (CFGCOMPLETE <> 1)
 							{
 								Loop, Parse, jsinvr,|
@@ -43751,7 +43738,7 @@ gui,submit,nohide
 ifnotexist, %MAMELOC%\%MAMEAPP%
 	{
 		MAMEAPP= mame.exe
-		MAMELOC= apps\mame
+		MAMELOC= %RJEMULOC%\mame
 	}
 IniRead, allrjvals, %EXSTCFG%,%RJSYSDD%
 IniRead, RJMAMENM, %EXSTCFG%,%RJSYSDD%,RJMAMENM

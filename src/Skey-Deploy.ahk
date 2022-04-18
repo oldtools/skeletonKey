@@ -29,6 +29,7 @@ ARIA= %binhome%\aria2c.exe
 LKDIRS= %ProgramFilesX86%|%A_ProgramFiles%|%binhome%|%home%
 GITWEB= https://github.com
 GITSWEB= https://github.com
+RAWGIT= https://raw.githubusercontent.com
 Loop, %save%
 	{
 		if (A_LoopFileSizeMB < 30)
@@ -503,9 +504,9 @@ if ((UPDTURL = "ERROR")or(UPDTFILE = ""))
 guicontrol,,uver,%UPDTFILE%
 guicontrol,,uflu, %UPDTURL% 
 guicontrol,,HOSTINGURL, %GITSWEB%/%GITUSER%
-guicontrol,,REPODATS,REPODATS
-guicontrol,,ROMDATS,ROMDATS
-guicontrol,,IMGDATS,IMGDATS
+guicontrol,,REPODATS,%REPODATS%
+guicontrol,,ROMDATS,%ROMDATS%
+guicontrol,,IMGDATS,%IMGDATS%
 guicontrol,,ialth, %GITSWEB%/%GITUSER%
 if (optionONE = "DEV")
 	{
@@ -910,7 +911,7 @@ guicontrol,,ROMDATS,%ROMDATS%
 guicontrolget,IMGDATS,,IMGDATS
 if (IMGDATS = "")
 	{
-		IMGDATS= %GITSWEB%/%GITUSER%/IMGDATS/releases/download
+		IMGDATS= %RAWGIT%/%GITUSER%/IMGDATS/master
 	}
 iniwrite,%IMGDATS%,%home%\skopt.cfg,GLOBAL,IMGDATS
 guicontrol,,IMGDATS,%IMGDATS%
@@ -2981,9 +2982,9 @@ if (ServerPush = 1)
 		SB_SetText(" Uploading rom repo databases ")
 		if (REPOBLD = 1)
 			{
-				FileAppend,pushd "%REPODATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%REPODATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %REPODNM% --public --source="%REPODATS%"`n,%DEPL%\gpush.cmd
+				FileAppend,pushd "%REPODATL%"`n,%DEPL%\gpush.cmd
+				fileappend,git -C "%REPODATL%" init`n,%DEPL%\gpush.cmd
+				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %REPODATS% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
@@ -3002,9 +3003,9 @@ if (ServerPush = 1)
 		SB_SetText(" Uploading rom-hash databases ")
 		if (DATBLD = 1)
 			{
-				FileAppend,pushd "%ROMDATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%ROMDATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %ROMDNM% --public --source="%ROMDATS%"`n,%DEPL%\gpush.cmd
+				FileAppend,pushd "%ROMDATL%"`n,%DEPL%\gpush.cmd
+				fileappend,git -C "%ROMDATL%" init`n,%DEPL%\gpush.cmd
+				FileAppend,gh repo create %ROMDNM% --public --source="%ROMDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %ROMDNM% %GITWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
@@ -3021,9 +3022,9 @@ if (ServerPush = 1)
 		SB_SetText(" Uploading image databases ")
 		if ((IMGBLD = 1)&&(nwimg = 1))
 			{
-				FileAppend,pushd "%IMGDATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%IMGDATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATS%"`n,%DEPL%\gpush.cmd
+				FileAppend,pushd "%IMGDATL%"`n,%DEPL%\gpush.cmd
+				fileappend,git -C "%IMGDATL%" init`n,%DEPL%\gpush.cmd
+				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %IMGDATS% %GITWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
