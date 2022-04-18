@@ -417,11 +417,11 @@ GITD= %GITROOT%\%RJPRJCT%
 iniwrite,%GITD%,%home%\skopt.cfg,GLOBAL,GITD
 iniwrite,%GITROOT%,%home%\skopt.cfg,GLOBAL,GITROOT
 DEPL=%home%\GitHub\%RJPRJCT%.deploy
+iniwrite,%DEPL%,%home%\skopt.cfg,GLOBAL,DEPL
 if ((GITUSER <> "")&&(GITUSER <> A_Username))
 	{
 		SITEDIR=%home%\GitHub\%GITUSER%.github.io\%RJPRJCT%
 	}
-iniwrite,%SITEDIR%,%home%\skopt.cfg,GLOBAL,GITROOT
 Loop,parse,LKDIRS,|
 	{
 		if (A_LoopField = "")
@@ -440,7 +440,7 @@ Loop,parse,LKDIRS,|
 				If (instr(A_LoopfileFullPath,ktmp)&&(DEPL = ""))
 					{
 						DEPL= %A_LoopFileFullPath%
-						iniwrite,%DEPL%,%home%\skopt.cfg,GLOBAL,GITROOT
+						iniwrite,%DEPL%,%home%\skopt.cfg,GLOBAL,DEPL
 					}			
 				ktmp= git.exe	
 				if (instr(A_LoopfileFullPath,ktmp)&&(GITAPP = ""))
@@ -2119,11 +2119,11 @@ Loop, Read, %home%\skopt.cfg
 						AHKDIR= %curlz%
 					}
 			}
-		if (curvl1 = "GITROOT")
+		if (curvl1 = "DEPL")
 				{
 					if ((curlz <> "")&&(curlz <> "ERROR"))
 						{
-							GITROOT= %curlz%
+							DEPL= %curlz%
 						}
 				}
 		if (curvl1 = "SKELD")
@@ -2151,7 +2151,7 @@ Loop, Read, %home%\skopt.cfg
 				{
 				if ((curlz <> "")&&(curlz <> "ERROR"))
 					{
-						DEPL= %curlz%
+						GITROOT= %curlz%
 					}
 			}
 		if (curvl1 = "UPDTURL")
@@ -2419,7 +2419,8 @@ StringReplace,skthemes,skthemes,[HOSTINGURL],%HOSTINGURL%,All
 StringReplace,arcorgv,arcorgv,[UPDATEFILE],%UPDTFILE%,All
 StringReplace,arcorgv,arcorgv,[IALTH],%IALTH%,All
 StringReplace,arcorgv,arcorgv,[HOSTINGURL],%HOSTINGURL%,All
-StringReplace,arcorgv,arcorgv,[ROMDB],%ROMDATS%,All
+StringReplace,arcorgv,arcorgv,[IMGDATS],%IMGDATS%,All
+StringReplace,arcorgv,arcorgv,[ROMDATS],%ROMDATS%,All
 StringReplace,arcorgv,arcorgv,[REPODATS],%REPODATS%,All
 StringReplace,arcorgv,arcorgv,[SOURCEHOST],%UPDTURL%,All
 StringReplace,arcorgv,arcorgv,[IPLK],%IPLK%,All
@@ -2980,7 +2981,16 @@ if (ServerPush = 1)
 				fileappend,git remote add %REPODATS% %GITWEB%/%GITUSER%/%REPODATS%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %REPODATS%`n,%DEPL%\gpush.cmd
+				Loop,parse,datlsts,|
+					{
+						wf= %A_LoopField%
+						splitpath,wf,,,,rdnme
+						stringupper,rdnme,rdnme
+						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
+					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
+
 
 			}
 		SB_SetText(" Uploading rom-hash databases ")
@@ -2995,6 +3005,14 @@ if (ServerPush = 1)
 				fileappend,git remote add %ROMDATS% %GITWEB%/%GITUSER%/%ROMDATS%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %ROMDATS%`n,%DEPL%\gpush.cmd
+				Loop,parse,repolsts,|
+					{
+						wp= %A_LoopField%
+						splitpath,wp,,,,rdnme
+						stringupper,rdnme,rdnme
+						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%"`n`n,%DEPL%\gpush.cmd
+					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading image databases ")
@@ -3025,46 +3043,6 @@ if (ServerPush = 1)
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
 				FileAppend,gh release delete Installer -y`n,%DEPL%\gpush.cmd
 				FileAppend,gh release create Installer -t "Installer" -n "" "%DEPL%\%RJPRJCT%.zip"`n`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-		if (DATBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				Loop,parse,repolsts,|
-					{
-						wp= %A_LoopField%
-						splitpath,wp,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%"`n`n,%DEPL%\gpush.cmd
-					}
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-			/*
-		if ((IMGBLD = 1)&&&&(nwimg = 1))
-			{
-				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%IMGDATS%\*.7z,F
-					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
-					}
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-			*/
-		if (REPOBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				Loop,parse,datlsts,|
-					{
-						wf= %A_LoopField%
-						splitpath,wf,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
-					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		guicontrol,,progb,80
@@ -3209,7 +3187,7 @@ if (PortVer = 1)
 	}	
 
 RunWait, %comspec% /c echo.##################  CREATE INSTALLER ######################## >>"%DEPL%\deploy.log", ,%rntp%
-RunWait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a "%DEPL%\%RJPRJCT%K.zip" "%DEPL%\%RJPRJCT%-installer.exe" >>"%DEPL%\deploy.log"", %BUILDIR%,%rntp%
+RunWait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a "%DEPL%\%RJPRJCT%.zip" "%DEPL%\%RJPRJCT%-installer.exe" >>"%DEPL%\deploy.log"", %BUILDIR%,%rntp%
 RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 if (DevlVer = 1)
 	{
