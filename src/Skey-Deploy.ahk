@@ -331,12 +331,12 @@ Gui, Add, Button, x408 y123 w75 h23 vCANCEL gCANCEL hidden, CANCEL
 gui,font,normal
 Gui, Add, Text, x308 y155, Version
 Gui, Add, CheckBox, x204 y76 w114 h13 vINITINCL gINITINCL checked, Initialize-Include
-Gui, Add, CheckBox, x204 y95 w154 h13 vREPOBLD gREPOBLD, Repository Databases
-Gui, Add, CheckBox, x204 y95 w154 h13 vDATBLD gDATBLD, ROM Databases
+Gui, Add, CheckBox, x204 y95 w154 h13 vREPOBLD gREPOBLD checked, Repository Databases
+Gui, Add, CheckBox, x204 y113 w154 h13 vDATBLD gDATBLD checked, ROM Databases
 Gui, Add, CheckBox, x90 y95 w104 h13 vPortVer gPortVer checked %FIE%, Portable/Update
 Gui, Add, CheckBox, x90 y76 w104 h13 vOvrStable gOvrStable %FIE% checked,Stable
 Gui, Add, CheckBox, x90 y95 w154 h13 vDevlVer gDevlVer hidden, Development Version
-Gui, Add, CheckBox, x90 y113 w154 h13 vIMGBLD gIMGBLD, Database Recompile
+Gui, Add, CheckBox, x90 y113 w104 h13 vIMGBLD gIMGBLD checked, Image Databases
 Gui, Add, Progress, x12 y135 w388 h8 vprogb -Smooth, 0
 
 Gui, Add, StatusBar, x0 y151 w488 h18, Compiler Status
@@ -2943,8 +2943,9 @@ if (ServerPush = 1)
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %REPODATS% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %REPODNM% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
+				FileAppend,git push -f --all %REPODNM%`n,%DEPL%\gpush.cmd
 				Loop,parse,datlsts,|
 					{
 						wf= %A_LoopField%
@@ -2954,8 +2955,6 @@ if (ServerPush = 1)
 						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
 					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
-
-
 			}
 		SB_SetText(" Uploading rom-hash databases ")
 		if (DATBLD = 1)
@@ -2971,6 +2970,7 @@ if (ServerPush = 1)
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %ROMDNM% %GITWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
+				FileAppend,git push -f --all %ROMDNM%`n,%DEPL%\gpush.cmd
 				Loop,parse,repolsts,|
 					{
 						wp= %A_LoopField%
@@ -2993,8 +2993,9 @@ if (ServerPush = 1)
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %IMGDATS% %GITWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %IMGDNM% %GITWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
+				FileAppend,git push -f --all %IMGDNM%`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading binaries to server ")
