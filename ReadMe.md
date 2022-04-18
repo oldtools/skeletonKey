@@ -1,6 +1,6 @@
 skeletonKey 0.99.00.06
 
- 2022-04-17 5:52 PM
+ 2022-04-17 7:38 PM
  
 by oldtools
 
@@ -39,8 +39,6 @@ You will need a [github account](https://github.com/join).
 If you obtained source files for skeletonKey without executables, links to the needed 3rd-party binary dependencies can be found in the "\bin\~ download_these_dependencies ~.txt" file. 
 
 The main program is compiled from the working.ahk file.  Other binaries needed should be compiled including all the files with an ".ahk" extension found in the root of the skeletonKey directory as well as those found in the "\bin" directory to their respective directories in Unicode-32bit with the Ahk2Exe compiler found in AutoHotKey's "Compiler" directory.
-
-The **skeletonKey.exe** file contains all the files it needs and creates them in the directory it in which it is executed.
 
 ###########################################
 

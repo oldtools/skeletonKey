@@ -417,7 +417,6 @@ GITD= %GITROOT%\%RJPRJCT%
 iniwrite,%GITD%,%home%\skopt.cfg,GLOBAL,GITD
 iniwrite,%GITROOT%,%home%\skopt.cfg,GLOBAL,GITROOT
 DEPL=%home%\GitHub\%RJPRJCT%.deploy
-iniwrite,%DEPL%,%home%\skopt.cfg,GLOBAL,GITROOT
 if ((GITUSER <> "")&&(GITUSER <> A_Username))
 	{
 		SITEDIR=%home%\GitHub\%GITUSER%.github.io\%RJPRJCT%
@@ -2715,7 +2714,7 @@ if (GitPush = 1)
 		FileAppend, copy /y "img\*.ico" "%GITD%\img"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "img\*.png" "%GITD%\img"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "ReadMe.md" "%GITD%"`n,%DEPL%\!gitupdate.cmd
-		FileAppend, copy /y "site\ReadMe.md" "%GITD%\site"`n,%DEPL%\!gitupdate.cmdvv
+		FileAppend, copy /y "site\ReadMe.md" "%GITD%\site"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "site\version.txt" "%GITD%\site"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, del /q "%GITD%\%RJPRJCT%.exe"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "src\*.put" "%GITD%\src"`n,%DEPL%\!gitupdate.cmd
@@ -2750,9 +2749,9 @@ if (BCANC = 1)
 	}		
 if (IMGBLD = 1)
 	{
+		filecreatedir,%GITROOT%\%IMGDATS%
 		Loop, files,%BUILDIR%\rj\scrapeArt\*,D
 			{
-				filecreatedir,%GITROOT%\%IMGDATS%\%A_LoopFilename%
 				RMDATNM= %A_LoopfileName%
 				ROMDATOADD.= A_LoopFileLongPath . "|"
 				FileCopy,%A_LoopFileLongPath%\*,%GITROOT%\%IMGDATS%\%A_LoopFilename%,1
@@ -2999,7 +2998,7 @@ if (ServerPush = 1)
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading image databases ")
-		if (IMGBLD = 1)
+		if ((IMGBLD = 1)&&(nwimg = 1))
 			{
 				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
 				fileappend,git -C "%GITROOT%\%IMGDATS%" init`n,%DEPL%\gpush.cmd
@@ -3031,16 +3030,18 @@ if (ServerPush = 1)
 		if (DATBLD = 1)
 			{
 				FileAppend,pushd "%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%ROMDATS%\*.7z,F
+				Loop,parse,repolsts,|
 					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
+						wp= %A_LoopField%
+						splitpath,wp,,,,rdnme
 						stringupper,rdnme,rdnme
 						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%"`n`n,%DEPL%\gpush.cmd
 					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
-		if (IMGBLD = 1)
+			/*
+		if ((IMGBLD = 1)&&&&(nwimg = 1))
 			{
 				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
 				Loop,files,%DEPL%\%IMGDATS%\*.7z,F
@@ -3052,15 +3053,17 @@ if (ServerPush = 1)
 					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
+			*/
 		if (REPOBLD = 1)
 			{
 				FileAppend,pushd "%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%REPODATS%\*.zip,F
+				Loop,parse,datlsts,|
 					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
+						wf= %A_LoopField%
+						splitpath,wf,,,,rdnme
 						stringupper,rdnme,rdnme
 						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
 					}
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
@@ -3236,6 +3239,7 @@ imglsts=
 if (IMGBLD = 1)
 	{		
 		SB_SetText(" Recompiling Image Databases ")
+		nwimg=
 		filecreatedir,%DEPL%\%IMGDATS%
 		Loop, %GITD%\rj\scrapeArt\*.7z
 			{
@@ -3250,6 +3254,7 @@ if (IMGBLD = 1)
 					{
 						filecopy,%DEPL%\%IMGDATS%\%A_LoopFileName%.7z,%GITROOT%\%IMGDATS%\%A_LoopFileName%.7z
 						imglsts.= GITROOT . "\" . IMGDATS . "\" . A_LoopFileName . ".7z" . "|"
+						nwimg= 1
 					}
 
 			}
