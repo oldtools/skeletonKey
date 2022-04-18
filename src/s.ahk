@@ -324,7 +324,7 @@ Gui, Add, Button, x408 y123 w75 h23 vCANCEL gCANCEL hidden, CANCEL
 gui,font,normal
 Gui, Add, Text, x308 y155, Version
 Gui, Add, CheckBox, x204 y76 w114 h13 vINITINCL gINITINCL checked, Initialize-Include
-Gui, Add, CheckBox, x204 y95 w154 h13 vREPOBLD gREPOBLD, Repository Databases
+;Gui, Add, CheckBox, x204 y95 w154 h13 vREPOBLD gREPOBLD, Repository Databases
 Gui, Add, CheckBox, x204 y95 w154 h13 vDATBLD gDATBLD, ROM Databases
 Gui, Add, CheckBox, x90 y95 w104 h13 vPortVer gPortVer checked %FIE%, Portable/Update
 Gui, Add, CheckBox, x90 y76 w104 h13 vOvrStable gOvrStable %FIE% checked,Stable
@@ -1044,7 +1044,7 @@ GITROOT:= GITROOTT
 splitpath,GITROOTT,GITROOTTFN
 ifnotinstring,GITROOTTFN,GitHub
 	{
-		Loop, Files,%GITROOTT%\*,D
+		Loop, %GITROOTT%\*,2
 			{
 				ifinstring,A_LoopFilename,GitHub
 					{
@@ -1778,7 +1778,7 @@ if (BUILDIR <> "")
 				return
 			}
 	}
-Loop,%BUILDIT%\src\SkDeploy.set
+Loop,%BUILDIT%\src\Skey-Deploy.set
 	{
 		bldexists= 1
 	}
@@ -1786,12 +1786,12 @@ if (bldexists = 1)
 	{
 		BUILDIR:= BUILDIT
 		iniwrite, %BUILDIR%,%home%\skopt.cfg,GLOBAL,BUILDIR
-		FileRead, nsiv,%BUILDIR%\src\SkDeploy.set
+		FileRead, nsiv,%BUILDIR%\src\Skey-Deploy.set
 		StringReplace, nsiv, nsiv,[SOURCE],%SKELD%,All
 		StringReplace, nsiv, nsiv,[INSTYP],-installer,All
 		StringReplace, nsiv, nsiv,[BUILD],%BUILDIR%,All
 		StringReplace, nsiv, nsiv,[DBP],%DEPL%,All
-		StringReplace, nsiv, nsiv,[RJ_PROJ],%RJPRJCT%,All
+		StringReplace, nsiv, nsiv,skeletonkey,%RJPRJCT%,All
 		StringReplace, nsiv, nsiv,[GIT_USER],%GITUSER%,All
 		StringReplace, nsiv, nsiv,[CURV],%vernum%,All
 		FileAppend, %nsiv%,%DEPL%\Skey-Deploy.nsi
@@ -2387,34 +2387,18 @@ guicontrol,disable,DevlVer
 readme= 
 FileMove,%SKELD%\ReadMe.md, %SKELD%\ReadMe.bak,1
 FileRead,readme,%SKELD%\src\ReadMe.set
-StringReplace,readme,readme,[CURV],%vernum%,All
-StringReplace,readme,readme,[RJ_PROJ],%RJPRJCT%,All
-StringReplace,readme,readme,[GIT_USER],%GITUSER%,All
-StringReplace,readme,readme,[VERSION],%date% %timestring%,All
+StringReplace,readme,readme,[CURV],%vernum%
+StringReplace,readme,readme,skeletonkey,%RJPRJCT%
+StringReplace,readme,readme,[GIT_USER],%GITUSER%
+StringReplace,readme,readme,[VERSION],%date% %timestring%
 FileAppend,%readme%,%SKELD%\ReadMe.md
-FileCopy,%SKELD%\ReadMe.md,%home%\site,1
+FileCopy,%SKELD%\ReadMe.md,site,1
 
 arcorgv= 
 FileMove,%SKELD%\src\themes.set, %SKELD%\themes.bak,1
 FileMove,%SKELD%\src\arcorg.set, %SKELD%\arcorg.bak,1
 FIleRead,skthemes,%SKELD%\src\Themes.put
 FIleRead,arcorgv,%SKELD%\src\arcorg.put
-
-iniread,arcsgg,%SKELD%\src\arcorg.set,GLOBAL
-Loop,parse,arcsgg,`r`n
-	{
-		if (A_LoopField = "")
-			{
-				continue
-			}
-		stringsplit,aug,A_LoopField,=
-		stringreplace,ana,A_LoopField,%aug1%=,,
-		uvar:= % %aug1%
-		if (uvar = "")
-			{
-				%aug1%= %ana%
-			}	
-	}
 StringReplace,skthemes,skthemes,[IALTH],%IALTH%,All
 StringReplace,skthemes,skthemes,[HOSTINGURL],%HOSTINGURL%,All
 StringReplace,arcorgv,arcorgv,[UPDATEFILE],%UPDTFILE%,All
@@ -2447,7 +2431,7 @@ iniwrite,%UPDTFILE%,%source%\arcorg.set,GLOBAL,UPDATEFILE
 iniwrite,%HOSTINGURL%,%source%\arcorg.set,GLOBAL,HOSTINGURL
 StringReplace,sktmc,sktmp,[VERSION],%date% %TimeString%,All
 StringReplace,sktmv,sktmc,[CURV],%vernum%
-StringReplace,sktmv,sktmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,sktmv,sktmc,skeletonkey,%RJPRJCT%
 stringreplace,sktmv,sktmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,sktmv,sktmv,`*`/  `;`;[DEBUGOV],,All
 FileAppend,%sktmv%,%SKELD%\src\working.ahk
@@ -2462,7 +2446,7 @@ uptmv=
 FileRead, uptmp,%SKELD%\src\Update.tmp
 StringReplace,uptmc,uptmp,[VERSION],%date% %TimeString%,All
 StringReplace,uptmv,uptmc,[CURV],%vernum%
-StringReplace,uptmv,uptmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,uptmv,uptmc,skeletonkey,%RJPRJCT%
 stringreplace,uptmv,uptmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,uptmv,uptmv,`*`/  `;`;[DEBUGOV],,All
 FileAppend,%uptmv%,%SKELD%\src\Update.ahk
@@ -2475,7 +2459,7 @@ intmv=
 FileRead, intmp,%SKELD%\src\init.tmp
 StringReplace,intmc,intmp,[VERSION],%date% %TimeString%,All
 StringReplace,intmv,intmc,[CURV],%vernum%
-StringReplace,intmv,intmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,intmv,intmc,skeletonkey,%RJPRJCT%
 stringreplace,intmv,intmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,intmv,intmv,`*`/  `;`;[DEBUGOV],,All
 FileAppend,%intmv%,%SKELD%\src\init.ahk
@@ -2507,7 +2491,6 @@ if (OvrStable = 1)
 			}
 	}
 
-guicontrol,,progb,10
 if (INITINCL = 1)
 	{		
 		RunWait, %comspec% /c echo.##################  COMPILE UPDATER  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
@@ -2518,58 +2501,42 @@ if (INITINCL = 1)
 		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\working.ahk" /out "%SKELD%\bin\%RJPRJCT%.exe" /icon "%SKELD%\site\key.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
 		FileCopy, %DEPL%\%RJPRJCT%.exe,%SKELD%,1
-		/*
-		portableincludes=		
+		portableincludes=
 		Loop,files,%SKELD%\bin\*,F
 			{
 				if ((A_LoopFileExt = "txt")or(A_LoopFileExt = "exe")or(A_LoopFileExt = "bat"))
 					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
+					stringreplace,ain,A_LoopFileFullPath,%home%\,,All
+						portableincludes.= ain . "|"
 					}
 			}
 		Loop,files,%SKELD%\src\*,F
 			{
 				if ((A_LoopFileExt = "set")or(A_LoopFileExt = "ahk")or(A_LoopFileExt = "put"))
 					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
+					stringreplace,ain,A_LoopFileFullPath,%home%\,,All
+						portableincludes.= ain . "|"
 					}
 			}
 		Loop,files,%SKELD%\rj\*,FR
 			{
 				if ((A_LoopFileExt = "amgp")or(A_LoopFileExt = "xpadderprofile")or(A_LoopFileExt = "ret")or(A_LoopFileExt = "set"))
 					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
+					stringreplace,ain,A_LoopFileFullPath,%home%\,,All
+						portableincludes.= ain . "|"
 					}
 			}
 		Loop,files,%SKELD%\img\*,F
 			{
 				if ((A_LoopFileExt = "ico")or(A_LoopFileExt = "png"))
 					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
+					stringreplace,ain,A_LoopFileFullPath,%home%\,,All
+						portableincludes.= ain . "|"
 					}
 			}
-		msgbox,,,4`n%portableincludes%	
 		portableincludes.= home . "\" . Readme.md
-		stringreaplace,portableincludex,portableincludes,|,`n,All
-		fileappend,%portableincludex%,C:\users\jesse\desktop\test.txt
-		*/
 	}	
+
 if (OvrStable = 1)
 	{
 		Process, exist, Skey-Deploy.exe
@@ -2585,10 +2552,10 @@ if (OvrStable = 1)
 				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 			}		
 	}				
-guicontrol,,progb,20
+guicontrol,,progb,15
 FileDelete,%SKELD%\*.lpl
 FileDelete,%SKELD%\*.tmp
-guicontrol,,progb,30
+guicontrol,,progb,20
 if (PortVer = 1)
 	{		
 		SB_SetText(" Building portable ")
@@ -2597,12 +2564,15 @@ if (PortVer = 1)
 			{
 				FileDelete, %DEPL%\%RJPRJCT%D.zip
 				RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" -r bin\*.exe bin\*.sfx bin\*.txt bin\*.sfx bin\*.bat src\*.ahk src\*.txt src\*.put rj\*.set rj\*.get rj\*.ret rj\*.xpadderprofile rj\*.amgp site\*.png site\*.ico site\*.txt site\*.otf site\*.ttf site\*.html site\*.md -w"%A_Temp%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
+				Loop,parse,portableincludes,|
+					{
+						runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" "%A_LoopField%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
+					}
 				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
 				sleep, 1000
 			}
 	}
-guicontrol,,progb,45
+guicontrol,,progb,35
 if (BCANC = 1)
 	{
 		SB_SetText(" Cancelling Development Build ")
@@ -2719,7 +2689,7 @@ if (GitPush = 1)
 		FileAppend, copy /y "site\version.txt" "%GITD%\site"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, del /q "%GITD%\%RJPRJCT%.exe"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "src\*.put" "%GITD%\src"`n,%DEPL%\!gitupdate.cmd
-		guicontrol,,progb,55
+		guicontrol,,progb,65
 	}
 if (BCANC = 1)
 	{
@@ -2739,7 +2709,7 @@ if (OvrStable = 1)
 			}
 	}		
 
-guicontrol,,progb,60	
+guicontrol,,progb,70	
 if (BCANC = 1)
 	{
 		SB_SetText(" Cancelling Server Upload ")
@@ -2750,26 +2720,16 @@ if (BCANC = 1)
 	}		
 if (IMGBLD = 1)
 	{
-		Loop, files,%BUILDIR%\rj\scrapeArt\*,D
-			{
-				filecreatedir,%GITROOT%\%IMGDATS%\%A_LoopFilename%
-				RMDATNM= %A_LoopfileName%
-				ROMDATOADD.= A_LoopFileLongPath . "|"
-				FileCopy,%A_LoopFileLongPath%\*,%GITROOT%\%IMGDATS%\%A_LoopFilename%,1
-			}
 		GRARDT= %GITSWEB%/%gituser%/%IMGDATS%/releases/download
-		StringReplace,arcorgv,arcorgv,[IMGDATS],%GRARDT%,All
-		
+		StringReplace,arcorgv,arcorgv,[IMGDATS],%GRARDT%,All	
 	}
 if (DATBLD = 1)
 	{
 		ROMDATOADD=
 		Loop, files,%BUILDIR%\dats\*,D
 			{
-				filecreatedir,%GITROOT%\%ROMDATS%\%A_LoopFilename%
 				RMDATNM= %A_LoopfileName%
 				ROMDATOADD.= A_LoopFileLongPath . "|"
-				FileCopy,%A_LoopFileLongPath%\*,%GITROOT%\%ROMDATS%\%A_LoopFilename%,1
 			}
 		GRARBV= %GITSWEB%/%gituser%/%ROMDATS%/releases/download
 		StringReplace,arcorgv,arcorgv,[DATSRC],%GRARBV%,All
@@ -2779,7 +2739,6 @@ if (REPOBLD = 1)
 		REPOPATH=
 		Loop, files,%BUILDIR%\gam\*,D
 			{
-				filecreatedir,%GITROOT%\%REPODATS%\%A_LoopFilename%
 				REPONM= %A_LoopfileName%
 				stringreplace,REPONM,REPONM,%A_Space%,_,All
 				stringreplace,REPONM,REPONM,-,_,All
@@ -2800,7 +2759,6 @@ if (REPOBLD = 1)
 				iniwrite,%REPOROOT%,%SKELD%\src\arcorg.set,SOURCES,%REPONM%
 				stringupper,UPARCNM,REPONM
 				iniwrite,%GRARBV%/%UPARCNM%/%A_LoopFileName%.7z,%SKELD%\src\arcorg.set,SOURCES,%REPONM%:SET
-				FileCopy,%A_LoopFileLongPath%\*,%GITROOT%\%REPODATS%\%A_LoopFilename%,1
 			}
 	}
 
@@ -2876,13 +2834,14 @@ if (ServerPush = 1)
 								dvms= reverted
 							}
 					}
-				guicontrol,,progb,70
+				guicontrol,,progb,90
 				StringReplace,skelhtml,skelhtml,[RSHA1],%ApndSHA%,All
 				StringReplace,skelhtml,skelhtml,[WEBURL],http://%GITUSER%.github.io,All
 				StringReplace,skelhtml,skelhtml,[PAYPAL],%donation%
-				StringReplace,skelhtml,skelhtml,[GIT_SRC],%GITSRC%,All
+				StringReplace,skelhtml,skelhtml,[GITSRC],%GITSRC%,All
 				StringReplace,skelhtml,skelhtml,[REVISION],%GITWEB%/%gituser%/%RJPRJCT%/releases/download/Installer/Installer.zip,All
 				StringReplace,skelhtml,skelhtml,[PORTABLE],%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/portable/portable.zip,All						
+				StringReplace,skelhtml,skelhtml,[GITUSER],%gituser%,All
 				StringReplace,skelhtml,skelhtml,[RELEASEPG],%GITSWEB%/%gituser%/%RJPRJCT%/releases,All
 				StringReplace,skelhtml,skelhtml,[ART_ASSETS],%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/ART_ASSETS/ART_ASSETS.7z,All						
 				StringReplace,skelhtml,skelhtml,[RDATE],%RDATE%,All
@@ -2923,6 +2882,7 @@ if (ServerPush = 1)
 				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 				SB_SetText(" Uploading to server ")
 			}
+		
 		FileDelete, %DEPL%\!gitupdate.cmd
 		if (GitPush = 1)
 			{
@@ -2966,104 +2926,23 @@ if (ServerPush = 1)
 				fileappend,git remote add %GITUSER%.github.io %GITWEB%/%GITUSER%/%GITUSER%.github.io`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %GITUSER%.github.io`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		
-		SB_SetText(" Uploading rom repo databases ")
-		if (REPOBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITROOT%\%REPODATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %REPODATS% --public --source="%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
-				FileAppend,pushd "%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %REPODATS% %GITWEB%/%GITUSER%/%REPODATS%`n,%DEPL%\gpush.cmd		
-				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
-				FileAppend,git push -f --all %REPODATS%`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
-
-			}
-		SB_SetText(" Uploading rom-hash databases ")
-		if (DATBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITROOT%\%ROMDATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %ROMDATS% --public --source="%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
-				FileAppend,pushd "%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %ROMDATS% %GITWEB%/%GITUSER%/%ROMDATS%`n,%DEPL%\gpush.cmd		
-				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
-				FileAppend,git push -f --all %ROMDATS%`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-		SB_SetText(" Uploading image databases ")
-		if (IMGBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITROOT%\%IMGDATS%" init`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %IMGDATS% --public --source="%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
-				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %IMGDATS% %GITWEB%/%GITUSER%/%IMGDATS%`n,%DEPL%\gpush.cmd		
-				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
-				FileAppend,git push -f --all %IMGDATS%`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
 		SB_SetText(" Uploading binaries to server ")
 		if (PortVer = 1)
 			{
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
 				FileAppend,gh release delete portable -y`n,%DEPL%\gpush.cmd
 				FileAppend,gh release create portable -t "portable" -n "" "%DEPL%\portable.zip"`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
-	
+
 		if (OvrStable = 1)
 			{
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
 				FileAppend,gh release delete Installer -y`n,%DEPL%\gpush.cmd
 				FileAppend,gh release create Installer -t "Installer" -n "" "%DEPL%\%RJPRJCT%.zip"`n`n,%DEPL%\gpush.cmd
-				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
-		if (DATBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%ROMDATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%ROMDATS%\*.7z,F
-					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
-					}
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-		if (IMGBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%IMGDATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%IMGDATS%\*.7z,F
-					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
-					}
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
-		if (REPOBLD = 1)
-			{
-				FileAppend,pushd "%GITROOT%\%REPODATS%"`n,%DEPL%\gpush.cmd
-				Loop,files,%DEPL%\%REPODATS%\*.zip,F
-					{
-						splitpath,A_LoopFileFullPath,,,,rdnme
-						stringupper,rdnme,rdnme
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%A_LoopFileLongPath%"`n`n,%DEPL%\gpush.cmd
-					}
-				fileappend,popd`n,%DEPL%\gpush.cmd
-			}
+		
 		guicontrol,,progb,80
 		if (GitPush = 1)
 			{
@@ -3073,9 +2952,59 @@ if (ServerPush = 1)
 			}
 	}
 	
+guicontrol,,progb,15
 FileDelete,%SKELD%\*.lpl
 FileDelete,%SKELD%\*.tmp
+guicontrol,,progb,20
+if (IMGBLD = 1)
+	{		
+		SB_SetText(" Recompiling Image Databases ")
+		Loop, %GITD%\rj\scrapeArt\*.7z
+			{
+				RunWait, %comspec% /c echo.##################  CREATE METADATA  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
+				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "ART_ASSETS.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
+				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
+			}
+	}
+if (REPOBLD = 1)
+	{
+		SB_SetText(" Compiling ROM Repo Databases ")
+		repolsts= 
+		Loop, %BUILDIR%\gam\*,2
+			{
+				RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
+				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
+			}	
 
+	}
+if (DATBLD = 1)
+	{
+		SB_SetText(" Compiling ROM Databases ")
+		repolsts= 
+		Loop,Files %BUILDIR%\dats\*,D
+			{
+				RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%A_LoopFileName%.zip" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
+				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
+			}	
+	}
+if (PortVer = 1)
+	{		
+		SB_SetText(" Building portable ")
+		COMPLIST= 
+		if (PBOV <> 1)
+			{
+				FileDelete, %DEPL%\%RJPRJCT%.zip
+				RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+				Loop,parse,portableincludes,|
+					{
+						runwait, %comspec% /c ""%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" "%A_LoopField%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
+					}
+				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
+				sleep, 1000
+			}
+	}
 guicontrol,,progb,100
 SB_SetText(" Complete ")
 gosub, canclbld
@@ -3122,9 +3051,9 @@ ifexist, %DEPL%\Skey-Deploy.nsi
 		FileDelete, %DEPL%\Skey-Deploy.nsi
 	}
 
-FileRead, nsiv,%BUILDIR%\src\SkDeploy.set
+FileRead, nsiv,%BUILDIR%\src\Skey-Deploy.set
 StringReplace, nsiv, nsiv,[GIT_USER],%GITUSER%,All
-StringReplace, nsiv, nsiv,[RJ_PROJ],%RJPRJCT%,All
+StringReplace, nsiv, nsiv,skeletonkey,%RJPRJCT%,All
 StringReplace, nsiv, nsiv,[INSTYP],-installer,All
 StringReplace, nsiv, nsiv,[SOURCE],%SKELD%,All
 StringReplace, nsiv, nsiv,[BUILD],%BUILDIR%,All
@@ -3187,23 +3116,6 @@ if (buildnum <> "")
 	{
 		buildnum= -%buildnum%
 	}	
-	
-if (PortVer = 1)
-	{		
-		SB_SetText(" Building portable ")
-		COMPLIST= 
-		if (PBOV <> 1)
-			{
-				FileDelete, %DEPL%\portable.zip
-				RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-				Loop,parse,portableincludes,|
-					{
-						runwait, %comspec% /c ""%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" "%A_LoopField%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
-					}
-				sleep, 1000
-			}
-		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
-	}	
 
 RunWait, %comspec% /c echo.##################  CREATE INSTALLER ######################## >>"%DEPL%\deploy.log", ,%rntp%
 RunWait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a "%DEPL%\%RJPRJCT%K.zip" "%DEPL%\%RJPRJCT%-installer.exe" >>"%DEPL%\deploy.log"", %BUILDIR%,%rntp%
@@ -3213,99 +3125,20 @@ if (DevlVer = 1)
 		if (DBOV <> 1)
 			{
 				FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%.zip,1	
-				FileMove,%DEPL%\%RJPRJCT%D.zip, %DEPL%\portable.zip,1
+				FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%.zip,1
 			}
 	}
 if (OvrStable = 1)
 	{
-		if (SBOV <> 1)
-			{
-				FileMove,%DEPL%\%RJPRJCT%.zip, %DEPL%\portable-%date%%buildnum%.zip,1
-				FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%-%date%%buildnum%.zip,1
-				ifExist, %DEPL%\portable-%date%%buildnum%.zip
+				if (SBOV <> 1)
 					{
-						FileMove,%DEPL%\portable-%date%%buildnum%.zip, %DEPL%\portable-%date%%buildnum%x.zip,1
+						FileCopy,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%-%date%%buildnum%.zip,1
+						ifExist, %DEPL%\%RJPRJCT%.zip
+							{
+								FileMove,%DEPL%\%RJPRJCT%.zip, %DEPL%\%RJPRJCT%.zip.bak,1
+							}
+						FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%.zip,1
 					}
-				ifExist,%DEPL%\%RJPRJCT%-%date%%buildnum%.zip
-					{
-						FileMove,%DEPL%\%RJPRJCT%-%date%%buildnum%.zip, %DEPL%\%RJPRJCT%-%date%%buildnum%x.zip,1
-					}
-			}
-	}
-imglsts=
-if (IMGBLD = 1)
-	{		
-		SB_SetText(" Recompiling Image Databases ")
-		filecreatedir,%DEPL%\%IMGDATS%
-		Loop, %GITD%\rj\scrapeArt\*.7z
-			{
-				RunWait, %comspec% /c echo.##################  CREATE METADATA  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%DEPL%\%IMGDATS%\%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
-				if fileexist(GITROOT . "\" . IMGDATS . "\" . A_LoopFileName . ".7z")
-					{
-						fileGetSize,oldFZ,%GITROOT%\%IMGDATS%\%A_LoopFileName%.7z,K
-						fileGetTime,oldDT,%GITROOT%\%IMGDATS%\%A_LoopFileName%.7z,M
-					}
-				if ((newFZ > oldFZ)&&(newDT > oldDT))
-					{
-						filecopy,%DEPL%\%IMGDATS%\%A_LoopFileName%.7z,%GITROOT%\%IMGDATS%\%A_LoopFileName%.7z
-						imglsts.= GITROOT . "\" . IMGDATS . "\" . A_LoopFileName . ".7z" . "|"
-					}
-
-			}
-		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
-	}
-if (REPOBLD = 1)
-	{
-		SB_SetText(" Compiling ROM Repo Databases ")
-		datlsts= 
-		filecreatedir,%DEPL%\%ROMDATS%
-		Loop, Files, %BUILDIR%\gam\*,D
-			{
-				newFZ:= A_LoopFileSizeKB
-				newDT:= A_LoopFileTimeModified
-				RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-				fileGetSize,oldFZ,%DEPL%\%ROMDATS%\%A_LoopFileName%.zip,K
-				fileGetTime,oldDT,%DEPL%\%ROMDATS%\%A_LoopFileName%.zip,M
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\%ROMDATS%\%A_LoopFileName%.zip" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
-				if fileexist(GITROOT . "\" . ROMDATS . "\" . A_LoopFileName . ".zip")
-					{
-						fileGetSize,oldFZ,%GITROOT%\%ROMDATS%\%A_LoopFileName%.zip,K
-						fileGetTime,oldDT,%GITROOT%\%ROMDATS%\%A_LoopFileName%.zip,M
-					}
-				if ((newFZ > oldFZ)&&(newDT > oldDT))
-					{
-						FileCopy,%DEPL%\%ROMDATS%\%A_LoopFileName%.zip,%GITROOT%\%ROMDATS%\%A_LoopFileName%.zip,1
-						datlsts.= GITROOT . "\" . ROMDATS . "\" . A_LoopFileName . ".zip" . "|"
-					}
-			}	
-		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
-
-	}
-if (DATBLD = 1)
-	{
-		SB_SetText(" Compiling ROM Databases ")
-		repolsts= 
-		filecreatedir,%DEPL%\%REPODATS%
-		Loop,Files %BUILDIR%\dats\*,D
-			{
-				RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%DEPL%\%REPODATS%\%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
-				fileGetSize,oldFZ,%DEPL%\%REPODATS%\%A_LoopFileName%.7z,K
-				fileGetTime,oldDT,%DEPL%\%REPODATS%\%A_LoopFileName%.7z,M
-				if fileexist(GITROOT . "\" REPODATS . "\" . A_LoopFileName . ".7z")
-					{
-						fileGetSize,oldFZ,%GITROOT%\%REPODATS%\%A_LoopFileName%.7z,K
-						fileGetTime,oldDT,%GITROOT%\%REPODATS%\%A_LoopFileName%.7z,M
-					}
-				if ((newFZ > oldFZ)&&(newDT > oldDT))
-					{
-						FileCopy,%DEPL%\%REPODATS%\%A_LoopFileName%.7z,%GITROOT%\%REPODATS%\%A_LoopFileName%.7z,1
-						repolsts.= GITROOT . "\" . REPODATS . "\" . A_LoopFileName . ".7z" . "|"
-					}
-
-			}	
-		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 	}
 return
 ;};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -94,16 +94,16 @@ if (SETSYSTMP = 0)
 	systemp= %temp%
 	return
 }
-FileDelete, %lpful%\tst.txt
-FileAppend, tst,%lpful%\tst.txt
+FileDelete, %A_temp%\tst.txt
+FileAppend, tst,%A_temp%\tst.txt
 if (errorLevel <> 0)
 	{
 		guicontrol,,SETSYSTMP,0
-		systemp= %temp%
-		SB_SetText("cache directory set to " lpful "")
+		systemp= %A_temp%
+		SB_SetText("cache directory set to " A_temp "")
 		return
 	}
-systemp= %lpful%
+systemp= %A_temp%
 return
 ;};;;;;;;;;;;;;;;;;;;;
 

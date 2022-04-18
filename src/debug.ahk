@@ -6,12 +6,12 @@ CURPID= %ERRORLEVEL%
 SetWinDelay,2
 #Persistent
 CoordMode,Mouse 
-;;;;;;;;;;;;;;;;;;             skeletonKey           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;             skeletonkey           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;   by Jesse Klein 2018  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    2022-04-17 2:17 AM  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    [VERSION]  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 GLBTOP:
 RJPRJCT= skeletonkey
-RELEASE= 2022-04-17 2:17 AM
+RELEASE= [VERSION]
 VERSION= [CURV]
 #Include %A_ScriptDir%\..\src\tf.ahk
 #Include %A_ScriptDir%\..\src\lbex.ahk
@@ -29,9 +29,9 @@ if ((tstidir = "src")or(tstidir = "bin")or(tstidir = "binaries"))
 source= %home%\src
 binhome= %home%\bin
 SetWorkingDir,%home%
-
-#Include %A_ScriptDir%\..\src\LV_InCellEdit.ahk
-
+/*  ;;[DEBUGOV]
+#Include %A_ScriptDir%\..\LV_InCellEdit.ahk
+*/  ;;[DEBUGOV]
 DetectHiddenWindows, On
 IniRead,iniversion,%home%\Settings.ini,GLOBAL,version
 stringreplace,iniversion,iniversion,",,All
@@ -729,6 +729,7 @@ if ((fontXlg = "")or(fontXlg = "ERROR"))
 		iniwrite,%fontXlg%,%home%\Settings.ini,THEME,font_large
 	}
 iniread,fontXmed,%home%\Settings.ini,THEME,font_medium
+iniread,fontXmed,%home%\Settings.ini,THEME,font_medium
 if ((fontXmed = "")or(fontXmed = "ERROR"))
 	{
 		fontXmed= s9
@@ -1172,10 +1173,10 @@ Gui,Font, Bold
 Gui,Add,Text, x18 y476 vTMPDIRTXT, Temp/Cache Dir
 Gui,Add,Button, x18 y450 w43 h23 vSETTMPD gSETTMPD, SET
 Gui,Font, normal
-
+/*  ;;[DEBUGOV]
 Gui,Add,Text, x449 y10 w112 h15 vthemntxt, Theme
 Gui,Add,DropDownList, hwndDplHndl2 x344 y7 w102 vSKTHEMEN gSKTHEMEN,%skthemen%||Default|Gray|White|Blue|Black
-
+*/  ;;[DEBUGOV]
 if (INITIAL = 1)
 	{
 		WinSet, TransColor, White,skelprg
@@ -1765,10 +1766,10 @@ Gui,Add,Button, x91 y59 w31 h23 vRJFLTRLST gRJFLTRLST hidden, Filter
 Gui,Add,Edit, hwndEdtHndl81 x122 y60 w118 h21 vRJEDTC gRJEDTC disabled,
 Gui,Add,Button, x241 y59 w35 h23 vRJFNDINLST gRJFNDINLST disabled, Find
 Gui,Add,ListView, x12 y86 w254 h414 -Hdr -ReadOnly altsubmit Multi background%bgcolor% c%foreColor% vRJLSTV gRJLSTV hwndRJLV checked,|
-
+/*  ;;[DEBUGOV]
 RJRN1 := New LV_InCellEdit(RJLV)
 RJRN1.SetColumns(1)
-
+*/  ;;[DEBUGOV]
 Gui,Add,Button, x267 y119 w56 h24 vRJSALITMS gRJSALITMS disabled, ALL
 Gui,Add,Text, x267 y143 h14 vRJTXTN,Selects All ROMs
 Gui,Add,GroupBox, x266 y155 w100 h113 vRJGRPN
@@ -2049,7 +2050,7 @@ Menu,Tray,Tip
 Gui,+LastFound
 GuiIDn:=WinExist()
 GuiID:= WinExist("Ahk_PID " DllCall("GetCurrentProcessId"))
-
+/*  ;;[DEBUGOV]
 Menu, tray, NoStandard
 Loop,108
 	{
@@ -2073,11 +2074,11 @@ Loop,Parse,lbxhwnds,|
 	{
 		CtlColors.Attach(%A_LoopField%, bgcolor, foreColor)
 	}
-
+*/  ;;[DEBUGOV]
 Gui, Show, Autosize,skeletonkey
 SplashTextOff
 Guicontrol,,TABMENU,|Settings|:=: MAIN :=:||Emu:=:Sys|Playlists|Frontends|DAT:=:Repo|Jackets|Util
-
+/*  ;;[DEBUGOV]
 ADDNSYS_TT :="Name of the new system`nRight-Click for more options"
 ADJS_TT :="Automatically assigns joysticks."
 ALTURL_TT :="Enables login-restricted titles"
@@ -2638,7 +2639,7 @@ ZIPSEEK_TT :="Gets and writes the CRC Hash number of ROMs to the playlist.`nThis
 SHDEN_TT :="Toggles shader"
 FILT_UNSUP_TT :="Any dropdown listing the contents of your ''systems'' directory`n will filter out any directories which have not been detected or assigned"
 RENONDET_TT :="Any systems-folders will be renamed to the supported nomenclature."
-
+*/  ;;[DEBUGOV]
 setPortable:
 if (SETPORTABLE = 1)
 	{
@@ -2684,7 +2685,7 @@ ifexist, %home%\lm.ini
 	}
 INITIAL=
 guicontrol,enable,RJSYSDD
-
+/*  ;;[DEBUGOV]
 Class CtlColors {
    Static Attached := {}
    Static HandledMessages := {Edit: 0, ListBox: 0, Static: 0}
@@ -2887,7 +2888,7 @@ CtlColors_OnMessage(HDC, HWND) {
    }
 }
 return
-
+*/  ;;[DEBUGOV]
 SplashImageGUI(Picture, X, Y, Transparent = false)
 	{
 		Gui, XPT99:Margin , 0, 0
@@ -4385,13 +4386,13 @@ if (CHKRMP = "")
 		{
 			CHKRUNE.= "|" CHRFFMP
 		}
-iniread,tdsv,%home%\GameOverrides.ini,%RUNSYSDDL%
+iniread,tdsv,GameOverrides.ini,%RUNSYSDDL%
 if (tdsv <> "ERROR")
 	{
 		Msgbox,8452,Overwrite All?,There are overrides for this system.`nClear Overrides for all titles in "%RUNSYSDDL%?"
 		ifmsgbox,yes
 			{
-				inidelete,%home%\GameOverrides.ini,%RUNSYSDDL%
+				inidelete,GameOverrides.ini,%RUNSYSDDL%
 				SB_SetText("Overrides cleared for " CHKRUNS "")
 			}
 	}
@@ -5662,15 +5663,15 @@ if ( (A_GuiX >= cRegionX) && (A_GuiX <= cRegionX+cRegionW) && (A_GuiY >= cRegion
 						return
 					}
 				SB_SetText("Sorting BIOS files")
-				FileDelete, %home%\bios.ini
-				FileAppend, %A_GuiEvent%, %home%\bios.ini
+				FileDelete, bios.ini
+				FileAppend, %A_GuiEvent%, bios.ini
 				arcdec=
 				ifnotexist, %cacheloc%\bios
 					{
 						FileCreateDir, %cacheloc%\bios
 						FileCreateDir, %cacheloc%\arc
 					}
-				Loop,Read,%home%\bios.ini
+				Loop,Read,bios.ini
 					{
 						SB_SetText(" Categorizing BIOS files ")
 						splitpath,A_LoopReadLine,biosfile,biospath,biosxt,biosn,biosdrv
@@ -6793,7 +6794,7 @@ Loop, Files, %cacheloc%\bios\*,
 				if (CRCM3 = ApndCRC)
 					{
 						biosnum++
-						fileappend,%A_LoopFileFullPath%|%CRCM1%|%CRCMX%%prib%`n,%home%\crcs.ini
+						fileappend,%A_LoopFileFullPath%|%CRCM1%|%CRCMX%%prib%`n,crcs.ini
 					}
 			}
 			
@@ -6809,7 +6810,7 @@ ifnotexist,crcs.ini
 	}
 	
 
-Fileread,curbios,%home%\crcs.ini
+Fileread,curbios,crcs.ini
 Loop, Parse, curbios,`n`r
 	{
 		if (A_LoopField = "")
@@ -9062,7 +9063,7 @@ Loop,Parse,AllPartSet,`n`r
 						ifmsgbox,yes
 							{
 								rtrcnt+= 1
-								Loop,parse,IALTH,>
+								Loop,parse,ALTHOST,>
 									{
 										if (A_Index = rtrcnt)
 											{
@@ -10713,11 +10714,11 @@ JNKLNK=
 junct=
 junctv1=
 junctv2=
-FileDelete,%home%\dxt.ini
-runwait, %comspec% cmd /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%RJSYSTEMS%\%semu%?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >"%home%\dxt.ini" &&exit /b ",,hide
-ifexist, %home%\dxt.ini
+FileDelete,dxt.ini
+runwait, %comspec% cmd /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%RJSYSTEMS%\%semu%?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >dxt.ini &&exit /b ",,hide
+ifexist, dxt.ini
 	{
-		FileReadLine,dxtini,%home%\dxt.ini,1
+		FileReadLine,dxtini,dxt.ini,1
 		stringreplace,junct,dxtini,%semu%,,
 		StringSplit,junctv,junct,[, ] `"
 		;"
@@ -14607,7 +14608,7 @@ gui, submit,nohide
 return
 
 ApndPL:
-FileDelete,%home%\tmp.ini
+FileDelete,tmp.ini
 Loop, Read, %plsave%\%SYSNAME%.lpl
 	{
 			totn+= 1
@@ -14621,14 +14622,14 @@ Loop, Read, %plsave%\%SYSNAME%.lpl
 					gten:= ""
 					gten:= totn - 4
 					stringsplit, crchsh,A_LoopReadLine,|
-					FileAppend,%fnm%|%pln%|%gten%|%crchsh1%`n,%home%\tmp.ini
+					FileAppend,%fnm%|%pln%|%gten%|%crchsh1%`n,tmp.ini
 				}
 			if (anum = 6)
 				{
 					anum=
 				}
 		}
-FileRead, newpl,%home%\tmp.ini
+FileRead, newpl,tmp.ini
 Runwait, %comspec% cmd /c "copy /b tmp.ini + %home%\hashdb.ini fullhash.ini",,Hide
 FileMove,fullhash.ini,%home%\hashdb.ini,1
 return
@@ -16263,9 +16264,9 @@ return
 
 HASHALLROMS:
 gui,submit,nohide
-ifexist,%home%\all_hash.ini
+ifexist,all_hash.ini
 	{
-		fileread,all_hash,%home%\all_hash.ini
+		fileread,all_hash,all_hash.ini
 	}
 HLTDATP= 
 if (HSH_DISP <> "")
@@ -19719,14 +19720,14 @@ return
 
 ASOCREA:
 splitpath,RUNRTST,,,,ROMTOVR
-iniwrite,%LCORE%,%home%\GameOverrides.ini,%RUNSYSTST%,%ROMTOVR%
+iniwrite,%LCORE%,GameOverrides.ini,%RUNSYSTST%,%ROMTOVR%
 SB_SetText(" " LCORE " set as override for " ROMTOVR "")
 return
 
 ASOCDEL:
 guicontrolget,RUNRTST,,MORROM
 guicontrolget,RUNSYSTST,,RUNSYSDDL
-inidelete,%home%\GameOverrides.ini,%RUNSYSTST%,%ROMTOVR%
+inidelete,GameOverrides.ini,%RUNSYSTST%,%ROMTOVR%
 SB_SetText(" " LCORE " override for " ROMTOVR " deleted")
 return
 
@@ -33916,7 +33917,7 @@ if (FERAD2B = 1)
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
 								IniRead,dlprfx,%ARCORG%,GLOBAL,IMAGEDATS
-								;;filereadline,dlprfx,%source%\arcorg.set,2
+								;;filereadline,dlprfx,arcorg.set,2
 								URLFILE= %dlprfx%/IMAGEDATS/%SYSLKUP%.7z
 								ifinstring,dlprfx,github
 									{
@@ -33941,7 +33942,7 @@ if (FERAD2B = 1)
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
 								IniRead,dlprfx,%ARCORG%,GLOBAL,SOURCEHOST
-								;;filereadline,dlprfx,%source%\arcorg.set,5
+								;;filereadline,dlprfx,arcorg.set,5
 								URLFILE= %dlprfx%/rj/scrapeart/%SYSLKUP%.7z
 								save= rj\scrapeArt\%SYSLKUP%.7z
 								SB_SetText("Downloading " SYSLKUP " Metadata")
@@ -34084,7 +34085,7 @@ if (FERAD2C = 1)
 						ifnotexist,%home%\rj\scrapeArt\%SYSLKUP%.7z
 							{
 								IniRead,dlprfx,%ARCORG%,GLOBAL,IMAGEDATS
-								;;filereadline,dlprfx,%source%\arcorg.set,2
+								;;filereadline,dlprfx,arcorg.set,2
 								URLFILE= %dlprfx%/IMAGEDATS/%SYSLKUP%.7z
 								ifinstring,dlprfx,github
 									{
@@ -38223,7 +38224,7 @@ Loop, Parse, emupartset,`n`r
 								ifmsgbox,yes
 									{											
 										rtrcnt+= 1
-										Loop,parse,IALTH,>
+										Loop,parse,ALTHOST,>
 											{
 												if (A_Index = rtrcnt)
 													{
@@ -38538,7 +38539,7 @@ ifnotexist,%save%
 				ifmsgbox,yes
 					{								
 						rtrcnt+= 1
-						Loop,parse,IALTH,>
+						Loop,parse,ALTHOST,>
 							{
 								if (A_Index = rtrcnt)
 									{
@@ -42870,11 +42871,11 @@ FileDelete,%home%\rj\cur.ini
 guicontrol,,RJSYSRADB,1
 RJSYSDD_TDB=
 gosub, OPENJACKOPT
-EXSTCFG= %home%\rj\dflt.ini
+EXSTCFG= rj\dflt.ini
 ifexist,%home%\rj\%RJSYSDD%.ini
 	{
 		guicontrol,,RJSYSRADC,1
-		EXSTCFG= %home%\rj\%RJSYSDD%.ini
+		EXSTCFG= rj\%RJSYSDD%.ini
 		PXSTCFG= 1
 	}
 FLTHRU:
@@ -43651,18 +43652,18 @@ if (RJSYSRADA = 1)
 	{
 		FileDelete,%home%\rj\%RJSYSDD%.ini
 		gosub, QUEUEOPTIONSRESET
-		EXSTCFG= %home%\rj\dflt.ini
+		EXSTCFG= rj\dflt.ini
 	}
 if (RJSYSRADB = 1)
 	{
-		EXSTCFG= %home%\rj\dflt.ini
+		EXSTCFG= rj\dflt.ini
 	}
 if (RJSYSRADC = 1)
 	{
-		EXSTCFG= %home%\rj\cur.ini
+		EXSTCFG= rj\cur.ini
 		ifexist,%home%\rj\%RJSYSDD%.ini
 			{
-				EXSTCFG= %home%\rj\%RJSYSDD%.ini
+				EXSTCFG= rj\%RJSYSDD%.ini
 			}
 	}
 gosub, LOADRJINI
@@ -45399,7 +45400,7 @@ ifinstring,coreselv,_libretro.dll
 			}	
 	}
 guicontrolget,coreselv,,LCORE
-iniread,romnaov,%home%\GameOverrides.ini,%ROMSYS%,%romname%
+iniread,romnaov,GameOverrides.ini,%ROMSYS%,%romname%
 if ((romnaov <> "ERROR")&&(AUTOPGS = 1))
 	{
 		coreselv= %romnaov%
@@ -47295,7 +47296,7 @@ guicontrolget,Ppltxt,,PplTxt
 splitpath,home,,,,,skeldrv
 pcfgext= ini|cfg|config|conf|xml|settings|opt
 stringsplit,pcfgxt,pcfgext,= | ""
-recfgf= %home%\ovr.ini|%home%\hashdb.ini|%home%\Assignments.ini|%home%\AppParams.ini|%home%\Settings.ini|%home%\config.cfg
+recfgf= ovr.ini|%home%\hashdb.ini|%home%\Assignments.ini|%home%\AppParams.ini|%home%\Settings.ini|config.cfg
 IfNotExist, %home%\Settings.ini
 	{
 		TGLPBL= 1
@@ -47363,16 +47364,16 @@ if (SETSYSTMP = 0)
 	systemp= %RJSYSTEMS%\Netplay - Netplay
 	return
 }
-FileDelete, %A_temp%\tst.txt
-FileAppend, tst,%A_temp%\tst.txt
+FileDelete, %lpful%\tst.txt
+FileAppend, tst,%lpful%\tst.txt
 if (errorLevel <> 0)
 	{
 		guicontrol,,SETSYSTMP,0
 		systemp= %RJSYSTEMS%\Netplay - Netplay
-		SB_SetText("cache directory set to " A_temp "")
+		SB_SetText("cache directory set to " lpful "")
 		return
 	}
-systemp= %A_temp%
+systemp= %lpful%
 return
 
 DisplSkTXT:
@@ -47688,9 +47689,9 @@ Process, close, %RJPRJCT%.exe
 MenuHandler:
 GuiEscape:
 GuiClose:
-
+/*  ;;[DEBUGOV]
 CtlColors.Free()
-
+*/  ;;[DEBUGOV]
 Gui, Destroy
 Exitapp
 Return
