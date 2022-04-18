@@ -222,7 +222,7 @@ oldsize=
 oldsha= 
 olrlsdt=
 vernum=	
-getversf= %gitroot%\%GITUSER%.github.io\%RJPRJCT%\index.html
+getversf= %SITEDIR%\index.html
 
 ifnotexist,%getversf%
 	{
@@ -2853,15 +2853,15 @@ if (ServerPush = 1)
 				;"
 				FileDelete, %DEPL%\sitecommit.cmd
 				FileAppend,pushd "%gitroot%\%GITUSER%.github.io"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\Global-Launch-Menu.png" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\*.otf" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\*.ttf" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\key.ico" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\img\*.png" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\img\*.svg" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\tip.png" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\ReadMe.md" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\version.txt" "%gitroot%\%GITUSER%.github.io\%RJPRJCT%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\Global-Launch-Menu.png" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\*.otf" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\*.ttf" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\key.ico" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\img\*.png" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\img\*.svg" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\tip.png" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\ReadMe.md" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
+				FileAppend,copy /y "%BUILDIR%\site\version.txt" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
 
 				RunWait, %comspec% /c echo.##################  SITE COMMIT  ######################## >>"%DEPL%\deploy.log", ,%rntp%
 				RunWait, %comspec% /c " "%DEPL%\sitecommit.cmd" "site-commit" >>"%DEPL%\deploy.log"",%BUILDIR%,%rntp%
@@ -2915,14 +2915,14 @@ if (ServerPush = 1)
 			{
 				FileDelete,%SITEDIR%\ReadMe.md
 				FileAppend,%readme%,%SITEDIR%\ReadMe.md
-				FileAppend,pushd "%GITROOT%\%GITUSER%.github.io"`n,%DEPL%\gpush.cmd
-				fileappend,if not exist ".git" git -C "%GITROOT%\%GITUSER%.github.io" init`n,%DEPL%\gpush.cmd
+				FileAppend,pushd "%SITEDIR%\..\"`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git" git -C "%SITEDIR%\..\" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %GITUSER%.github.io --public --source="%GITROOT%\%GITUSER%.github.io"`n,%DEPL%\gpush.cmd
+				FileAppend,gh repo create %GITUSER%.github.io --public --source="%SITEDIR%\..\"`n,%DEPL%\gpush.cmd
 				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %GITUSER%.github.io %GITWEB%/%GITUSER%/%GITUSER%.github.io`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
@@ -2942,18 +2942,18 @@ if (ServerPush = 1)
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %REPODNM% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
-				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
-				FileAppend,git push -f --all %REPODNM%`n,%DEPL%\gpush.cmd
 				Loop,parse,datlsts,|
 					{
 						wf= %A_LoopField%
-						splitpath,wf,,,,rdnme
+						splitpath,wf,,wpth,,rdnme
 						stringupper,rdnme,rdnme
+						FileAppend,git add "%GITROOT%\%REPODNM%\%rdnme%"`n,%DEPL%\gpush.cmd
 						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
 						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
 					}
+				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
+				FileAppend,git push -f --all %REPODNM%`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading rom-hash databases ")
@@ -2967,18 +2967,18 @@ if (ServerPush = 1)
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %ROMDNM% --public --source="%ROMDATL%"`n,%DEPL%\gpush.cmd
-				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %ROMDNM% %GITWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
-				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %ROMDNM%`n,%DEPL%\gpush.cmd
 				Loop,parse,repolsts,|
 					{
 						wp= %A_LoopField%
-						splitpath,wp,,,,rdnme
+						splitpath,wp,,wpth,,rdnme
 						stringupper,rdnme,rdnme
+						FileAppend,git add "%GITROOT%\%ROMDNM%\%rdnme%"`n,%DEPL%\gpush.cmd
 						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
 						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%"`n`n,%DEPL%\gpush.cmd
 					}
+				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading image databases ")
@@ -3146,13 +3146,13 @@ if (IMGBLD = 1)
 		SB_SetText(" Recompiling Image Databases ")
 		nwimg=
 		filecreatedir,%IMGDATL%
+		RunWait, %comspec% /c echo.##################  CREATE METADATA  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
 		Loop, %GITD%\rj\scrapeArt\*.7z
 			{
 				newFZ:= A_LoopFileSizeKB
 				newDT:= A_LoopFileTimeModified
 				oldFZ=
 				oldDT=
-				RunWait, %comspec% /c echo.##################  CREATE METADATA  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
 				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%IMGDATL%\%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
 				if fileexist(GITROOT . "\" . imgdnm . "\" . A_LoopFileName . ".7z")
 					{
@@ -3169,18 +3169,20 @@ if (IMGBLD = 1)
 			}
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
 	}
-if (REPOBLD = 1)
+if (DATBLD = 1)
 	{
 		SB_SetText(" Compiling ROM Repo Databases ")
 		datlsts= 
 		filecreatedir,%ROMDATL%
+		RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
 		Loop, Files, %BUILDIR%\gam\*,D
 			{
+				FileCreateDir,%ROMDATL%\%A_LoopFileName%
+				FileCopy,%A_LoopFileLongPath%\*.*,%ROMDATL%\%A_LoopFileName%,1
 				newFZ:= A_LoopFileSizeKB
 				newDT:= A_LoopFileTimeModified
 				oldFZ=
 				oldDT=
-				RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
 				fileGetSize,oldFZ,%ROMDATL%\%A_LoopFileName%.zip,K
 				fileGetTime,oldDT,%ROMDATL%\%A_LoopFileName%.zip,M
 				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%ROMDATL%\%A_LoopFileName%.zip" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
@@ -3198,14 +3200,16 @@ if (REPOBLD = 1)
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 
 	}
-if (DATBLD = 1)
+if (REPOBLD = 1)
 	{
 		SB_SetText(" Compiling ROM Databases ")
 		repolsts= 
 		filecreatedir,%REPODATL%
+		RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
 		Loop,Files %BUILDIR%\dats\*,D
 			{
-				RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+				FileCreateDir,%REPODATL%\%A_LoopFileName%
+				FileCopy,%A_LoopFileLongPath%\*.*,%REPODATL%\%A_LoopFileName%,1
 				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%REPODATL%\%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
 				newFZ:= A_LoopFileSizeKB
 				newDT:= A_LoopFileTimeModified
