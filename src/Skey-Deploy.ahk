@@ -2871,11 +2871,11 @@ if (ServerPush = 1)
 			{
 				FileDelete,%GITD%\ReadMe.md
 				FileAppend,%readme%,%GITD%\ReadMe.md
+				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
+				fileappend,git -C "%GITD%" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
-				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITD%" init`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,"%gitappdir%\..\mingw64\libexec\git-core\git-credential-manager-core.exe" configure`n,%DEPL%\gpush.cmd
@@ -2898,6 +2898,11 @@ if (ServerPush = 1)
 				FileAppend,%readme%,%SITEDIR%\ReadMe.md
 				FileAppend,pushd "%GITROOT%\%GITUSER%.github.io"`n,%DEPL%\gpush.cmd
 				fileappend,git -C "%GITROOT%\%GITUSER%.github.io" init`n,%DEPL%\gpush.cmd
+				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
+				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
+				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %GITUSER%.github.io --public --source="%GITROOT%\%GITUSER%.github.io"`n,%DEPL%\gpush.cmd
 				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %GITUSER%.github.io %GITWEB%/%GITUSER%/%GITUSER%.github.io`n,%DEPL%\gpush.cmd		
@@ -2912,6 +2917,11 @@ if (ServerPush = 1)
 			{
 				FileAppend,pushd "%REPODATL%"`n,%DEPL%\gpush.cmd
 				fileappend,git -C "%REPODATL%" init`n,%DEPL%\gpush.cmd
+				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
+				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
+				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %REPODATS% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
@@ -2933,6 +2943,11 @@ if (ServerPush = 1)
 			{
 				FileAppend,pushd "%ROMDATL%"`n,%DEPL%\gpush.cmd
 				fileappend,git -C "%ROMDATL%" init`n,%DEPL%\gpush.cmd
+				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
+				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
+				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %ROMDNM% --public --source="%ROMDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %ROMDNM% %GITWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
@@ -2951,7 +2966,12 @@ if (ServerPush = 1)
 		if ((IMGBLD = 1)&&(nwimg = 1))
 			{
 				FileAppend,pushd "%IMGDATL%"`n,%DEPL%\gpush.cmd
+				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
+				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
 				fileappend,git -C "%IMGDATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
+				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
 				fileappend,git remote add %IMGDATS% %GITWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
