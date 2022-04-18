@@ -2868,7 +2868,9 @@ if (ServerPush = 1)
 			}
 		FileDelete, %DEPL%\!gitupdate.cmd
 		if (GitPush = 1)
-			{
+			{		
+				FileAppend,set PATH=`%PATH`%`;%GITAPPDIR%`;%GITRLSDIR%`n,%DEPL%\gpush.cmd		
+				fileappend,cd "%GITROOT%"`n,%DEPL%\gpush.cmd
 				FileDelete,%GITD%\ReadMe.md
 				FileAppend,%readme%,%GITD%\ReadMe.md
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
