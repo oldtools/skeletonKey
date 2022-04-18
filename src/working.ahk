@@ -6,12 +6,12 @@ CURPID= %ERRORLEVEL%
 SetWinDelay,2
 #Persistent
 CoordMode,Mouse 
-;;;;;;;;;;;;;;;;;;             skeletonKey           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;             [RJ_PROJ]           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;   by Jesse Klein 2018  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    2022-04-17 2:17 AM  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 GLBTOP:
-RJPRJCT= skeletonkey
-RELEASE= 2022-04-17 2:17 AM
+RJPRJCT= [RJ_PROJ]
+RELEASE= [VERSION]
 VERSION= [CURV]
 #Include %A_ScriptDir%\..\src\tf.ahk
 #Include %A_ScriptDir%\..\src\lbex.ahk
@@ -2074,7 +2074,7 @@ Loop,Parse,lbxhwnds,|
 		CtlColors.Attach(%A_LoopField%, bgcolor, foreColor)
 	}
 
-Gui, Show, Autosize,skeletonkey
+Gui, Show, Autosize,[RJ_PROJ]
 SplashTextOff
 Guicontrol,,TABMENU,|Settings|:=: MAIN :=:||Emu:=:Sys|Playlists|Frontends|DAT:=:Repo|Jackets|Util
 
@@ -3143,7 +3143,7 @@ RButton::Menu, MINITOGGLE, Show, %MENU_X% %MENU_Y%
 return
 MouseIsOverTitlebar() {
     static WM_NCHITTEST := 0x84, HTCAPTION := 2
-    if WinActive("skeletonkey") 
+    if WinActive("[RJ_PROJ]") 
 		{
 			CoordMode Mouse, Screen
 			MouseGetPos x, y, w
@@ -5572,8 +5572,8 @@ If ((A_GuiX >= RDXgrid) && (A_GuiX <= RDXgrid+RDWgrid) && (A_GuiY >= RDYgrid) &&
 								guicontrol,,LCORE,%coreselv%|
 								return
 							}
-						Control, ShowDropDown, , %LCORE%, skeletonkey
-						ControlFocus, %LCORE%, skeletonkey
+						Control, ShowDropDown, , %LCORE%, [RJ_PROJ]
+						ControlFocus, %LCORE%, [RJ_PROJ]
 						return
 					}
 				if (AUTOLNCH = 1)
@@ -5902,8 +5902,8 @@ if (MINIMODE <> 1)
 	}
 MINIMODEOFF:
 MINIMODE= 
-WinSet, Region,,skeletonkey
-WinSet, Style, +0x800000,skeletonkey
+WinSet, Region,,[RJ_PROJ]
+WinSet, Style, +0x800000,[RJ_PROJ]
 guicontrol,,MINISWITCH,-
 return	
 MINIMODE:
@@ -5911,10 +5911,10 @@ gui,submit,nohide
 MINIMODE= 1
 Guicontrol,Choose,TABMENU,2
 guicontrol,,MINISWITCH,=
-WinSet, Style, -0x800000, skeletonkey
+WinSet, Style, -0x800000, [RJ_PROJ]
 mmwdth:= 750*(A_ScreenDPI/96)
 mmwhght:= 45*(A_ScreenDPI/96)
-WinSet, Region,18-4 W%mmwdth% H%mmwhght%,skeletonkey
+WinSet, Region,18-4 W%mmwdth% H%mmwhght%,[RJ_PROJ]
 return
 
 AWYONLTGL:
@@ -5940,8 +5940,8 @@ gosub, ALWOTP
 TRANSLID:= 255
 guicontrol,,TRANSLID,255
 gosub TRANSLID
-Winset,top,,skeletonkey
-Winset,Enable,,skeletonkey
+Winset,top,,[RJ_PROJ]
+Winset,Enable,,[RJ_PROJ]
 goto, MINIMODEOFF
 return
 
@@ -5962,12 +5962,12 @@ if (ALWOTP = 1)
 	{
 		ALWOTPs= On
 	}
-Winset,alwaysOntop,%ALWOTPs%,skeletonkey
+Winset,alwaysOntop,%ALWOTPs%,[RJ_PROJ]
 return
 
 TRANSLID:
 gui,submit,nohide
-WinSet,Transparent,%TRANSLID%,skeletonkey
+WinSet,Transparent,%TRANSLID%,[RJ_PROJ]
 return
 
 SKTHEMEN:
@@ -15824,8 +15824,8 @@ if (tmprm <> "")
 								SB_SetText(" Seletct a core to use and then select a ROM. ")
 								if (FRC = "")
 									{
-										Control, ShowDropDown, , %NetCore%, skeletonkey
-										ControlFocus, %NetCore%, skeletonkey
+										Control, ShowDropDown, , %NetCore%, [RJ_PROJ]
+										ControlFocus, %NetCore%, [RJ_PROJ]
 										SB_SetText("you must select a core")
 										return
 									}
@@ -19839,8 +19839,8 @@ SB_SetText("Use the checkboxes to add items to your scrape.")
 ifnotinstring,scrsup,/%FEDDLA%/
 	{
 		SB_SetText("Scraping MetaData Not Available for that system.  Select one from the dropdown.")
-		;;Control, ShowDropDown, , %FEDDLA%, skeletonkey
-		;;ControlFocus, %FEDDLA%,skeletonkey
+		;;Control, ShowDropDown, , %FEDDLA%, [RJ_PROJ]
+		;;ControlFocus, %FEDDLA%,[RJ_PROJ]
 	}
 return
 
@@ -45694,21 +45694,21 @@ RETRANSLID=
 if ((TRANSLID > 65)&&(DYNTRANS = 1))
 	{
 		RETRANSLID= 1
-		WinSet,Transparent,65,skeletonkey
+		WinSet,Transparent,65,[RJ_PROJ]
 		guicontrol,,TRANSLID,65
 		if (ALWOTP = 0)
 			{
-				Winset,Disable,,skeletonkey
+				Winset,Disable,,[RJ_PROJ]
 			}				
 	}
 runwait, %comspec% /c " "%raexedir%\%RaExeFile%" -c "%home%\config.cfg"",%home%
 if (RETRANSLID = 1)
 	{
-		Winset,Transparent,%TRANSLID%,skeletonkey
+		Winset,Transparent,%TRANSLID%,[RJ_PROJ]
 		guicontrol,,TRANSLID,%TRANSLID%
-		Winset,Enable,,skeletonkey	
-		Winset,Top,,skeletonkey		
-		WinActivate,skeletonkey
+		Winset,Enable,,[RJ_PROJ]	
+		Winset,Top,,[RJ_PROJ]		
+		WinActivate,[RJ_PROJ]
 			}
 guicontrol,hide,RETAL
 guicontrol,move,CLRCUROM,x744 y34
@@ -45719,21 +45719,21 @@ RETRANSLID=
 if ((TRANSLID > 65)&&(DYNTRANS = 1))
 	{
 		RETRANSLID= 1
-		WinSet,Transparent,65,skeletonkey
+		WinSet,Transparent,65,[RJ_PROJ]
 		guicontrol,,TRANSLID,65
 		if (ALWOTP = 0)
 			{
-				Winset,Disable,,skeletonkey
+				Winset,Disable,,[RJ_PROJ]
 			}				
 	}
 runwait, %comspec% /c " "%raexedir%\%RaExeFile%" -c "%curcfg%"",%home%
 if (RETRANSLID = 1)
 	{
-		Winset,Transparent,%TRANSLID%,skeletonkey
+		Winset,Transparent,%TRANSLID%,[RJ_PROJ]
 		guicontrol,,TRANSLID,%TRANSLID%
-		Winset,Enable,,skeletonkey
-		Winset,Top,,skeletonkey		
-		WinActivate,skeletonkey
+		Winset,Enable,,[RJ_PROJ]
+		Winset,Top,,[RJ_PROJ]		
+		WinActivate,[RJ_PROJ]
 	}
 guicontrol,hide,RETAL
 guicontrol,move,CLRCUROM,x744 y34
@@ -46322,21 +46322,21 @@ RETRANSLID=
 if ((TRANSLID > 65)&&(DYNTRANS = 1))
 	{
 		RETRANSLID= 1
-		WinSet,Transparent,65,skeletonkey
+		WinSet,Transparent,65,[RJ_PROJ]
 		guicontrol,,TRANSLID,65
 		if (ALWOTP = 0)
 			{
-				Winset,Disable,,skeletonkey
+				Winset,Disable,,[RJ_PROJ]
 			}
 	}
 RunWait, "%OvrExtAs%"%RunOptions%%RUNROM%%RunArgs%,%runloc%,,overxtpid
 if (RETRANSLID = 1)
 	{
-		Winset,Transparent,%TRANSLID%,skeletonkey
+		Winset,Transparent,%TRANSLID%,[RJ_PROJ]
 		guicontrol,,TRANSLID,%TRANSLID%
-		Winset,Enable,,skeletonkey
-		WinActivate,skeletonkey
-		Winset,Top,,skeletonkey
+		Winset,Enable,,[RJ_PROJ]
+		WinActivate,[RJ_PROJ]
+		Winset,Top,,[RJ_PROJ]
 	}
 CHOSEN= 0
 GLBLRUN=
@@ -46755,22 +46755,22 @@ if (CSTCMD = 1)
 		if ((TRANSLID > 65)&&(DYNTRANS = 1))
 			{
 				RETRANSLID= 1
-				WinSet,Transparent,65,skeletonkey
+				WinSet,Transparent,65,[RJ_PROJ]
 				guicontrol,,TRANSLID,65
 				if (ALWOTP = 0)
 					{
-						Winset,Disable,,skeletonkey
+						Winset,Disable,,[RJ_PROJ]
 					}				
 			}
 		SB_SetText(" " raexedir " \ " RaExeFile " " CSTRAOPTF " " RUNROM " -L" LCORE " " CSTRAARGF " |||from " ~emu directory " ")
 		Runwait, "%raexedir%\%RaExeFile%" %CSTRAOPTF% %RUNROM% %CSTRAARGF%,%raexedir%,,
 		if (RETRANSLID = 1)
 			{
-				Winset,Transparent,%TRANSLID%,skeletonkey
+				Winset,Transparent,%TRANSLID%,[RJ_PROJ]
 				guicontrol,,TRANSLID,%TRANSLID%
-				Winset,Enable,,skeletonkey	
-				Winset,Top,,skeletonkey		
-				WinActivate,skeletonkey
+				Winset,Enable,,[RJ_PROJ]	
+				Winset,Top,,[RJ_PROJ]		
+				WinActivate,[RJ_PROJ]
 			}
 		return
 	}
@@ -46790,22 +46790,22 @@ RETRANSLID=
 if ((TRANSLID > 65)&&(DYNTRANS = 1))
 	{
 		RETRANSLID= 1
-		WinSet,Transparent,65,skeletonkey
+		WinSet,Transparent,65,[RJ_PROJ]
 		guicontrol,,TRANSLID,65
 		if (ALWOTP = 0)
 			{
-				Winset,Disable,,skeletonkey
+				Winset,Disable,,[RJ_PROJ]
 			}	
 	}
 SB_SetText(" " raexedir " \ " RaExeFile " "LNCHCORE " " BSV " "LNCHROM " " LNCHCFG " " pgmargs " |||from ~emu directory ")
 Runwait, "%raexedir%\%RaExeFile%" %LNCHCORE% %BSV% %LNCHROM% %LNCHCFG%%pgmargs%,%raexedir%,,
 if (RETRANSLID = 1)
 	{
-		Winset,Transparent,%TRANSLID%,skeletonkey
+		Winset,Transparent,%TRANSLID%,[RJ_PROJ]
 		guicontrol,,TRANSLID,%TRANSLID%
-		Winset,Enable,,skeletonkey
-		Winset,Top,,skeletonkey
-		WinActivate,skeletonkey
+		Winset,Enable,,[RJ_PROJ]
+		Winset,Top,,[RJ_PROJ]
+		WinActivate,[RJ_PROJ]
 	}
 guicontrolget, SAVEXIT
 if (SAVEXIT = 1)
@@ -47646,7 +47646,7 @@ DoubleAlt := A_PriorHotkey = "~Alt" AND A_TimeSincePriorHotkey < 400
 Sleep 0
 KeyWait Alt  ; This prevents the keyboard's auto-repeat feature from interfering.
 return
-#IfWinActive skeletonkey
+#IfWinActive [RJ_PROJ]
 esc::
 gosub, MINIMODEOFF
 msgbox, 8452,Exiting, Would you like to close %RJPRJCT%?

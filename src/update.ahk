@@ -45,7 +45,7 @@ FileReadLine,DATECHK,version.txt,1
 stringsplit,VERCHKC,DATECHK,=
 if (VERCHKC1 <> RELEASE)
 	{
-		msgbox,4,Update, Update available`n%VERCHKC1%`nWould you like to update skeletonKey?
+		msgbox,4,Update, Update available`n%VERCHKC1%`nWould you like to update [RJ_PROJ]?
 		IfMsgBox, yes
 			{
 				gosub, getupdate
@@ -62,17 +62,17 @@ return
 
 getupdate:
 upcnt=
-loop, %cacheloc%\skeletonkey*.zip
+loop, %cacheloc%\[RJ_PROJ]*.zip
 	{
 		upcnt+=1
 	}
 URLFILE= %UPDATEFILE%
-save= %cacheloc%\skeletonkey%upcnt%.zip
+save= %cacheloc%\[RJ_PROJ]%upcnt%.zip
 DownloadFile(URLFILE, save, True, True)
 ifexist,%save%
 	{
 		Process, close, Skey-Deploy.exe
-		Process, close, skeletonkey.exe
+		Process, close, [RJ_PROJ].exe
 		Runwait, %comspec% cmd /c "%binhome%\7za.exe x -y "%save%" -O"`%CD`%" ",,hide
 		if (ERRORLEVEL <> 0)
 			{
@@ -83,7 +83,7 @@ ifexist,%save%
 					}
 				exitapp
 			}
-		Run, skeletonkey.exe
+		Run, [RJ_PROJ].exe
 		exitapp
 	}
 	else {
@@ -97,7 +97,7 @@ ifexist,%save%
 return
 
 skelupdf:
-TrayTip, Update, Extracting Update.`nskeletonkey will restart,999,48
+TrayTip, Update, Extracting Update.`n[RJ_PROJ] will restart,999,48
 Runwait, %comspec% /c "%binhome%\7za.exe" x -y "%skelupdf%" -O"`%CD`%",,hide
 if (ERRORLEVEL <> 0)
 	{
@@ -105,7 +105,7 @@ if (ERRORLEVEL <> 0)
 	}
 if (inapp = 1)
 	{
-		Run, skeletonkey.exe
+		Run, [RJ_PROJ].exe
 	}	
 exitapp
 

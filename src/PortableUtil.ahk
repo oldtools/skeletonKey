@@ -25,7 +25,7 @@ IfNotExist, ..\Settings.ini
 		MsgBox,3,No Settings,No Settings.ini file has not been found.`nOpen skeleteonKey and create a config?
 		ifmsgbox,Ok
 			{
-				Run,..\Skeletonkey.exe
+				Run,..\[RJ_PROJ].exe
 			}
 		goto Quitout
 	}
@@ -79,7 +79,7 @@ return
 SetPSK:
 gui,submit,nohide
 skeloc=
-FileSelectFolder, skeloc,,3,Select the portable skeletonkey folder
+FileSelectFolder, skeloc,,3,Select the portable [RJ_PROJ] folder
 if (skeloc = "")
 	{
 		goto, QUITOUT
@@ -130,8 +130,8 @@ guicontrolget,skeloc,,DisplSkTXT
 guicontrolget,MKPDTI,,MKPDTI
 if (MKPDTI = 1)
 	{
-		FileDelete,%A_Desktop%\skeletonKey.lnk
-		FileCreateShortcut, %skeloc%\skeletonKey.exe, %A_Desktop%\skeletonKey.lnk, %skeloc%\, , Portable skeletonKey, %skeloc%\key.ico
+		FileDelete,%A_Desktop%\[RJ_PROJ].lnk
+		FileCreateShortcut, %skeloc%\[RJ_PROJ].exe, %A_Desktop%\[RJ_PROJ].lnk, %skeloc%\, , Portable [RJ_PROJ], %skeloc%\key.ico
 	}
 IniWrite, "%syslocdir%",..\Settings.ini,GLOBAL,systems_directory
 iniread,cdtmp,..\Settings.ini,OPTIONS,cache_directory
@@ -232,7 +232,7 @@ if (TGLREP = 1)
 					}
 		}
 	}
-msgbox,0,,SkeletonKey can now be launched from the portable device.,10
+msgbox,0,,[RJ_PROJ] can now be launched from the portable device.,10
 gui,1:destroy
 gosub, QUITOUT
 exitapp

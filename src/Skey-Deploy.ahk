@@ -2447,7 +2447,7 @@ FileAppend,%arcorgv%,%SKELD%\src\arcorg.set
 FileAppend,%skthemes%,%SKELD%\src\themes.set
 
 FileDelete, %SKELD%\bin\%RJPRJCT%.exe
-FileMove, %SKELD%\src\working.ahk, %SKELD%\src\%RJPRJCT%.tmp,1
+FileDelete, %SKELD%\src\_working.ahk
 sktmp= 
 sktmc= 
 sktmv= 
@@ -2459,45 +2459,57 @@ Loop,Files,%SKELD%\bin\*.exe
 extrc.= "|\..\|"
 iniwrite,https://github.com/%GITUSER%/%RJPRJCT%/releases/download/portable/portable.zip%exrtc%,%source%\arcorg.set,REPOSITORIES,originalBinary
 iniwrite,https://github.com/%GITUSER%/%RJPRJCT%,%source%\arcorg.set,GLOBAL,SOURCEHOST
-FileRead, sktmp,%SKELD%\src\%RJPRJCT%.tmp
+FileRead, sktmp,%SKELD%\src\working.ahk
 iniwrite,%date% %TimeString%,%source%\arcorg.set,GLOBAL,Version
 iniwrite,%UPDTFILE%,%source%\arcorg.set,GLOBAL,UPDATEFILE
 iniwrite,%HOSTINGURL%,%source%\arcorg.set,GLOBAL,HOSTINGURL
 StringReplace,sktmc,sktmp,[VERSION],%date% %TimeString%,All
-StringReplace,sktmv,sktmc,[CURV],%vernum%
-StringReplace,sktmv,sktmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,sktmv,sktmc,[CURV],%vernum%,All
+StringReplace,sktmv,sktmc,[RJ_PROJ],%RJPRJCT%,All
 stringreplace,sktmv,sktmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,sktmv,sktmv,`*`/  `;`;[DEBUGOV],,All
-FileAppend,%sktmv%,%SKELD%\src\working.ahk
-FileDelete,%SKELD%\src\%RJPRJCT%.tmp
+FileAppend,%sktmv%,%SKELD%\src\_working.ahk
 
-FileDelete, %SKELD%\src\Update.exe
-FileDelete,%SKELD%\src\Update.tmp
-FileMove,%SKELD%\src\Update.ahk,%SKELD%\src\Update.tmp,1
+FileDelete, %SKELD%\bin\Update.exe
+FileDelete,%SKELD%\src\_Update.ahk
 uptmp= 
 uptmc= 
 uptmv= 
-FileRead, uptmp,%SKELD%\src\Update.tmp
+FileRead, uptmp,%SKELD%\src\Update.ahk
 StringReplace,uptmc,uptmp,[VERSION],%date% %TimeString%,All
-StringReplace,uptmv,uptmc,[CURV],%vernum%
-StringReplace,uptmv,uptmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,uptmv,uptmc,[CURV],%vernum%,All
+StringReplace,uptmv,uptmc,[RJ_PROJ],%RJPRJCT%,All
 stringreplace,uptmv,uptmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,uptmv,uptmv,`*`/  `;`;[DEBUGOV],,All
-FileAppend,%uptmv%,%SKELD%\src\Update.ahk
-FileDelete,%SKELD%\src\Update.tmp
+FileAppend,%uptmv%,%SKELD%\src\_Update.ahk
+
+
+FileDelete, %SKELD%\bin\PortableUtil.exe
+FileDelete,%SKELD%\src\_PortableUtil.ahk
+pbtmp= 
+pbtmc= 
+pbtmv= 
+FileRead, pbtmp,%SKELD%\src\PortableUtil.ahk
+StringReplace,pbtmc,pbtmp,[VERSION],%date% %TimeString%,All
+StringReplace,pbtmv,pbtmc,[CURV],%vernum%,All
+StringReplace,pbtmv,pbtmc,[RJ_PROJ],%RJPRJCT%,All
+stringreplace,pbtmv,pbtmv,`/`*  `;`;[DEBUGOV],,All
+stringreplace,pbtmv,pbtmv,`*`/  `;`;[DEBUGOV],,All
+FileAppend,%pbtmv%,%SKELD%\src\_PortableUtil.ahk
+
+
 FileDelete, %SKELD%\bin\init.exe
-FileDelete,%SKELD%\src\init.tFileMove,%SKELD%\src\init.ahk,%SKELD%\src\init.tmp,1
+FileDelete,%SKELD%\src\_init.ahk
 intmp= 
 intmc= 
 intmv= 
-FileRead, intmp,%SKELD%\src\init.tmp
+FileRead, intmp,%SKELD%\src\init.ahk
 StringReplace,intmc,intmp,[VERSION],%date% %TimeString%,All
-StringReplace,intmv,intmc,[CURV],%vernum%
-StringReplace,intmv,intmc,[RJ_PROJ],%RJPRJCT%
+StringReplace,intmv,intmc,[CURV],%vernum%,All
+StringReplace,intmv,intmc,[RJ_PROJ],%RJPRJCT%,All
 stringreplace,intmv,intmv,`/`*  `;`;[DEBUGOV],,All
 stringreplace,intmv,intmv,`*`/  `;`;[DEBUGOV],,All
-FileAppend,%intmv%,%SKELD%\src\init.ahk
-FileDelete,%SKELD%\src\init.tmp
+FileAppend,%intmv%,%SKELD%\src\_init.ahk
 if (BCANC = 1)
 	{
 		SB_SetText(" Cancelling Compile ")
@@ -2510,10 +2522,6 @@ if (BCANC = 1)
 SB_SetText(" Compiling ")
 if (OvrStable = 1)
 	{
-		ifexist, %DEPL%\%RJPRJCT%-installer.exe
-			{
-				FileMove, %DEPL%\%RJPRJCT%-installer.exe, %DEPL%\%RJPRJCT%-installer.exe.bak,1
-			}
 		IsSrc= 
 		ifexist, %SKELD%\bin\SKey-Deploy.exe
 			{
@@ -2525,68 +2533,22 @@ if (OvrStable = 1)
 			}
 	}
 
-guicontrol,,progb,10
+guicontrol,,progb,5
 if (INITINCL = 1)
 	{		
+		RunWait, %comspec% /c echo.##################  COMPILE PBUTIL  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
+		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\_PortableUtil.ahk" /out "%SKELD%\bin\PortableUtil.exe" /icon "%SKELD%\img\helper.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%	
 		RunWait, %comspec% /c echo.##################  COMPILE UPDATER  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\Update.ahk" /out "%SKELD%\bin\Update.exe" /icon "%SKELD%\img\Update.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%	
+		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\_Update.ahk" /out "%SKELD%\bin\Update.exe" /icon "%SKELD%\img\Update.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%	
 		RunWait, %comspec% /c echo.##################  COMPILE INITIALIZER  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\init.ahk" /out "%SKELD%\bin\Init.exe" /icon "%SKELD%\img\helper.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%	
+		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\_init.ahk" /out "%SKELD%\bin\Init.exe" /icon "%SKELD%\img\helper.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%	
 		RunWait, %comspec% /c echo.##################  COMPILE %RJPRJCT%  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\working.ahk" /out "%SKELD%\bin\%RJPRJCT%.exe" /icon "%SKELD%\site\key.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%
+		runwait, %comspec% /c " "%AHKDIR%\Ahk2Exe.exe" /in "%SKELD%\src\_working.ahk" /out "%SKELD%\bin\%RJPRJCT%.exe" /icon "%SKELD%\site\key.ico" /bin "%AHKDIR%\Unicode 32-bit.bin" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
-		FileCopy, %DEPL%\%RJPRJCT%.exe,%SKELD%,1
-		/*
-		portableincludes=		
-		Loop,files,%SKELD%\bin\*,F
-			{
-				if ((A_LoopFileExt = "txt")or(A_LoopFileExt = "exe")or(A_LoopFileExt = "bat"))
-					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
-					}
-			}
-		Loop,files,%SKELD%\src\*,F
-			{
-				if ((A_LoopFileExt = "set")or(A_LoopFileExt = "ahk")or(A_LoopFileExt = "put"))
-					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
-					}
-			}
-		Loop,files,%SKELD%\rj\*,FR
-			{
-				if ((A_LoopFileExt = "amgp")or(A_LoopFileExt = "xpadderprofile")or(A_LoopFileExt = "ret")or(A_LoopFileExt = "set"))
-					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
-					}
-			}
-		Loop,files,%SKELD%\img\*,F
-			{
-				if ((A_LoopFileExt = "ico")or(A_LoopFileExt = "png"))
-					{
-						
-						if !instr(portableincludes,A_LoopFIleLongPath "|")
-							{
-								portableincludes.= A_LoopFIleLongPath "|"
-							}
-					}
-			}
-		msgbox,,,4`n%portableincludes%	
-		portableincludes.= home . "\" . Readme.md
-		stringreaplace,portableincludex,portableincludes,|,`n,All
-		fileappend,%portableincludex%,C:\users\jesse\desktop\test.txt
-		*/
+		FileDelete,%SKELD%\src\_PortableUtil.ahk
+		FileDelete,%SKELD%\src\_Update.ahk
+		FileDelete,%SKELD%\src\_init.ahk
+		FileDelete,%SKELD%\src\_working.ahk
 	}	
 if (OvrStable = 1)
 	{
@@ -2603,24 +2565,9 @@ if (OvrStable = 1)
 				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 			}		
 	}				
-guicontrol,,progb,20
+guicontrol,,progb,10
 FileDelete,%SKELD%\*.lpl
 FileDelete,%SKELD%\*.tmp
-guicontrol,,progb,30
-if (PortVer = 1)
-	{		
-		SB_SetText(" Building portable ")
-		COMPLIST= 
-		if (PBOV <> 1)
-			{
-				FileDelete, %DEPL%\%RJPRJCT%D.zip
-				RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%	
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" -r bin\*.exe bin\*.sfx bin\*.txt bin\*.sfx bin\*.bat src\*.ahk src\*.txt src\*.put rj\*.set rj\*.get rj\*.ret rj\*.xpadderprofile rj\*.amgp site\*.png site\*.ico site\*.txt site\*.otf site\*.ttf site\*.html site\*.md -w"%A_Temp%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
-				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
-				sleep, 1000
-			}
-	}
-guicontrol,,progb,45
 if (BCANC = 1)
 	{
 		SB_SetText(" Cancelling Development Build ")
@@ -2737,7 +2684,7 @@ if (GitPush = 1)
 		FileAppend, copy /y "site\version.txt" "%GITD%\site"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, del /q "%GITD%\%RJPRJCT%.exe"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, copy /y "src\*.put" "%GITD%\src"`n,%DEPL%\!gitupdate.cmd
-		guicontrol,,progb,55
+		guicontrol,,progb,20
 	}
 if (BCANC = 1)
 	{
@@ -2757,7 +2704,7 @@ if (OvrStable = 1)
 			}
 	}		
 
-guicontrol,,progb,60	
+guicontrol,,progb,30	
 if (BCANC = 1)
 	{
 		SB_SetText(" Cancelling Server Upload ")
@@ -2871,30 +2818,8 @@ if (ServerPush = 1)
 					{
 						CrCFLN= %DEPL%\%RJPRJCT%-installer.exe
 						gosub, SHA1GET
-						if (SBOV = 1)
-							{
-								ApndSHA= reverted
-							}
-						if (DBOV = 1)
-							{
-								ApndSHA= reverted
-							}
 					}
-				ifExist, %DEPL%\%RJPRJCT%-%date%%buildnum%.zip
-					{
-						FileGetSize,dvlsize,%DEPL%\%RJPRJCT%-%date%%buildnum%.zip, K
-						dvps:= dvlsize / 1000
-						StringLeft,dvms,dvps,4
-						if (DBOV = 1)
-							{
-								dvms= reverted
-							}
-						if (SBOV = 1)
-							{
-								dvms= reverted
-							}
-					}
-				guicontrol,,progb,70
+				guicontrol,,progb,40
 				StringReplace,skelhtml,skelhtml,[RSHA1],%ApndSHA%,All
 				StringReplace,skelhtml,skelhtml,[WEBURL],http://%GITUSER%.github.io,All
 				StringReplace,skelhtml,skelhtml,[PAYPAL],%donation%
@@ -2960,11 +2885,13 @@ if (ServerPush = 1)
 				FileAppend,git commit -a -m "%PushNotes%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %RJPRJCT%`n,%DEPL%\gpush.cmd
 				FileAppend,gh release delete portable -y`n,%DEPL%\gpush.cmd
-				FileAppend,gh release create portable -t "portable" -n "" "%DEPL%\portable.zip"`n,%DEPL%\gpush.cmd								FileAppend,gh release delete Installer -y`n,%DEPL%\gpush.cmd
+				FileAppend,gh release create portable -t "portable" -n "" "%DEPL%\portable.zip"`n,%DEPL%\gpush.cmd								
+				FileAppend,gh release delete Installer -y`n,%DEPL%\gpush.cmd
 				FileAppend,gh release create Installer -t "Installer" -n "" "%DEPL%\%RJPRJCT%.zip"`n`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		
+		guicontrol,,progb,60
 		if (SiteUpdate = 1)
 			{
 				FileDelete,%SITEDIR%\ReadMe.md
@@ -2979,6 +2906,7 @@ if (ServerPush = 1)
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		
+		guicontrol,,progb,80
 		SB_SetText(" Uploading rom repo databases ")
 		if (REPOBLD = 1)
 			{
@@ -3031,7 +2959,7 @@ if (ServerPush = 1)
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading binaries to server ")
-		guicontrol,,progb,80
+		guicontrol,,progb,90
 		if (GitPush = 1)
 			{
 				RunWait, %comspec% /c echo.###################  GIT DEPLOYMENT PUSH  ####################### >>"%DEPL%\deploy.log", ,%rntp%
@@ -3072,18 +3000,6 @@ return
 
 BUILDING:
 BUILT= 1
-ifexist, %DEPL%\%RJPRJCT%D.zip
-	{
-		FileDelete, %DEPL%\%RJPRJCT%D.zip
-	}
-ifexist, %DEPL%\%RJPRJCT%K.zip
-	{
-		FileDelete, %DEPL%\%RJPRJCT%K.zip
-	}
-ifexist, %DEPL%\%RJPRJCT%-installer.exe
-	{
-		FileDelete, %DEPL%\%RJPRJCT%-installer.exe
-	}
 ifexist, %DEPL%\Skey-Deploy.nsi
 	{
 		FileDelete, %DEPL%\Skey-Deploy.nsi
@@ -3099,10 +3015,23 @@ StringReplace, nsiv, nsiv,[DBP],%DEPL%,All
 StringReplace, nsiv, nsiv,[CURV],%vernum%,All
 FileAppend, %nsiv%, %DEPL%\Skey-Deploy.nsi
 SB_SetText("Building Installer")
-FileDelete,%DEPL%\%RJPRJCT%-Installer.exe.bak
+FileDelete,%DEPL%\%RJPRJCT%-Installer.exe
 RunWait, %comspec% /c echo.###################  DEPLOYMENT LOG FOR %date%  ####################### >>"%DEPL%\deploy.log", ,%rntp%
 RunWait,"%NSIS%" "%DEPL%\Skey-Deploy.nsi",,hide
 ;NSITST:= cmdret(nsicommand)
+
+buildnum= 
+ifExist,%DEPL%\%RJPRJCT%-Installer.exe
+	{
+		Loop,Files, %DEPL%\%RJPRJCT%-%date%*.exe
+			{
+				buildnum+=1
+			}
+		FileCopy,%DEPL%\%RJPRJCT%-Installer.exe, %DEPL%\%RJPRJCT%-%date%%buildnum%.exe,1
+	}
+else {
+	FileCopy,%DEPL%\%RJPRJCT%-Installer.exe,%DEPL%\%RJPRJCT%-%date%.exe,1
+}	
 sleep,1500
 RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 CrCFLN= %DEPL%\%RJPRJCT%-installer.exe
@@ -3143,62 +3072,34 @@ if (BLDERROR = 1)
 	}
 FileDelete, %SKELD%\site\version.txt
 FileAppend, %date% %timestring%=%nchash%=%vernum%,%SKELD%\site\version.txt
-buildnum= 
-buildtnum= 1
-Loop, %DEPL%\%RJPRJCT%-%date%*.zip
-	{
-		buildnum+=1
-	}
 
-if (buildnum <> "")
-	{
-		buildnum= -%buildnum%
-	}	
-	
 if (PortVer = 1)
 	{		
 		SB_SetText(" Building portable ")
-		COMPLIST= 
-		if (PBOV <> 1)
+		COMPLIST= 	
+		buildnum= 
+		ifExist,%DEPL%\portable.zip
 			{
-				FileDelete, %DEPL%\portable.zip
-				RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-				Loop,parse,portableincludes,|
+				Loop,Files, %DEPL%\portable-%date%*.zip
 					{
-						runwait, %comspec% /c ""%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" "%A_LoopField%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
+						buildnum+=1
 					}
-				sleep, 1000
+				FileCopy,%DEPL%\portable.zip, %DEPL%\portable-%date%%buildnum%.zip,1
 			}
+			else {
+				FileCopy,%DEPL%\portable.zip,%DEPL%\portable-%date%.zip,1
+			}
+		FileDelete, %DEPL%\portable.zip
+		RunWait, %comspec% /c echo.##################  CREATE PORTABLE ZIP  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+		runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\portable.zip" -r bin\*.exe bin\*.sfx bin\*.txt bin\*.sfx bin\*.bat src\*.ahk src\*.txt src\*.put rj\*.set rj\*.get rj\*.ret rj\*.xpadderprofile rj\*.amgp site\*.png site\*.ico site\*.txt site\*.otf site\*.ttf site\*.html site\*.md -w"%A_Temp%" >>"%DEPL%\deploy.log"", %SKELD%,%rntp%					
+		sleep, 1000
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%	
 	}	
 
 RunWait, %comspec% /c echo.##################  CREATE INSTALLER ######################## >>"%DEPL%\deploy.log", ,%rntp%
 RunWait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a "%DEPL%\%RJPRJCT%.zip" "%DEPL%\%RJPRJCT%-installer.exe" >>"%DEPL%\deploy.log"", %BUILDIR%,%rntp%
 RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
-if (DevlVer = 1)
-	{
-		if (DBOV <> 1)
-			{
-				FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%.zip,1	
-				FileMove,%DEPL%\%RJPRJCT%D.zip, %DEPL%\portable.zip,1
-			}
-	}
-if (OvrStable = 1)
-	{
-		if (SBOV <> 1)
-			{
-				FileMove,%DEPL%\%RJPRJCT%.zip, %DEPL%\portable-%date%%buildnum%.zip,1
-				FileMove,%DEPL%\%RJPRJCT%K.zip, %DEPL%\%RJPRJCT%-%date%%buildnum%.zip,1
-				ifExist, %DEPL%\portable-%date%%buildnum%.zip
-					{
-						FileMove,%DEPL%\portable-%date%%buildnum%.zip, %DEPL%\portable-%date%%buildnum%x.zip,1
-					}
-				ifExist,%DEPL%\%RJPRJCT%-%date%%buildnum%.zip
-					{
-						FileMove,%DEPL%\%RJPRJCT%-%date%%buildnum%.zip, %DEPL%\%RJPRJCT%-%date%%buildnum%x.zip,1
-					}
-			}
-	}
+
 imglsts=
 if (IMGBLD = 1)
 	{		

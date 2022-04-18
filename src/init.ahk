@@ -39,7 +39,7 @@ INTRMEMU_TT :="The directory where Emulators should be located."
 SETJKR_TT :="Selcts the systems directory"
 SETEMUD_TT :="Selects the emulators directory."
 CONTINUE_TT :="Confirm the current settings and initializes setup."
-LNKTOD_TT :="Sets the destination for linked folders`n***This will be skeletonKey's ''systems'' folder"
+LNKTOD_TT :="Sets the destination for linked folders`n***This will be [RJ_PROJ]'s ''systems'' folder"
 
 Gui,Font, Bold
 Gui, Add, GroupBox, x100 y0 w169 h42
@@ -129,7 +129,7 @@ if (pthnm = A_Username)
 										goto, SETJKR
 									}
 								FileDelete,%home%\Settings.ini
-								Run, %comspec% cmd /c taskkill /f /im skeletonkey.exe,,hide
+								Run, %comspec% cmd /c taskkill /f /im [RJ_PROJ].exe,,hide
 								ExitApp	
 							}
 					}
@@ -183,7 +183,7 @@ if (efi = ":\")
 								}
 							FileDelete,%home%\Settings.ini
 							Run, %comspec% cmd /c taskkill /f /im init.exe,,hide
-							Run, %comspec% cmd /c taskkill /f /im skeletonkey.exe,,hide
+							Run, %comspec% cmd /c taskkill /f /im [RJ_PROJ].exe,,hide
 							ExitApp	
 						}
 			}
@@ -192,7 +192,7 @@ if (efi = ":\")
 fileappend,f,%RJSYSTEMF%\sk
 if (ERRORLEVEL <> 0)
 	{
-		MsgBox,1,NoWrite,skeletonkey does not have write access`nAre you sure you want to use the ''%RJSYSTEMF%'' directory?
+		MsgBox,1,NoWrite,[RJ_PROJ] does not have write access`nAre you sure you want to use the ''%RJSYSTEMF%'' directory?
 		ifMsgBox,OK
 			{
 				goto,JKDFINISH
@@ -331,7 +331,7 @@ if (usremum = A_Username)
 							}
 						FileDelete,%home%\Settings.ini
 						Run, %comspec% cmd /c taskkill /f /im init.exe,,hide
-						Run, %comspec% cmd /c taskkill /f /im skeletonkey.exe,,hide
+						Run, %comspec% cmd /c taskkill /f /im [RJ_PROJ].exe,,hide
 						ExitApp
 					}
 			}
@@ -343,7 +343,7 @@ if (efi = ":\")
 fileappend,f,%RJEMUF%\sk
 if (ERRORLEVEL <> 0)
 	{
-		MsgBox,1,NoWrite,skeletonkey does not have write access`nAre you sure you want to use the ''%RJEMUF%'' directory?
+		MsgBox,1,NoWrite,[RJ_PROJ] does not have write access`nAre you sure you want to use the ''%RJEMUF%'' directory?
 		ifMsgBox,OK
 			{
 				goto,EMUDFINISH
@@ -543,7 +543,7 @@ exitapp
 
 
 ESC::
-msgbox,1,Exit,Exit skeletonkey?
+msgbox,1,Exit,Exit [RJ_PROJ]?
 ifmsgbox,OK
 	{
 		FileDelete,%home%\Settings.ini
