@@ -2634,6 +2634,7 @@ if (GitPush = 1)
 			{
 				donation= 00.00				
 			}
+		FileDelete, %DEPL%\!gitupdate.cmd	
 		FileAppend, mkdir "%GITD%\gam"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, mkdir "%GITD%\bin"`n,%DEPL%\!gitupdate.cmd
 		FileAppend, mkdir "%GITD%\rj\scrapeArt"`n,%DEPL%\!gitupdate.cmd
@@ -2866,9 +2867,35 @@ if (ServerPush = 1)
 				RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 				SB_SetText(" Uploading to server ")
 			}
-		FileDelete, %DEPL%\!gitupdate.cmd
 		if (GitPush = 1)
-			{		
+			{	
+				Process, exist, gh.exe
+				if (ERRORLEVEL <> 0)
+					{
+						MsgBox,8196,Busy,Would you like to exit currently running gh.exe applications?
+						if msgbox,yes
+							{
+								Process,close,gh.exe
+							}
+							else {
+								gosub, canclbld
+								return
+							}
+					}
+				Process, exist, Git.exe
+				if (ERRORLEVEL <> 0)
+					{
+						MsgBox,8196,Busy,Would you like to exit currently running git.exe applications?
+						if msgbox,yes
+							{
+								Process,close,git.exe
+							}
+							else {
+								gosub, canclbld
+								return
+							}
+					}
+				FileDelete,%DEPL%\gpush.cmd
 				FileAppend,set PATH=`%PATH`%`;%GITAPPDIR%`;%GITRLSDIR%`n,%DEPL%\gpush.cmd		
 				fileappend,cd "%GITROOT%"`n,%DEPL%\gpush.cmd
 				FileDelete,%GITD%\ReadMe.md
