@@ -310,9 +310,9 @@ splitpath,gitrls,,GITRLSDIR
 REPODNM= REPODATS
 ROMDNM= ROMDATS
 IMGDNM= IMGDATS
-REPODATL= %DEPL%\%REPODNM%
-IMGDATL= %DEPL%\%IMGDNM%
-ROMDATL= %DEPL%\%ROMDNM%
+REPODATL= %GITROOT%\%REPODNM%
+IMGDATL= %GITROOT%\%IMGDNM%
+ROMDATL= %GITROOT%\%ROMDNM%
 ;{;;;;;;;;;;;;;;;,,,,,,,,,, DEPLOYMENT MENU GUI,,,,,,,,,,;;;;;;;;;;;;;;;;;;;;;;;
 
 Gui, Add, Edit, x8 y24 w469 h50 vPushNotes gPushNotes,%date% :%A_Space%
@@ -2399,6 +2399,7 @@ guicontrol,disable,ROMDATS
 guicontrol,disable,REPODATS
 guicontrol,disable,PortVer
 guicontrol,disable,INITINCL
+guicontrol,disable,REPOBLD
 guicontrol,disable,DevlVer
 
 readme= 
@@ -2870,38 +2871,27 @@ if (ServerPush = 1)
 		if (GitPush = 1)
 			{	
 				Process, exist, gh.exe
-				if (ERRORLEVEL <> 0)
+				ghae= %ERRORLEVEL%
+				if (ghae <> 0)
 					{
-						MsgBox,8196,Busy,Would you like to exit currently running gh.exe applications?
-						if msgbox,yes
-							{
-								Process,close,gh.exe
-							}
-							else {
-								gosub, canclbld
-								return
-							}
+						Run, %comspec% /c taskkill /f /im gh.exe
+						Process,close,%ghae%
 					}
 				Process, exist, Git.exe
-				if (ERRORLEVEL <> 0)
+				ghae= %ERRORLEVEL%
+				if (ghae <> 0)
 					{
-						MsgBox,8196,Busy,Would you like to exit currently running git.exe applications?
-						if msgbox,yes
-							{
-								Process,close,git.exe
-							}
-							else {
-								gosub, canclbld
-								return
-							}
+						Run, %comspec% /c taskkill /f /im git.exe
+						Process,close,%ghae%
 					}
+
 				FileDelete,%DEPL%\gpush.cmd
 				FileAppend,set PATH=`%PATH`%`;%GITAPPDIR%`;%GITRLSDIR%`n,%DEPL%\gpush.cmd		
 				fileappend,cd "%GITROOT%"`n,%DEPL%\gpush.cmd
 				FileDelete,%GITD%\ReadMe.md
 				FileAppend,%readme%,%GITD%\ReadMe.md
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITD%" init`n,%DEPL%\gpush.cmd
+				FileAppend,if not exist ".git" git -C "%GITD%" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
@@ -2926,7 +2916,7 @@ if (ServerPush = 1)
 				FileDelete,%SITEDIR%\ReadMe.md
 				FileAppend,%readme%,%SITEDIR%\ReadMe.md
 				FileAppend,pushd "%GITROOT%\%GITUSER%.github.io"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%GITROOT%\%GITUSER%.github.io" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git" git -C "%GITROOT%\%GITUSER%.github.io" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
@@ -2945,7 +2935,7 @@ if (ServerPush = 1)
 		if (REPOBLD = 1)
 			{
 				FileAppend,pushd "%REPODATL%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%REPODATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git" git -C "%REPODATL%" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
@@ -2971,7 +2961,7 @@ if (ServerPush = 1)
 		if (DATBLD = 1)
 			{
 				FileAppend,pushd "%ROMDATL%"`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%ROMDATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git" git -C "%ROMDATL%" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
@@ -2992,13 +2982,13 @@ if (ServerPush = 1)
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		SB_SetText(" Uploading image databases ")
-		if ((IMGBLD = 1)&&(nwimg = 1))
+		if (IMGBLD = 1)
 			{
 				FileAppend,pushd "%IMGDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
-				fileappend,git -C "%IMGDATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git" git -C "%IMGDATL%" init`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATL%"`n,%DEPL%\gpush.cmd
@@ -3259,6 +3249,7 @@ ifmsgbox,Yes
 		guicontrol,enable,SiteUpdate
 		guicontrol,enable,PortVer
 		guicontrol,enable,INITINCL
+		guicontrol,enable,REPOBLD
 		guicontrol,enable,DevlVer
 		guicontrol,enable,RESDD
 		guicontrol,enable,ResB
