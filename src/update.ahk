@@ -3,7 +3,6 @@
 #Persistent
 SetBatchLines -1
 
-
 home= %A_ScriptDir%
 Splitpath,A_ScriptDir,tstidir,tstipth
 if ((tstidir = "src")or(tstidir = "bin")or(tstidir = "binaries"))
@@ -21,7 +20,7 @@ if (skelupdf <> "")
 		inapp= 1
 		goto, skelupdf
 	}
-FileDelete, version.txt
+FileDelete,%cacheloc%\version.txt
 ARCORG= %source%\Arcorg.set
 ifexist, %home%\Arcorg.ini
 	{
@@ -31,7 +30,7 @@ IniRead,sourceHost,%ARCORG%,GLOBAL,SOURCEHOST
 IniRead,UPDATEFILE,%ARCORG%,GLOBAL,UPDATEFILE
 IniRead,RELEASE,%ARCORG%,GLOBAL,VERSION
 getVer:
-URLDownloadToFile, %sourceHost%,version.txt
+URLDownloadToFile, %sourceHost%,%cacheloc%\version.txt
 ifnotexist, version.txt
 	{
 		MsgBox,4,Not Found,Update Versioning File not found.`nRetry?
@@ -41,7 +40,7 @@ ifnotexist, version.txt
 			}
 		return
 	}
-FileReadLine,DATECHK,version.txt,1
+FileReadLine,DATECHK,%cacheloc%\version.txt,1
 stringsplit,VERCHKC,DATECHK,=
 if (VERCHKC1 <> RELEASE)
 	{

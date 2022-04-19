@@ -30,8 +30,11 @@ source= %home%\src
 binhome= %home%\bin
 SetWorkingDir,%home%
 
+/*  ;;[DEBUGOV]
+
 #Include %A_ScriptDir%\..\src\LV_InCellEdit.ahk
 
+*/  ;;[DEBUGOV]
 DetectHiddenWindows, On
 IniRead,iniversion,%home%\Settings.ini,GLOBAL,version
 stringreplace,iniversion,iniversion,",,All
@@ -54,7 +57,7 @@ IniRead,BLDBOT,%ARCORG%,GLOBAL,BLDBOT
 IniRead,IMGDATS,%ARCORG%,GLOBAL,IMGDATS
 IniRead,HOSTINGURL,%ARCORG%,GLOBAL,HOSTINGURL
 IniRead,ROMDATS,%ARCORG%,GLOBAL,ROMDATS
-IniRead,REPODATS,%ARCORG%,GLOBAL,DATSOURCE
+IniRead,REPODATS,%ARCORG%,GLOBAL,REPODATS
 tmpcvpth:
 Loop %0%
 	{
@@ -273,6 +276,7 @@ ifnotexist,%home%\datlist.ini
 						alldats.= ebi2 . "|"
 					}
 			}
+		stringreplace,alldats,alldats,%home%\dats\,,all	
 		stringreplace,alldats,alldats,dats\,,all	
 	}	
 fileread,oldlkup,%source%\lkup.set	
@@ -1172,10 +1176,10 @@ Gui,Font, Bold
 Gui,Add,Text, x18 y476 vTMPDIRTXT, Temp/Cache Dir
 Gui,Add,Button, x18 y450 w43 h23 vSETTMPD gSETTMPD, SET
 Gui,Font, normal
-
+/*  ;;[DEBUGOV]
 Gui,Add,Text, x449 y10 w112 h15 vthemntxt, Theme
 Gui,Add,DropDownList, hwndDplHndl2 x344 y7 w102 vSKTHEMEN gSKTHEMEN,%skthemen%||Default|Gray|White|Blue|Black
-
+*/  ;;[DEBUGOV]
 if (INITIAL = 1)
 	{
 		WinSet, TransColor, White,skelprg
@@ -1765,9 +1769,10 @@ Gui,Add,Button, x91 y59 w31 h23 vRJFLTRLST gRJFLTRLST hidden, Filter
 Gui,Add,Edit, hwndEdtHndl81 x122 y60 w118 h21 vRJEDTC gRJEDTC disabled,
 Gui,Add,Button, x241 y59 w35 h23 vRJFNDINLST gRJFNDINLST disabled, Find
 Gui,Add,ListView, x12 y86 w254 h414 -Hdr -ReadOnly altsubmit Multi background%bgcolor% c%foreColor% vRJLSTV gRJLSTV hwndRJLV checked,|
-
+/*  ;;[DEBUGOV]
 RJRN1 := New LV_InCellEdit(RJLV)
 RJRN1.SetColumns(1)
+*/  ;;[DEBUGOV]
 
 Gui,Add,Button, x267 y119 w56 h24 vRJSALITMS gRJSALITMS disabled, ALL
 Gui,Add,Text, x267 y143 h14 vRJTXTN,Selects All ROMs
@@ -2049,7 +2054,7 @@ Menu,Tray,Tip
 Gui,+LastFound
 GuiIDn:=WinExist()
 GuiID:= WinExist("Ahk_PID " DllCall("GetCurrentProcessId"))
-
+/*  ;;[DEBUGOV]
 Menu, tray, NoStandard
 Loop,108
 	{
@@ -2073,11 +2078,12 @@ Loop,Parse,lbxhwnds,|
 	{
 		CtlColors.Attach(%A_LoopField%, bgcolor, foreColor)
 	}
-
+*/  ;;[DEBUGOV]
 Gui, Show, Autosize,[RJ_PROJ]
 SplashTextOff
 Guicontrol,,TABMENU,|Settings|:=: MAIN :=:||Emu:=:Sys|Playlists|Frontends|DAT:=:Repo|Jackets|Util
 
+/*  ;;[DEBUGOV]
 ADDNSYS_TT :="Name of the new system`nRight-Click for more options"
 ADJS_TT :="Automatically assigns joysticks."
 ALTURL_TT :="Enables login-restricted titles"
@@ -2639,6 +2645,7 @@ SHDEN_TT :="Toggles shader"
 FILT_UNSUP_TT :="Any dropdown listing the contents of your ''systems'' directory`n will filter out any directories which have not been detected or assigned"
 RENONDET_TT :="Any systems-folders will be renamed to the supported nomenclature."
 
+*/  ;;[DEBUGOV]
 setPortable:
 if (SETPORTABLE = 1)
 	{
@@ -2684,7 +2691,7 @@ ifexist, %home%\lm.ini
 	}
 INITIAL=
 guicontrol,enable,RJSYSDD
-
+/*  ;;[DEBUGOV]
 Class CtlColors {
    Static Attached := {}
    Static HandledMessages := {Edit: 0, ListBox: 0, Static: 0}
@@ -2887,7 +2894,7 @@ CtlColors_OnMessage(HDC, HWND) {
    }
 }
 return
-
+*/  ;;[DEBUGOV]
 SplashImageGUI(Picture, X, Y, Transparent = false)
 	{
 		Gui, XPT99:Margin , 0, 0
@@ -5678,13 +5685,13 @@ if ( (A_GuiX >= cRegionX) && (A_GuiX <= cRegionX+cRegionW) && (A_GuiY >= cRegion
 							{
 								arcdec= 1
 								SB_SetText("extracting " A_LoopReadLine " ")
-								Runwait, %comspec% cmd /c " "%binhome%\7za.exe" e -y "%A_LoopReadLine%" -O"%cacheloc%\bios" ",,hide
+								Runwait, %comspec% /c " "%binhome%\7za.exe" e -y "%A_LoopReadLine%" -O"%cacheloc%\bios" ",,hide
 							}
 						if (biosxt = "rar")
 							{
 								arcdec= 1
 								SB_SetText("extracting " A_LoopReadLine " ")
-								Runwait, %comspec% cmd /c "%binhome%\UnRAR.exe e -y "%A_LoopReadLine%" "*" +o "%cacheloc%\bios" ",,hide
+								Runwait, %comspec% /c "%binhome%\UnRAR.exe e -y "%A_LoopReadLine%" "*" +o "%cacheloc%\bios" ",,hide
 							}
 						FileCopy,%A_LoopReadLine%,%cacheloc%\bios\%biosfile%,1
 					}
@@ -6062,7 +6069,7 @@ if (INITIAL = 1)
 			{
 				EMUTSL= %drvp%\Emulators
 			}
-		Runwait, Init.exe %RJSYSTSL% %EMUTSL% %CURPID%
+		Runwait, %binhome%\Init.exe %RJSYSTSL% %EMUTSL% %CURPID%
 		iniread,RJSYSTEMS,%home%\Settings.ini,GLOBAL,systems_directory
 		iniread,RJEMUD,%home%\Settings.ini,GLOBAL,emulators_directory
 		if ((RJSYSTEMS = "") or (RJEMUD = "") or (RJSYSTEMS = "ERROR") or (RJEMUD = "ERROR"))
@@ -6392,7 +6399,7 @@ exe_get(ARIA,UPDATEFILE,svap,svaf,CURPID,cacheloc)
 ifexist,%save%
 	{
 		Process, close, Skey-Deploy.exe
-		Run, "Update.exe" "%save%"
+		Run, "%home%\Update.exe" "%save%"
 		Process, close, %RJPRJCT%.exe
 		gosub, QUITOUT
 		exitapp
@@ -10714,7 +10721,7 @@ junct=
 junctv1=
 junctv2=
 FileDelete,%home%\dxt.ini
-runwait, %comspec% cmd /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%RJSYSTEMS%\%semu%?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >"%home%\dxt.ini" &&exit /b ",,hide
+runwait, %comspec% /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%RJSYSTEMS%\%semu%?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >"%home%\dxt.ini" &&exit /b ",,hide
 ifexist, %home%\dxt.ini
 	{
 		FileReadLine,dxtini,%home%\dxt.ini,1
@@ -10729,7 +10736,7 @@ return
 XTRACTEMU:
 XTRACTFAIL=
 SB_SetText(" " save " " "extracting")
-runwait, %comspec% cmd /c  " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%" ", ,hide
+runwait, %comspec% /c  " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%" ", ,hide
 SB_SetText(" " save " " "was extracted")
 ifnotexist, %xtractmu%
 		{
@@ -14629,7 +14636,7 @@ Loop, Read, %plsave%\%SYSNAME%.lpl
 				}
 		}
 FileRead, newpl,%home%\tmp.ini
-Runwait, %comspec% cmd /c "copy /b tmp.ini + %home%\hashdb.ini fullhash.ini",,Hide
+Runwait, %comspec% /c "copy /b tmp.ini + %home%\hashdb.ini fullhash.ini",,Hide
 FileMove,fullhash.ini,%home%\hashdb.ini,1
 return
 
@@ -15160,11 +15167,11 @@ splitpath,urlaloc,urlalocf,,urlaext
 iniread,EULA,%home%\Settings.ini,Global,%urltxt%_EULA
 %urlsv%_EULA= %EULA%
 dispeula= %urltxt%
-ifnotexist,%source%%urltxt%_eula.set
+ifnotexist,%source%\%urltxt%_eula.set
 	{
 		dispeula= generic
 	}
-filecopy,%source%%dispeula%_eula.set,tmp.htm,1
+filecopy,%source%\%dispeula%_eula.set,%home%\tmp.htm,1
 if (EULA <> 1)
 	{
 		ARCEULA=file:///%home%\tmp.htm
@@ -16244,7 +16251,7 @@ if (AddToDatSet = "")
 		return
 	}
 splitpath,Addtodatset,dat_f,,,dat_n
-filecopy,%Addtodatset%,dats\%N_DatTYP%\%dat_f%
+filecopy,%Addtodatset%,%home%\dats\%N_DatTYP%\%dat_f%
 if ((ERRORLEVEL = 0)&& !instr(alldats,dat_f))
 	{
 		alldats.= N_DatTYP . "\" . dat_f
@@ -16508,7 +16515,7 @@ Loop,parse,incldats,|
 			}
 		if (dat_nm = "")
 			{
-				Fileread,incl%dat_inc%,%dat_in%
+				Fileread,incl,%dat_inc%,%dat_in%
 				dat_nm= % incl%dat_inc%
 			}
 		DAT_TST:	
@@ -17012,7 +17019,7 @@ ifnotexist,%save%
 		return	
 	}
 SB_SetText(" " hubtget " downloaded and extracting")
-Runwait, %comspec% cmd /c  " "%binhome%\7za.exe" e -y "%save%" -O"dats\%hubtget%" ",,hide
+Runwait, %comspec% /c  " "%binhome%\7za.exe" e -y "%save%" -O"%home%\dats\%hubtget%" ",,hide
 SB_SetText(" " hubtget " extracted")
 gosub, getdatlist
 return
@@ -17045,10 +17052,10 @@ nointrodatset=
 hyperspindatset=
 mamedatset=
 fileappend,[DATLIST]`n,%home%\datlist.ini
-Loop,Files,dats\*.*,R
+Loop,Files,%home%\dats\*.*,R
 	{
 		splitpath,A_LoopFileFullPath,DATname,DatPath,DatXtn,DatFN
-		stringreplace,ccnpth,A_LoopFileFullPath,dats\,,All
+		stringreplace,ccnpth,A_LoopFileFullPath,%home%\dats\,,All
 		ifinstring,A_LoopFileDir,TOSEC
 			{
 				alldats.= A_LoopFileFullPath . "|"
@@ -17078,7 +17085,7 @@ Loop,Files,dats\*.*,R
 				continue
 			}
 	}
-stringreplace,alldats,alldats,dats\,,All	
+stringreplace,alldats,alldats,%home%\dats\,,All	
 guicontrol,,DATDRPD,|%alldats%	
 return
 
@@ -19036,7 +19043,7 @@ ifnotexist, %xtrdir%
 		filecreatedir,%xtrdir%
 	}
 SB_SetText(" extracting and converting chd ")
-RunWait, %comspec% cmd /c "%binhome%\chdman.exe extractcd -i "%save%" -o "%xtrdir%\%romname%.cue" -ob "%xtrdir%\%romname%.bin" ",,hide
+RunWait, %comspec% /c "%binhome%\chdman.exe extractcd -i "%save%" -o "%xtrdir%\%romname%.cue" -ob "%xtrdir%\%romname%.bin" ",,hide
 SB_SetText(" extraction and conversion complete ")
 if (RUNXTRACT = 1)
 	{
@@ -19056,13 +19063,13 @@ if (EXTEXPLD = 1)
 	{
 		xtrvar= e
 	}
-runwait, %comspec% cmd /c "%binhome%\UnRAR.exe %xtrvar% -y "%romf%" "*" +o "%xtrdir%" ",,hide
+runwait, %comspec% /c "%binhome%\UnRAR.exe %xtrvar% -y "%romf%" "*" +o "%xtrdir%" ",,hide
 sleep 2000
 FileMove, %save%, %ACSVDEST%\%romname%.bak
 SB_SetText(" extraction complete to " xtrdir " ")
 Loop, files, %ACSVDEST%\*.rar
 	{
-		Runwait, %comspec% cmd /c "%binhome%\UnRAR.exe %xtrvar% -y "%A_LoopFileFullPath%" "*" +o "%xtrdir%" ",,hide
+		Runwait, %comspec% /c "%binhome%\UnRAR.exe %xtrvar% -y "%A_LoopFileFullPath%" "*" +o "%xtrdir%" ",,hide
 		FileMove, %A_LoopFileFullPath%,%A_LoopFileFullPath%.bak
 		if (ArcMove = 1)
 			{
@@ -19094,7 +19101,7 @@ if (EXTEXPLD = 1)
 	{
 		xtrvar= e
 	}
-runwait, %comspec% cmd /c " "%binhome%\7za.exe" %xtrvar% -y "%save%" -O"%xtrdir%" ", ,hide
+runwait, %comspec% /c " "%binhome%\7za.exe" %xtrvar% -y "%save%" -O"%xtrdir%" ", ,hide
 SB_SetText(" extraction complete to " xtrdir " ")
 gosub, ArcExtract
 return
@@ -19112,7 +19119,7 @@ if (EXTEXPLD = 1)
 		xtrvar= e
 	}
 srvn= 
-runwait, %comspec% cmd /c " "%binhome%\7za.exe" %xtrvar% -y "%save%" -O"%xtrdir%" ", ,hide
+runwait, %comspec% /c " "%binhome%\7za.exe" %xtrvar% -y "%save%" -O"%xtrdir%" ", ,hide
 srvn= %ERRORLEVEL%
 SB_SetText(" extraction complete to " xtrdir " ")
 if (RUNXTRACT = 1)
@@ -19424,7 +19431,7 @@ Loop,
 						}
 					if FileExist(savetmp "\old.del")
 						{
-							RunWait,%comspec% cmd /c copy /b "%savetmp%\old.del"+"%filetmp%" "%save%",,hide
+							RunWait,%comspec% /c copy /b "%savetmp%\old.del"+"%filetmp%" "%save%",,hide
 							filedelete, "%filetmp%"
 							filedelete, "%savetmp%\old.del"
 							if (arcfinz = 2)
@@ -19507,7 +19514,7 @@ stringreplace,vbs_out,vbs_out,post_data,"%post_data%",All
 stringreplace,vbs_out,vbs_out,save_data,"%save%",All
 stringreplace,vbs_out,vbs_out,username_str,"%username_str%",All
 stringreplace,vbs_out,vbs_out,password_str,"%password_str%",All
-RunWait, %comspec% cmd /c "cscript tmp.vbs",,hide
+RunWait, %comspec% /c "cscript tmp.vbs",,hide
 filedelete, tmp.vbs
 SB_SetText(" Download Complete ")
 return
@@ -20401,8 +20408,8 @@ ifnotexist,%home%\lm.ini
 				SB_SetText(" MAME NOT FOUND ")
 				return
 			}
-		RunWait,%comspec% cmd /c " "%mame_verx%" -lm >"%home%\lm.ini"",,Min
-		RunWait,%comspec% cmd /c " "%mame_verx%" -cc",%mamevpth%,Min
+		RunWait,%comspec% /c " "%mame_verx%" -lm >"%home%\lm.ini"",,Min
+		RunWait,%comspec% /c " "%mame_verx%" -cc",%mamevpth%,Min
 	}
 emuprgpl+=40
 ifexist,%home%\lm.ini
@@ -20815,7 +20822,7 @@ ifnotexist,%save%
 	}
 if (pgteo = "")
 	{
-		RunWait, %comspec% cmd /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
+		RunWait, %comspec% /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
 	}
 guicontrol,,FECBXA,|%fesyslst%
 guicontrol,enable,FEBUTA
@@ -24492,7 +24499,7 @@ if (FECHKC = 1)
 	}
 if (rfteo = "")
 	{
-		RunWait, %comspec% cmd /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
+		RunWait, %comspec% /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
 	}
 SB_SetText("Current theme is " RFTHEME " ")
 rfitmt= enable
@@ -28224,7 +28231,7 @@ ifnotexist,%save%
 	}
 if (esteo = "")
 	{
-		RunWait, %comspec% cmd /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
+		RunWait, %comspec% /c " "%binhome%\7za.exe" x -y "%save%" -O"%extractpath%" ",,hide
 	}
 ifexist, %ESHOME%\themes\%FEDDLD%
 	{
@@ -34092,7 +34099,7 @@ if (FERAD2C = 1)
 							}
 					}
 						SB_SetText("Extracting " SYSLKUP " metadata")
-						RunWait, %comspec% cmd /c "  "%binhome%\7za.exe" e -y "%home%\rj\scrapeArt\%SYSLKUP%.7z" -O"%home%\rj\scrapeArt\%SYSLKUP%" ",,hide
+						RunWait, %comspec% /c "  "%binhome%\7za.exe" e -y "%home%\rj\scrapeArt\%SYSLKUP%.7z" -O"%home%\rj\scrapeArt\%SYSLKUP%" ",,hide
 						SB_SetText(" " SYSLKUP " metadata extracted")
 					}
 				Loop,%home%\rj\scrapeArt\%SYSLKUP%\*.xml
@@ -38226,7 +38233,7 @@ Loop, Parse, emupartset,`n`r
 							}
 					}
 				SB_SetText(" " save " " "extracting")
-				runwait, %comspec% cmd /c  " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%\emu" ", ,hide
+				runwait, %comspec% /c  " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%\emu" ", ,hide
 				SB_SetText(" " save " " "was extracted")
 				ifnotexist, %xtractmu%\emu\
 					{
@@ -38561,7 +38568,7 @@ return
 amicroxtr:
 SB_SetText(" " save " " "extracting")
 xtractmu= %home%\executable
-runwait, %comspec% cmd /c " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%\antimicro" ", ,hide
+runwait, %comspec% /c " "%binhome%\7za.exe" x -y "%save%" -O"%xtractmu%\antimicro" ", ,hide
 SB_SetText(" " save " " "was extracted")
 ifnotexist, %xtractmu%\antimicro\
 	{
@@ -40853,7 +40860,7 @@ Loop,%home%\rj\*.jak
 							}
 						if (nicesrc = 1)
 							{
-								RunWait, %comspec% cmd /c "mklink /H "%RJSYSTEMS%\%curjf%\%nwjak%\%ibjn2%" "%RJSYSTEMS%\%curjf%\SOURCE\%ibjn2%" ",,hide
+								RunWait, %comspec% /c "mklink /H "%RJSYSTEMS%\%curjf%\%nwjak%\%ibjn2%" "%RJSYSTEMS%\%curjf%\SOURCE\%ibjn2%" ",,hide
 							}
 					}
 				Loop, Parse, inclfl,`n`r
@@ -45291,7 +45298,7 @@ if (RUNPLRAD = 1)
 			}
 		if (coreselv = "DETECT")
 			{
-				inpl= %source%%home%\Assignments.ini
+				inpl= %home%\Assignments.ini
 				rersini:
 				iniread,fijj,%inpl%,OVERRIDES,%TRPTYP%
 				if (fijj = "ERROR")
@@ -47676,7 +47683,9 @@ MenuHandler:
 GuiEscape:
 GuiClose:
 
+/*  ;;[DEBUGOV]
 CtlColors.Free()
+*/  ;;[DEBUGOV]
 
 Gui, Destroy
 Exitapp

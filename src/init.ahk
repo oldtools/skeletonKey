@@ -17,7 +17,7 @@ if ((tstidir = "src")or(tstidir = "bin")or(tstidir = "binaries"))
 	}
 source= %home%\src
 binhome= %home%\bin
-	
+FileDelete,%home%\initialize_error.log
 splitpath,home,,,,,drvp
 RJEMUF= %ejemut%
 RJSYSTEMS= %rjsyst%
@@ -129,7 +129,7 @@ if (pthnm = A_Username)
 										goto, SETJKR
 									}
 								FileDelete,%home%\Settings.ini
-								Run, %comspec% cmd /c taskkill /f /im [RJ_PROJ].exe,,hide
+								Run, %comspec% /c taskkill /f /im [RJ_PROJ].exe,,hide
 								ExitApp	
 							}
 					}
@@ -182,8 +182,8 @@ if (efi = ":\")
 									goto, SETJKR
 								}
 							FileDelete,%home%\Settings.ini
-							Run, %comspec% cmd /c taskkill /f /im init.exe,,hide
-							Run, %comspec% cmd /c taskkill /f /im [RJ_PROJ].exe,,hide
+							Run, %comspec% /c taskkill /f /im init.exe,,hide
+							Run, %comspec% /c taskkill /f /im [RJ_PROJ].exe,,hide
 							ExitApp	
 						}
 			}
@@ -413,8 +413,8 @@ guicontrol,disable,LNKDIR
 guicontrol,disable,RNMDIR
 guicontrol,disable,ADJDIRS
 guicontrol,disable,SETEMUD
-FileRead,SysLLst,sets\lkup.set
-FileRead,fuzsys,sets\fuzsyslk.set	
+FileRead,SysLLst,%source%\lkup.set
+FileRead,fuzsys,%source%\fuzsyslk.set	
 SB_SetText("Detecting systems")
 if (ADJDIRS = 1)
 	{
@@ -432,11 +432,11 @@ if (ADJDIRS = 1)
 					{
 						continue
 					}
-				filedelete,dxt.ini	
-				runwait, %comspec% cmd /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%a_LoopField%*?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >dxt.ini &&exit /b ",,hide
-				ifexist, dxt.ini
+				filedelete,%home%\dxt.ini	
+				runwait, %comspec% /c "for /f "tokens=2`,3 delims=<>" `%a in ('dir /a:d "%a_LoopField%*?`"') do if "`%~a"=="JUNCTION" for /f "tokens=* delims= " `%n in ("`%~b") do echo."`%~n" >dxt.ini &&exit /b ",,hide
+				ifexist, %home%\dxt.ini
 					{
-						filereadline,fei,dxt.ini,1
+						filereadline,fei,%source%dxt.ini,1
 						stringsplit,fnn,fei,:
 						stringtrimright,fax,fnn1,3
 						stringreplace,fax,fax,",,All
@@ -529,7 +529,7 @@ if (ADJDIRS = 1)
 										ifnotexist, %van%\%fsys%\
 											{
 												SB_SetText("Could not Link " A_LoopFileName "")
-												fileappend,"%van%\%fsys%\:%A_LoopFileName%"`n,C:\users\romjacket\desktop\error.txt
+												fileappend,"%van%\%fsys%\:%A_LoopFileName%"`n,%home%\initialize_error.log
 												continue
 											}								
 									}

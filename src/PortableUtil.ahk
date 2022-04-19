@@ -1,37 +1,47 @@
 #NoEnv
 #SingleInstance Force
+home= %A_ScriptDir%
+Splitpath,A_ScriptDir,tstidir,tstipth
+if ((tstidir = "src")or(tstidir = "bin")or(tstidir = "binaries"))
+	{
+		home= %tstipth%
+	}
+source= %home%\src
+binhome= %home%\bin
+SetWorkingDir, %home%
+
 Process, Exist,
 CURPID= %ERRORLEVEL%
 makePortable:
-filedelete,d.tmp
-filedelete,..\vdrv.tmp
+filedelete,%home%\d.tmp
+filedelete,%home%\vdrv.tmp
 splitpath,A_ScriptDir,,,,,skeldrv
-RunWait, %comspec% cmd /c for /F "usebackq tokens=1`,2`,3`,4 " `%i in (`wmic logicaldisk get caption^`,description^`,drivetype 2^ >NUL`) do (if `%l equ 2 echo.`%i>>d.tmp),,hide
-filereadline,NWDRV,d.tmp,1
-RunWait, %comspec% cmd /c start /w "%A_ScriptDir%\VDrive.exe" configuration && if "`%VDrive`%" NEQ "" echo.`%VDrive`%>"..\vdrv.tmp"&& exit /b|| exit /b),,hide
-filereadline,tmpraloc,..\vdrv.tmp,1
+RunWait, %comspec% /c for /F "usebackq tokens=1`,2`,3`,4 " `%i in (`wmic logicaldisk get caption^`,description^`,drivetype 2^ >NUL`) do (if `%l equ 2 echo.`%i>>d.tmp),,hide
+filereadline,NWDRV,%home%\d.tmp,1
+RunWait, %comspec% /c start /w "%A_ScriptDir%\VDrive.exe" configuration && if "`%VDrive`%" NEQ "" echo.`%VDrive`%>"%home%\vdrv.tmp"&& exit /b|| exit /b),,hide
+filereadline,tmpraloc,%home%\vdrv.tmp,1
 if ((tmpraloc = "") or (tmpraloc = "`%VDrive`%"))
 	{
-		tmpraloc= %A_ScriptDir%\..
+		tmpraloc= %home%\..
 	}
 
 ;;pcfgext= *.ini|*.cfg|*.config|*.conf|*.xml|*.settings|*.opt
 pcfgext= ini|cfg|config|conf|xml|settings|opt
 stringsplit,pcfgxt,pcfgext,= | ""
 recfgf= ovr.ini|hashdb.ini|Assignments.ini|AppParams.ini|Settings.ini|config.cfg
-IfNotExist, ..\Settings.ini
+IfNotExist, %home%\Settings.ini
 	{
 		TGLPBL= 1
 		MsgBox,3,No Settings,No Settings.ini file has not been found.`nOpen skeleteonKey and create a config?
 		ifmsgbox,Ok
 			{
-				Run,..\[RJ_PROJ].exe
+				Run,%binhome%\[RJ_PROJ].exe
 			}
 		goto Quitout
 	}
 skeloc=
 oldskel=
-IniRead, pcfgskel, ..\Settings.ini,GLOBAL,working_config
+IniRead, pcfgskel, %home%\Settings.ini,GLOBAL,working_config
 SplitPath,pcfgskel,,oldskel
 guicontrol,,PRBFND,|%oldskel%||%oldra%
 if (A_ScriptDir <> oldskel)
@@ -42,7 +52,7 @@ if (A_ScriptDir <> oldskel)
 				oldskel:= skeloc
 			}
 	}
-IniRead,syslocdir,..\Settings.ini,GLOBAL,systems_directory
+IniRead,syslocdir,%home%\Settings.ini,GLOBAL,systems_directory
 if ((syslocdir = "")or(syslocdir = "ERROR"))
 	{
 		fileselectFolder, syslocdir,, 3,Select Systems Directory
@@ -133,13 +143,13 @@ if (MKPDTI = 1)
 		FileDelete,%A_Desktop%\[RJ_PROJ].lnk
 		FileCreateShortcut, %skeloc%\[RJ_PROJ].exe, %A_Desktop%\[RJ_PROJ].lnk, %skeloc%\, , Portable [RJ_PROJ], %skeloc%\key.ico
 	}
-IniWrite, "%syslocdir%",..\Settings.ini,GLOBAL,systems_directory
-iniread,cdtmp,..\Settings.ini,OPTIONS,cache_directory
+IniWrite, "%syslocdir%",%home%\Settings.ini,GLOBAL,systems_directory
+iniread,cdtmp,%home%\Settings.ini,OPTIONS,cache_directory
 if (cdtmp = "ERROR")
 	{
 
 	}
-IniWrite, "%systemp%",..\Settings.ini,OPTIONS,temp_location
+IniWrite, "%systemp%",%home%\Settings.ini,OPTIONS,temp_location
 if (TGLREP = 1)
 	{
 		guicontrolget,PRBFND,,PRBFND
@@ -148,11 +158,11 @@ if (TGLREP = 1)
 			{
 				Loop, Parse, recfgf,|
 					{
-						FileRead,REPB,..\%A_LoopField%
-						FileMove,..\%A_LoopField%,..\%A_LoopField%.bak,1
+						FileRead,REPB,%home%\%A_LoopField%
+						FileMove,%home%\%A_LoopField%,%home%\%A_LoopField%.bak,1
 						StringReplace,NREPB,REPB,%PRBFND%,%PRBREP%,All
 						SB_SetText("Replacing in file " A_LoopField " ")
-						FileAppend,%NREPB%,..\%A_LoopField%
+						FileAppend,%NREPB%,%home%\%A_LoopField%
 					}
 				ar := Object()
 				Loop, Parse, %pcfgxt0%
@@ -164,7 +174,7 @@ if (TGLREP = 1)
 							}
 					}
 				cfgplst=
-				Loop, Files, cfg\*.*,R
+				Loop, Files, %home%\cfg\*.*,R
 					{
 						ext= %A_LoopFileExt%
 						noapl=
@@ -290,11 +300,11 @@ Loop, read, %lplsrch%
 	}
 Loop, Parse, recfgf,|
 	{
-		FileRead, RepSet, ..\%A_LoopField%
-		FileDelete, ..\%A_LoopField%
+		FileRead, RepSet, %home%\%A_LoopField%
+		FileDelete, %home%\%A_LoopField%
 		StringReplace, gvo, RepSet,%skeloc%, %skeloc%, All
 		StringReplace, repout,gvo,%ralocsel%, %syslocdir%, All
-		FileAppend, %repout%, ..\%A_LoopField%
+		FileAppend, %repout%, %home%\%A_LoopField%
 	}
 
 return
@@ -345,4 +355,5 @@ GuiEscape:
 GuiClose:
 Process, close, PortableUtil.exe
 Process, close,  %CURPID%
+Run, %comspec% /c taskkill /f /im [RJ_PROJ].exe
 ExitApp

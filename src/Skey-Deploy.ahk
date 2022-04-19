@@ -415,7 +415,7 @@ iniwrite,%GITUSER%,%home%\skopt.cfg,GLOBAL,GITUSER
 GITMAIL= %GITUSER%@nomailaddy.org
 iniwrite,%GITMAIL%,%home%\skopt.cfg,GLOBAL,git_email
 IPLK= http://www.netikus.net/show_ip.html				
-GITSRC= %GITWEB%/%GITUSER%/%RJPRJCT%
+GITSRC= %GITSWEB%/%GITUSER%/%RJPRJCT%
 iniwrite,%GITSRC%,%home%\skopt.cfg,GLOBAL,GITSRC
 SITEDIR= %home%\GitHub\%A_Username%.github.io\%RJPRJCT%
 iniwrite,%SITEDIR%,%home%\skopt.cfg,GLOBAL,SITEDIR
@@ -741,7 +741,7 @@ if (GITD = "")
 			}	
 		if (GITSRC= "")
 			{
-				GITSRC= %GITWEB%/%gituser%/%RJPRJCT%
+				GITSRC= %GITSWEB%/%gituser%/%RJPRJCT%
 			}
 		iniwrite,%GITD%,%home%\skopt.cfg,GLOBAL,Git_Directory	
 		iniwrite,%GITSRC%,%home%\skopt.cfg,GLOBAL,GITSRC
@@ -853,7 +853,7 @@ guicontrol,,txtGPD,%GITROOT%
 GITD=%GITROOT%\%RJPRJCT%
 iniwrite,%GITD%,%home%\skopt.cfg,GLOBAL,GITD
 guicontrol,,TxtGSD,%GITD%
-GITSRC=%GITWEB%/%gituser%/%RJPRJCT%
+GITSRC=%GITSWEB%/%gituser%/%RJPRJCT%
 
 iniwrite,%GITSRC%,%home%\skopt.cfg,GLOBAL,GITSRC
 guicontrol,,txtGWD,%SITEDIR%
@@ -987,7 +987,7 @@ guicontrol,,uVer,https://raw.githubusercontent.com/%gituser%/%RJPRJCT%/master/si
 iniwrite,%uVer%,%home%\skopt.cfg,GLOBAL,UPDTURL
 guicontrol,,uFLU,%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/portable/portable.zip
 iniwrite,%uFLU%,%home%\skopt.cfg,GLOBAL,UPDTFILE
-GITSRC= %GITWEB%/%GITUSER%/%RJPRJCT%
+GITSRC= %GITSWEB%/%GITUSER%/%RJPRJCT%
 iniwrite,%GITSRC%,%home%\skopt.cfg,GLOBAL,GITSRC
 if (!fileExist(GITROOT)or(GITROOT = ""))
 	{
@@ -1468,7 +1468,7 @@ if ((GITT = BUILDIR)or(GITT = SKELD))
 		SB_SetText("Github project directory should not be your source or build directories")
 	}
 GITD:= GITT
-GITSRC= %GITWEB%/%gituser%/%RJPRJCT%
+GITSRC= %GITSWEB%/%gituser%/%RJPRJCT%
 iniwrite, %GITD%,%home%\skopt.cfg,GLOBAL,GITD
 IniWrite,%GitSRC%,%home%\skopt.cfg,GLOBAL,GITSRC	
 guicontrol,,txtGSD,%GITD%	
@@ -1873,13 +1873,13 @@ gui,submit,nohide
 GitSRC= 
 if (GitSRCT = "")
 	{
-		GitSRCT= %GITWEB%/%GITUSER%/%RJPRJCT%
+		GitSRCT= %GITSWEB%/%GITUSER%/%RJPRJCT%
 	}
 
 inputbox,GitSRC,Git Repo,Enter the url for the project's git repo,,345,140,,,,,%GitSRCT%
 if (GitSRC = "")
 	{
-		GitSRCT= %GITWEB%/%GITUSER%/%RJPRJCT%
+		GitSRCT= %GITSWEB%/%GITUSER%/%RJPRJCT%
 		GitSRC= %GitSRCT%
 	}
 
@@ -2271,7 +2271,7 @@ if (IALTH = "")
 	}
 if (IALTH = "")
 	{
-		IALTH= %GITWEB%/romjacket
+		IALTH= %GITSWEB%/romjacket
 		guicontrol,,IALTH,%IALTH%
 	}
 IniWrite,%IALTH%,%home%\skopt.cfg,GLOBAL,IALTH
@@ -2282,7 +2282,7 @@ gui,submit,nohide
 guicontrolget,IMGDATS,,IMGDATS
 if (IMGDATS = "")
 	{
-		IMGDATS= %GITWEB%/%GITUSER%/IMGDATS/releases/download
+		IMGDATS= %GITSWEB%/%GITUSER%/IMGDATS/releases/download
 		guicontrol,,IMGDATS,%IMGDATS%	
 	}
 IniWrite,%IMGDATS%,%home%\skopt.cfg,GLOBAL,IMGDATS
@@ -2335,7 +2335,7 @@ HOSTINGURL:
 gui,submit,nohide
 guicontrolget,HOSTINGURLT,,HOSTINGURL
 HOSTINGURL= 
-UPDTFILE= %GITWEB%/%GITUSER%/%RJPRJCT%/releases/download/nodats
+UPDTFILE= %GITSWEB%/%GITUSER%/%RJPRJCT%/releases/download/nodats
 if (REPORURLT = "")
 	{
 		iniread,HOSTINGURLT,%SKELD%\src\arcorg.set,GLOBAL,HOSTINGURL
@@ -2724,7 +2724,7 @@ if (IMGBLD = 1)
 				ROMDATOADD.= A_LoopFileLongPath . "|"
 				FileCopy,%A_LoopFileLongPath%\*,%IMGDATL%\%A_LoopFilename%,1
 			}
-		GRARDT= %GITSWEB%/%gituser%/%imgdnm%/releases/download
+		GRARDT= %RAWGIT%/%GITUSER%/IMGDATS/master
 		StringReplace,arcorgv,arcorgv,[IMGDATS],%GRARDT%,All
 		
 	}
@@ -2739,7 +2739,7 @@ if (DATBLD = 1)
 				FileCopy,%A_LoopFileLongPath%\*,%ROMDATL%\%A_LoopFilename%,1
 			}
 		GRARBV= %GITSWEB%/%gituser%/%romdnm%/releases/download
-		StringReplace,arcorgv,arcorgv,[DATSRC],%GRARBV%,All
+		StringReplace,arcorgv,arcorgv,[ROMDATS],%GRARBV%,All
 	}
 if (REPOBLD = 1)
 	{
@@ -2766,9 +2766,10 @@ if (REPOBLD = 1)
 					}
 				iniwrite,%REPOROOT%,%SKELD%\src\arcorg.set,SOURCES,%REPONM%
 				stringupper,UPARCNM,REPONM
-				iniwrite,%GRARBV%/%UPARCNM%/%A_LoopFileName%.7z,%SKELD%\src\arcorg.set,SOURCES,%REPONM%:SET
+				iniwrite,%GITSWEB%/%gituser%/%repodnm%/releases/download/%UPARCNM%/%A_LoopFileName%.7z,%SKELD%\src\arcorg.set,SOURCES,%REPONM%:SET
 				FileCopy,%A_LoopFileLongPath%\*,%REPODATL%\%A_LoopFilename%,1
 			}
+		StringReplace,arcorgv,arcorgv,[REPODATS],%GITSWEB%/%gituser%/%repodnm%/releases/download,All
 	}
 
 if (ServerPush = 0)
@@ -2808,7 +2809,6 @@ if (ServerPush = 1)
 						RDATE= reverted
 					}
 			}
-		FileMove, %DEPL%\site\index.html, %DEPL%\index.bak,1
 		FileRead,skelhtml,%BUILDIR%\site\index.html
 		StringReplace,skelhtml,skelhtml,[CURV],%vernum%,All
 		StringReplace,skelhtml,skelhtml,[TAGLINE],%tagline%,All
@@ -2825,8 +2825,9 @@ if (ServerPush = 1)
 				StringReplace,skelhtml,skelhtml,[RSHA1],%ApndSHA%,All
 				StringReplace,skelhtml,skelhtml,[WEBURL],http://%GITUSER%.github.io,All
 				StringReplace,skelhtml,skelhtml,[PAYPAL],%donation%
+				StringReplace,skelhtml,skelhtml,[GIT_USER],%GITUSER%,All
 				StringReplace,skelhtml,skelhtml,[GIT_SRC],%GITSRC%,All
-				StringReplace,skelhtml,skelhtml,[REVISION],%GITWEB%/%gituser%/%RJPRJCT%/releases/download/Installer/Installer.zip,All
+				StringReplace,skelhtml,skelhtml,[REVISION],%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/Installer/Installer.zip,All
 				StringReplace,skelhtml,skelhtml,[PORTABLE],%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/portable/portable.zip,All						
 				StringReplace,skelhtml,skelhtml,[RELEASEPG],%GITSWEB%/%gituser%/%RJPRJCT%/releases,All
 				StringReplace,skelhtml,skelhtml,[ART_ASSETS],%GITSWEB%/%gituser%/%RJPRJCT%/releases/download/ART_ASSETS/ART_ASSETS.7z,All						
@@ -2834,14 +2835,20 @@ if (ServerPush = 1)
 				StringReplace,skelhtml,skelhtml,[RSIZE],%dvms%,All
 				StringReplace,skelhtml,skelhtml,[RSIZE2],%dvmg%,All
 				StringReplace,skelhtml,skelhtml,[DBSIZE],%DATSZ%,All
-				FileDelete,%SITEDIR%\index.html
 				ifnotexist, %SITEDIR%
 					{
 						FileCreateDir,%SITEDIR%
 						FileCreateDir,%SITEDIR%\img						
-						FileCopy,%SKELD%\site\*,%SITEDIR%\			
-						FileCopy,%SKELD%\site\img\*,%SITEDIR%\img
+						FileCopy,%SKELD%\site\*.html,%SITEDIR%,1		
+						FileCopy,%SKELD%\site\*.ico,%SITEDIR%,1			
+						FileCopy,%SKELD%\site\*.otf,%SITEDIR%,1			
+						FileCopy,%SKELD%\site\*.ttf,%SITEDIR%,1			
+						FileCopy,%SKELD%\site\*.md,%SITEDIR%,1			
+						FileCopy,%SKELD%\site\img\*.png,%SITEDIR%\img,1
+						FileCopy,%SKELD%\site\img\*.ico,%SITEDIR%\img,1
+						FileCopy,%SKELD%\site\img\*.svg,%SITEDIR%\img,
 					}
+				FileDelete,%SITEDIR%\index.html
 				FileAppend,%skelhtml%,%SITEDIR%\index.html
 				RunWait, %comspec% /c echo.##################  GIT UPDATE  ######################## >>"%DEPL%\deploy.log", ,%rntp%
 				SB_SetText(" committing changes to git ")
@@ -2853,7 +2860,6 @@ if (ServerPush = 1)
 				;"
 				FileDelete, %DEPL%\sitecommit.cmd
 				FileAppend,pushd "%gitroot%\%GITUSER%.github.io"`n,%DEPL%\sitecommit.cmd
-				FileAppend,copy /y "%BUILDIR%\site\Global-Launch-Menu.png" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
 				FileAppend,copy /y "%BUILDIR%\site\*.otf" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
 				FileAppend,copy /y "%BUILDIR%\site\*.ttf" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
 				FileAppend,copy /y "%BUILDIR%\site\key.ico" "%SITEDIR%"`n,%DEPL%\sitecommit.cmd
@@ -2891,7 +2897,7 @@ if (ServerPush = 1)
 				FileDelete,%GITD%\ReadMe.md
 				FileAppend,%readme%,%GITD%\ReadMe.md
 				FileAppend,pushd "%GITD%"`n,%DEPL%\gpush.cmd
-				FileAppend,if not exist ".git" git -C "%GITD%" init`n,%DEPL%\gpush.cmd
+				FileAppend,if not exist ".git\" cd ..\ git -C "%GITD%" init && cd "%GITD%"`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
@@ -2899,8 +2905,9 @@ if (ServerPush = 1)
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,"%gitappdir%\..\mingw64\libexec\git-core\git-credential-manager-core.exe" configure`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %RJPRJCT% --public --source="%GITD%"`n,%DEPL%\gpush.cmd
+				fileappend,git config --global --add safe.directory "%GITD%"`n,%DEPL%\gpush.cmd
 				fileappend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %RJPRJCT% %GITWEB%/%GITUSER%/%RJPRJCT%`n,%DEPL%\gpush.cmd
+				fileappend,git remote add %RJPRJCT% %GITSWEB%/%GITUSER%/%RJPRJCT%`n,%DEPL%\gpush.cmd
 				FileAppend,git commit -a -m "%PushNotes%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %RJPRJCT%`n,%DEPL%\gpush.cmd
 				FileAppend,gh release delete portable -y`n,%DEPL%\gpush.cmd
@@ -2916,15 +2923,16 @@ if (ServerPush = 1)
 				FileDelete,%SITEDIR%\ReadMe.md
 				FileAppend,%readme%,%SITEDIR%\ReadMe.md
 				FileAppend,pushd "%SITEDIR%\..\"`n,%DEPL%\gpush.cmd
-				fileappend,if not exist ".git" git -C "%SITEDIR%\..\" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist "%SITEDIR%\.git\" git -C "%SITEDIR%" init`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
-				FileAppend,gh repo create %GITUSER%.github.io --public --source="%SITEDIR%\..\"`n,%DEPL%\gpush.cmd
+				FileAppend,gh repo create %GITUSER%.github.io  --public --source="%SITEDIR%\..\"`n,%DEPL%\gpush.cmd
+				FileAppend,git config --global --add safe.directory "%SITEDIR%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add "%RJPRJCT%"`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %GITUSER%.github.io %GITWEB%/%GITUSER%/%GITUSER%.github.io`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %GITUSER%.github.io %GITSWEB%/%GITUSER%/%GITUSER%.github.io`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %GITUSER%.github.io`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
@@ -2935,14 +2943,15 @@ if (ServerPush = 1)
 		if (REPOBLD = 1)
 			{
 				FileAppend,pushd "%REPODATL%"`n,%DEPL%\gpush.cmd
-				fileappend,if not exist ".git" git -C "%REPODATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git\" cd ..\ && git -C "%REPODATL%" init && cd "%REPODATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %REPODNM% %GITWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
+				fileappend,git config --global --add safe.directory "%REPODATL%"`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %REPODNM% %GITSWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
 				Loop,parse,datlsts,|
 					{
 						wf= %A_LoopField%
@@ -2960,14 +2969,15 @@ if (ServerPush = 1)
 		if (DATBLD = 1)
 			{
 				FileAppend,pushd "%ROMDATL%"`n,%DEPL%\gpush.cmd
-				fileappend,if not exist ".git" git -C "%ROMDATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git\" cd ..\ && git -C "%ROMDATL%" init && cd "%ROMDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %ROMDNM% --public --source="%ROMDATL%"`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %ROMDNM% %GITWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
+				fileappend,git config --global --add safe.directory "%ROMDATL%"`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %ROMDNM% %GITSWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git push -f --all %ROMDNM%`n,%DEPL%\gpush.cmd
 				Loop,parse,repolsts,|
 					{
@@ -2988,12 +2998,13 @@ if (ServerPush = 1)
 				FileAppend,git config --local credential.helper wincred`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.name %GITUSER%`n,%DEPL%\gpush.cmd
 				fileappend,git config --local user.email %GITMAIL%`n,%DEPL%\gpush.cmd
-				fileappend,if not exist ".git" git -C "%IMGDATL%" init`n,%DEPL%\gpush.cmd
+				fileappend,if not exist ".git\" cd ..\ && git -C "%IMGDATL%" init && cd "%IMGDATL%"`n,%DEPL%\gpush.cmd
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %IMGDNM% --public --source="%IMGDATL%"`n,%DEPL%\gpush.cmd
+				FileAppend,git config --global --add safe.directory "%IMGDATL%"`n,%DEPL%\gpush.cmd
 				FileAppend,git add .`n,%DEPL%\gpush.cmd
-				fileappend,git remote add %IMGDNM% %GITWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
+				fileappend,git remote add %IMGDNM% %GITSWEB%/%GITUSER%/%IMGDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %IMGDNM%`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
@@ -3171,61 +3182,36 @@ if (IMGBLD = 1)
 	}
 if (DATBLD = 1)
 	{
-		SB_SetText(" Compiling ROM Repo Databases ")
+		SB_SetText(" Compiling ROM Databases ")
 		datlsts= 
 		filecreatedir,%ROMDATL%
-		RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-		Loop, Files, %BUILDIR%\gam\*,D
+		RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+		Loop, Files, %BUILDIR%\dats\*,D
 			{
 				FileCreateDir,%ROMDATL%\%A_LoopFileName%
 				FileCopy,%A_LoopFileLongPath%\*.*,%ROMDATL%\%A_LoopFileName%,1
-				newFZ:= A_LoopFileSizeKB
-				newDT:= A_LoopFileTimeModified
-				oldFZ=
-				oldDT=
-				fileGetSize,oldFZ,%ROMDATL%\%A_LoopFileName%.zip,K
-				fileGetTime,oldDT,%ROMDATL%\%A_LoopFileName%.zip,M
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%ROMDATL%\%A_LoopFileName%.zip" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
-				if fileexist(GITROOT . "\" . romdnm . "\" . A_LoopFileName . ".zip")
-					{
-						fileGetSize,oldFZ,%GITROOT%\%romdnm%\%A_LoopFileName%.zip,K
-						fileGetTime,oldDT,%GITROOT%\%romdnm%\%A_LoopFileName%.zip,M
-					}
-				if ((newFZ > oldFZ)&&(newDT > oldDT))
-					{
-						FileCopy,%ROMDATL%\%A_LoopFileName%.zip,%GITROOT%\%romdnm%\%A_LoopFileName%.zip,1
-						datlsts.= GITROOT . "\" . romdnm . "\" . A_LoopFileName . ".zip" . "|"
-					}
+				FileMove,%DEPL%\%romdnm%\%A_LoopFileName%.zip,%DEPL%\%romdnm%\%A_LoopFileName%.old,1
+				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -tzip "%DEPL%\%romdnm%\%A_LoopFileName%.zip" -r "%A_LoopFileName%\*" >>"%DEPL%\deploy.log"",%ROMDATL%,%rntp%
+				FileCopy,%ROMDATL%\%A_LoopFileName%.zip,%DEPL%\%ROMDATL%\%A_LoopFileName%.zip,1
+				datlsts.= DEPL . "\" . romdnm . "\" . A_LoopFileName . ".zip" . "|"
 			}	
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 
 	}
 if (REPOBLD = 1)
-	{
-		SB_SetText(" Compiling ROM Databases ")
+	{		
+		RunWait, %comspec% /c echo.##################  CREATE GAMFILES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
+		SB_SetText(" Compiling ROM Repo Databases ")
 		repolsts= 
 		filecreatedir,%REPODATL%
-		RunWait, %comspec% /c echo.##################  CREATE ROMDAT ARCHIVES  ######################## >>"%DEPL%\deploy.log", ,%rntp%
-		Loop,Files %BUILDIR%\dats\*,D
+		Loop,Files %BUILDIR%\gam\*,D
 			{
 				FileCreateDir,%REPODATL%\%A_LoopFileName%
+				FileMove,%DEPL%\%repdnm%\%A_LoopFileName%.7z,%DEPL%\%repdnm%\%A_LoopFileName%.old,1
 				FileCopy,%A_LoopFileLongPath%\*.*,%REPODATL%\%A_LoopFileName%,1
-				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%REPODATL%\%A_LoopFileName%.7z" "%A_LoopFileFullPath%" >>"%DEPL%\deploy.log"",%DEPL%,%rntp%
-				newFZ:= A_LoopFileSizeKB
-				newDT:= A_LoopFileTimeModified
-				oldFZ=
-				oldDT=
-				if fileexist(GITROOT . "\" repodnm . "\" . A_LoopFileName . ".7z")
-					{
-						fileGetSize,oldFZ,%GITROOT%\%repodnm%\%A_LoopFileName%.7z,K
-						fileGetTime,oldDT,%GITROOT%\%repodnm%\%A_LoopFileName%.7z,M
-					}
-				if ((newFZ > oldFZ)&&(newDT > oldDT))
-					{
-						FileCopy,%A_LoopFileName%.7z,%GITROOT%\%repodnm%\%A_LoopFileName%.7z,1
-						repolsts.= GITROOT . "\" . repodnm . "\" . A_LoopFileName . ".7z" . "|"
-					}
-
+				runwait, %comspec% /c " "%BUILDIR%\bin\7za.exe" a -t7z "%DEPL%\%repdnm%\%A_LoopFileName%.7z" * >>"%DEPL%\deploy.log"",%REPODATL%\%A_LoopFileName%,%rntp%
+				FileCopy,%REPODATL%\%A_LoopFileName%.7z,%DEPL%\%repodnm%\%A_LoopFileName%.7z,1
+				repolsts.= DEPL . "\" . repodnm . "\" . A_LoopFileName . ".7z" . "|"
 			}	
 		RunWait, %comspec% /c echo.########################################## >>"%DEPL%\deploy.log", ,%rntp%
 	}
