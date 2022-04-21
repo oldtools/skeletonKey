@@ -324,7 +324,7 @@ gui,font,normal
 Gui, Add, Text, x8 y7, Git Push Description / changelog
 Gui, Add, Button, x452 y106 w31 h17 vLogView gLogView,log
 Gui, Add, CheckBox, x9 y75 h17 vGitPush gGitPush checked, Git Push
-Gui, Add, CheckBox, x9 y94 h17 vServerPush gServerPush checked, Release Push
+Gui, Add, CheckBox, x9 y94 h17 vServerPush gServerPush checked, Rls Push
 Gui, Add, CheckBox, x9 y112 h17 vSiteUpdate gSiteUpdate checked, Site Update
 gui,font,bold
 Gui, Add, Button, x408 y123 w75 h23 vCANCEL gCANCEL hidden, CANCEL
@@ -2397,6 +2397,7 @@ guicontrol,disable,ServerPush
 guicontrol,disable,SiteUpdate
 guicontrol,disable,IMGBLD
 guicontrol,disable,ROMDATS
+guicontrol,disable,REPOBLD
 guicontrol,disable,DATBLD
 guicontrol,disable,REPODATS
 guicontrol,disable,PortVer
@@ -2432,6 +2433,7 @@ StringReplace,arcorgv,arcorgv,[REPODATS],%REPODATS%,All
 StringReplace,arcorgv,arcorgv,[SOURCEHOST],%UPDTURL%,All
 StringReplace,arcorgv,arcorgv,[IPLK],%IPLK%,All
 StringReplace,arcorgv,arcorgv,[CURV],%vernum%,All
+
 if (REPOBLD = 1)
 	{
 		REPOPATH=
