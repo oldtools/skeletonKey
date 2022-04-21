@@ -2378,6 +2378,7 @@ guicontrol,hide,COMPILE
 guicontrol,show,CANCEL
 guicontrolget,REPOBLD,,REPOBLD
 guicontrolget,DATBLD,,DATBLD
+guicontrolget,REPOBLD,,REPOBLD
 guicontrolget,IMGBLD,,IMGBLD
 guicontrolget,GITPUSH,,GITPUSH
 guicontrolget,SERVERPUSH,,SERVERPUSH
@@ -2396,6 +2397,7 @@ guicontrol,disable,ServerPush
 guicontrol,disable,SiteUpdate
 guicontrol,disable,IMGBLD
 guicontrol,disable,ROMDATS
+guicontrol,disable,DATBLD
 guicontrol,disable,REPODATS
 guicontrol,disable,PortVer
 guicontrol,disable,INITINCL
@@ -2418,6 +2420,49 @@ FileMove,%SKELD%\src\arcorg.set, %SKELD%\arcorg.bak,1
 FIleRead,skthemes,%SKELD%\src\Themes.put
 FIleRead,arcorgv,%SKELD%\src\arcorg.put
 
+
+StringReplace,skthemes,skthemes,[IALTH],%IALTH%,All
+StringReplace,skthemes,skthemes,[HOSTINGURL],%HOSTINGURL%,All
+StringReplace,arcorgv,arcorgv,[UPDATEFILE],%UPDTFILE%,All
+StringReplace,arcorgv,arcorgv,[IALTH],%IALTH%,All
+StringReplace,arcorgv,arcorgv,[HOSTINGURL],%HOSTINGURL%,All
+StringReplace,arcorgv,arcorgv,[IMGDATS],%IMGDATS%,All
+StringReplace,arcorgv,arcorgv,[ROMDATS],%ROMDATS%,All
+StringReplace,arcorgv,arcorgv,[REPODATS],%REPODATS%,All
+StringReplace,arcorgv,arcorgv,[SOURCEHOST],%UPDTURL%,All
+StringReplace,arcorgv,arcorgv,[IPLK],%IPLK%,All
+StringReplace,arcorgv,arcorgv,[CURV],%vernum%,All
+if (REPOBLD = 1)
+	{
+		REPOPATH=
+		Loop, files,%BUILDIR%\gam\*,D
+			{
+				filecreatedir,%REPODATL%\%A_LoopFilename%
+				REPONM= %A_LoopfileName%
+				stringreplace,REPONM,REPONM,%A_Space%,_,All
+				stringreplace,REPONM,REPONM,-,_,All
+				stringreplace,REPONM,REPONM,`,_,All
+				stringreplace,REPONM,REPONM,),_,All
+				stringreplace,REPONM,REPONM,(,_,All
+				stringreplace,REPONM,REPONM,!,_,All
+				stringreplace,REPONM,REPONM,[,_,All
+				stringreplace,REPONM,REPONM,],_,All
+				stringreplace,REPONM,REPONM,;,_,All
+				stringreplace,REPONM,REPONM,.,_,All
+				stringreplace,REPONM,REPONM,@,_,All
+				REPOROOT= % REPONM_%A_Index%
+				if (REPOROOT = "")
+					{
+						REPOROOT= %REPONM%
+					}
+				iniwrite,%REPOROOT%,%SKELD%\src\arcorg.set,SOURCES,%REPONM%
+				stringupper,UPARCNM,REPONM
+				iniwrite,%GITSWEB%/%gituser%/%repodnm%/releases/download/%UPARCNM%/%A_LoopFileName%.7z,%SKELD%\src\arcorg.set,SOURCES,%REPONM%:SET
+				FileCopy,%A_LoopFileLongPath%\*,%REPODATL%\%A_LoopFilename%,1
+			}
+		StringReplace,arcorgv,arcorgv,[REPODATS],%GITSWEB%/%gituser%/%repodnm%/releases/download,All
+	}
+
 iniread,arcsgg,%SKELD%\src\arcorg.set,GLOBAL
 Loop,parse,arcsgg,`r`n
 	{
@@ -2433,17 +2478,7 @@ Loop,parse,arcsgg,`r`n
 				%aug1%= %ana%
 			}	
 	}
-StringReplace,skthemes,skthemes,[IALTH],%IALTH%,All
-StringReplace,skthemes,skthemes,[HOSTINGURL],%HOSTINGURL%,All
-StringReplace,arcorgv,arcorgv,[UPDATEFILE],%UPDTFILE%,All
-StringReplace,arcorgv,arcorgv,[IALTH],%IALTH%,All
-StringReplace,arcorgv,arcorgv,[HOSTINGURL],%HOSTINGURL%,All
-StringReplace,arcorgv,arcorgv,[IMGDATS],%IMGDATS%,All
-StringReplace,arcorgv,arcorgv,[ROMDATS],%ROMDATS%,All
-StringReplace,arcorgv,arcorgv,[REPODATS],%REPODATS%,All
-StringReplace,arcorgv,arcorgv,[SOURCEHOST],%UPDTURL%,All
-StringReplace,arcorgv,arcorgv,[IPLK],%IPLK%,All
-StringReplace,arcorgv,arcorgv,[CURV],%vernum%,All
+
 FileAppend,%arcorgv%,%SKELD%\src\arcorg.set
 FileAppend,%skthemes%,%SKELD%\src\themes.set
 
@@ -2741,36 +2776,6 @@ if (DATBLD = 1)
 		GRARBV= %GITSWEB%/%gituser%/%romdnm%/releases/download
 		StringReplace,arcorgv,arcorgv,[ROMDATS],%GRARBV%,All
 	}
-if (REPOBLD = 1)
-	{
-		REPOPATH=
-		Loop, files,%BUILDIR%\gam\*,D
-			{
-				filecreatedir,%REPODATL%\%A_LoopFilename%
-				REPONM= %A_LoopfileName%
-				stringreplace,REPONM,REPONM,%A_Space%,_,All
-				stringreplace,REPONM,REPONM,-,_,All
-				stringreplace,REPONM,REPONM,`,_,All
-				stringreplace,REPONM,REPONM,),_,All
-				stringreplace,REPONM,REPONM,(,_,All
-				stringreplace,REPONM,REPONM,!,_,All
-				stringreplace,REPONM,REPONM,[,_,All
-				stringreplace,REPONM,REPONM,],_,All
-				stringreplace,REPONM,REPONM,;,_,All
-				stringreplace,REPONM,REPONM,.,_,All
-				stringreplace,REPONM,REPONM,@,_,All
-				REPOROOT= % REPONM_%A_Index%
-				if (REPOROOT = "")
-					{
-						REPOROOT= %REPONM%
-					}
-				iniwrite,%REPOROOT%,%SKELD%\src\arcorg.set,SOURCES,%REPONM%
-				stringupper,UPARCNM,REPONM
-				iniwrite,%GITSWEB%/%gituser%/%repodnm%/releases/download/%UPARCNM%/%A_LoopFileName%.7z,%SKELD%\src\arcorg.set,SOURCES,%REPONM%:SET
-				FileCopy,%A_LoopFileLongPath%\*,%REPODATL%\%A_LoopFilename%,1
-			}
-		StringReplace,arcorgv,arcorgv,[REPODATS],%GITSWEB%/%gituser%/%repodnm%/releases/download,All
-	}
 
 if (ServerPush = 0)
 	{
@@ -2950,9 +2955,9 @@ if (ServerPush = 1)
 				fileappend,gh config set git_protocol https`n,%DEPL%\gpush.cmd
 				fileappend,gh auth login -w --scopes repo`,delete_repo`n,%DEPL%\gpush.cmd
 				FileAppend,gh repo create %REPODNM% --public --source="%REPODATL%"`n,%DEPL%\gpush.cmd
-				fileappend,git config --global --add safe.directory "%REPODATL%"`n,%DEPL%\gpush.cmd		
-				fileappend,git remote add %REPODNM% %GITSWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd		
-				Loop,parse,datlsts,|
+				fileappend,git config --global --add safe.directory "%REPODATL%"`n,%DEPL%\gpush.cmd
+				fileappend,git remote add %REPODNM% %GITSWEB%/%GITUSER%/%REPODNM%`n,%DEPL%\gpush.cmd
+				Loop,parse,repolsts,|
 					{
 						wf= %A_LoopField%
 						splitpath,wf,,wpth,,rdnme
@@ -2979,7 +2984,7 @@ if (ServerPush = 1)
 				fileappend,git config --global --add safe.directory "%ROMDATL%"`n,%DEPL%\gpush.cmd		
 				fileappend,git remote add %ROMDNM% %GITSWEB%/%GITUSER%/%ROMDNM%`n,%DEPL%\gpush.cmd		
 				FileAppend,git push -f --all %ROMDNM%`n,%DEPL%\gpush.cmd
-				Loop,parse,repolsts,|
+				Loop,parse,datlsts,|
 					{
 						wp= %A_LoopField%
 						splitpath,wp,,wpth,,rdnme
@@ -3038,6 +3043,7 @@ guicontrol,enable,GitPush
 guicontrol,enable,ServerPush
 guicontrol,enable,SiteUpdate
 guicontrol,enable,IMGBLD
+guicontrol,enable,ROMDATS
 guicontrol,enable,REPODATS
 guicontrol,enable,PortVer
 guicontrol,enable,INITINCL
