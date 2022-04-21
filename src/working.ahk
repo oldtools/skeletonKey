@@ -8,7 +8,7 @@ SetWinDelay,2
 CoordMode,Mouse 
 ;;;;;;;;;;;;;;;;;;             [RJ_PROJ]           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;   by Jesse Klein 2018  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    2022-04-17 2:17 AM  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  [VERSION]  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 GLBTOP:
 RJPRJCT= [RJ_PROJ]
 RELEASE= [VERSION]
@@ -529,6 +529,7 @@ if (INITIAL = 1)
 iniread,origasi,%source%\Assignments.set,ASSIGNMENTS,
 iniread,origsys,%source%\Assignments.set,OVERRIDES,
 iniread,sysposb,%source%\emucfgpresets.set,PLAYLISTS,sysposb
+
 iniRead, UTLPartSet,%source%\EmuParts.set,UTILITIES
 stringreplace,UTLPartSet,UTLPartSet,[ARCH],%ARCH%,All
 iniRead, KMPPartSet,%source%\EmuParts.set,KEYMAPPERS
@@ -539,6 +540,7 @@ iniread,PrgLst,%source%\EmuCfgPresets.set,Programs
 iniRead, EmuPartSet,%source%\EmuParts.set,EMULATORS
 stringreplace,EmuPartSet,EmuPartSet,[ARCH],%ARCH%,All
 stringreplace,EmuPartSet,EmuPartSet,[BUILDBOT],%BLDBOT%,All
+
 IniRead,repoloc,%home%\Settings.ini,GLOBAL,Emulator_Repository
 iniread,RASTABLE,%ARCORG%,GLOBAL,RASTABLE
 FileRead, RepoLst,%home%\RepoList.ini
@@ -7534,7 +7536,7 @@ REVSPL= 1
 omitxtn=
 omitxtz=
 iniread,omitxtz,%home%\EmuCfgPresets.ini,%OPTYP%,RJROMXT
-if (omitxtz <> "ERROR")
+if ((omitxtz <> "ERROR")&&(omitxtz <> ""))
 	{
 		stringreplace,omitxtz,omitxtz,.,,All
 		stringreplace,omitxtz,omitxtz,`,,|,All
@@ -9324,12 +9326,12 @@ if (INSTLTYP = "Systems")
 													}
 												rewr.= A_LoopField . "|"
 											}
-									}
-										if (selxt <> 1)
-											{
-												rewr:= selfnd . "|" . rewr
-											}
-										iniwrite, "%rewr%",%home%\Assignments.ini,OVERRIDES,%SYSINSTLBX%
+										}
+									if (selxt <> 1)
+										{
+											rewr:= selfnd . "|" . rewr
+										}
+									iniwrite, "%rewr%",%home%\Assignments.ini,OVERRIDES,%SYSINSTLBX%
 							}
 					}
 			}
@@ -11052,7 +11054,10 @@ Loop, Parse, origsys,`n`r
 							{
 								continue
 							}
-						repx.= A_LoopField . "|"
+						if !instr(repx,A_LoopField)
+							{
+								repx.= A_LoopField . "|"
+							}	
 					}
 			}
 		repw.= inix . repx
@@ -11076,10 +11081,14 @@ Loop, Parse, origsys,`n`r
 										continue
 									}										
 							}
-						repw.= A_LoopField . "|"
+						if !instr(repw,A_LoopField)
+							{
+								repw.= A_LoopField . "|"						
+							}	
 					}
 			}
-		stringreplace,repw,repw,||,|,All	
+		stringreplace,repw,repw,|||,|,All
+		stringreplace,repw,repw,||,|,All
 		iniwrite,"%repw%",%home%\Assignments.ini,OVERRIDES,%fei1%
 	}
 LNCHPTFIN:
@@ -12120,7 +12129,7 @@ aparg= %apparg%
 IniWrite, "%appasi%",%home%\Assignments.ini,ASSIGNMENTS,%sysni%
 IniRead,avr,%home%\Assignments.ini,OVERRIDES,%ADDCORE%
 sysniad= %sysni%
-ifnotinstring,A_LoopField,%sysni%
+ifnotinstring,avr,%sysni%
 	{
 		sysniad:= sysni . "|" avr
 	}
@@ -19157,7 +19166,7 @@ return
 LkExtrExt:
 klp=
 iniread,lookf,%home%\EmuCfgPresets.ini,%keyout%,RJROMXT
-if (lookf = "ERROR")
+if ((lookf = "ERROR")or(lookf = ""))
 	{
 		klp= 1
 		return
@@ -19241,7 +19250,7 @@ if (coreslc2 = "dll")
 	}
 LkXtrRom:
 iniread,lookf,%home%\EmuCfgPresets.ini,%keyout%,RJROMXT
-if (lookf = "ERROR")
+if ((lookf = "ERROR")or(lookf = ""))
 	{
 		return
 	}
@@ -23143,7 +23152,7 @@ if (PGRPOPROM = 1)
 	{
 		guicontrol,,PGPLXMP,|%PGDWNLPOS%||%PGPLPLST%%pgcommon%%systmfldrs%
 		IniRead,sysexlst,%home%\EmuCfgPresets.ini,%PGDWNLPOS%,RJROMXT
-		if (sysexlst = "ERROR")
+		if ((sysexlst = "ERROR")or(sysexlst = ""))
 			{
 				sysexlst= .*
 			}
@@ -26664,7 +26673,7 @@ if (RFRPOPROM = 1)
 	{
 		guicontrol,,RFPLXMP,|%RFDWNLPOS%||%RFPLPLST%%rfcommon%%systmfldrs%
 		IniRead,sysexlst,%home%\EmuCfgPresets.ini,%RFDWNLPOS%,RJROMXT
-		if (sysexlst = "ERROR")
+		if ((sysexlst = "ERROR")or(sysexlst = ""))
 			{
 				sysexlst= .*
 			}
@@ -34016,7 +34025,7 @@ if (FERAD2B = 1)
 if (FERAD2C = 1)
 	{
 		iniread,bbnbz,%home%\EmuCfgPresets.ini,%rmfnpth%,RJROMXT
-		if (bbnbz = "ERROR")
+		if ((bbnbz = "ERROR")or(bbnbz = ""))
 			{
 				krmswp= 1
 				bbnbz= %extpvr%
@@ -43367,7 +43376,7 @@ if (lkupe <> "ERROR")
 	}
 iniWrite, %lkupe%,%home%\rj\cur.ini,%RJSYSDD%,RJRUNDIR
 iniread, lkupf,%home%\EmuCfgPresets.ini, %RJEMUTG%, RJROMXT
-if (lkupf <> "ERROR")
+if ((lkupf <> "ERROR")&&(lkupf <> ""))
 	{
 		guicontrol,,RJEMUXTCBX,|%lkupf%||%RJEMUXTCBX%
 		iniWrite, %lkupf%,%home%\rj\cur.ini,%RJSYSDD%,RJROMXT
@@ -45651,7 +45660,7 @@ efek= |=""
 fein= %omitxt%
 kro= 1
 iniread,extpl,%home%\EmuCfgPresets.ini,%EXTRSYS%,RJROMXT
-if (extpl <> "ERROR")
+if ((extpl <> "ERROR")&&(extpl <> ""))
 	{
 		efek= `,
 		fein= extpl

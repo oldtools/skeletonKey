@@ -2880,14 +2880,14 @@ if (ServerPush = 1)
 				ghae= %ERRORLEVEL%
 				if (ghae <> 0)
 					{
-						Run, %comspec% /c taskkill /f /im gh.exe
+						Run, %comspec% /c taskkill /f /im gh.exe,,hide
 						Process,close,%ghae%
 					}
 				Process, exist, Git.exe
 				ghae= %ERRORLEVEL%
 				if (ghae <> 0)
 					{
-						Run, %comspec% /c taskkill /f /im git.exe
+						Run, %comspec% /c taskkill /f /im git.exe,,hide
 						Process,close,%ghae%
 					}
 
@@ -2910,10 +2910,10 @@ if (ServerPush = 1)
 				fileappend,git remote add %RJPRJCT% %GITSWEB%/%GITUSER%/%RJPRJCT%`n,%DEPL%\gpush.cmd
 				FileAppend,git commit -a -m "%PushNotes%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %RJPRJCT%`n,%DEPL%\gpush.cmd
-				FileAppend,gh release delete portable -y`n,%DEPL%\gpush.cmd
-				FileAppend,gh release create portable -t "portable" -n "" "%DEPL%\portable.zip"`n,%DEPL%\gpush.cmd								
-				FileAppend,gh release delete Installer -y`n,%DEPL%\gpush.cmd
-				FileAppend,gh release create Installer -t "Installer" -n "" "%DEPL%\%RJPRJCT%.zip"`n`n,%DEPL%\gpush.cmd
+				FileAppend,gh release delete portable -y --repo "%GITSWEB%/%GITUSER%/%RJPRJCT%"`n,%DEPL%\gpush.cmd
+				FileAppend,gh release create portable -t "portable" -n "" "%DEPL%\portable.zip" --repo "%GITSWEB%/%GITUSER%/%RJPRJCT%"`n,%DEPL%\gpush.cmd								
+				FileAppend,gh release delete Installer -y --repo "%GITSWEB%/%GITUSER%/%RJPRJCT%"`n,%DEPL%\gpush.cmd
+				FileAppend,gh release create Installer -t "Installer" -n "" "%DEPL%\%RJPRJCT%.zip" --repo "%GITSWEB%/%GITUSER%/%RJPRJCT%"`n`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
 			}
 		
@@ -2958,8 +2958,8 @@ if (ServerPush = 1)
 						splitpath,wf,,wpth,,rdnme
 						stringupper,rdnme,rdnme
 						FileAppend,git add "%GITROOT%\%REPODNM%\%rdnme%"`n,%DEPL%\gpush.cmd
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%"`n`n,%DEPL%\gpush.cmd
+						FileAppend,gh release delete %rdnme% -y --repo "%GITSWEB%/%GITUSER%/%REPODNM%"`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wf%" --repo "%GITSWEB%/%GITUSER%/%REPODNM%"`n`n,%DEPL%\gpush.cmd
 					}
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				FileAppend,git push -f --all %REPODNM%`n,%DEPL%\gpush.cmd
@@ -2985,8 +2985,8 @@ if (ServerPush = 1)
 						splitpath,wp,,wpth,,rdnme
 						stringupper,rdnme,rdnme
 						FileAppend,git add "%GITROOT%\%ROMDNM%\%rdnme%"`n,%DEPL%\gpush.cmd
-						FileAppend,gh release delete %rdnme% -y`n,%DEPL%\gpush.cmd
-						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%"`n`n,%DEPL%\gpush.cmd
+						FileAppend,gh release delete %rdnme% -y --repo "%GITSWEB%/%GITUSER%/%ROMDNM%"`n,%DEPL%\gpush.cmd
+						FileAppend,gh release create %rdnme% -t "%rdnme%" -n "" "%wp%" --repo "%GITSWEB%/%GITUSER%/%ROMDNM%"`n`n,%DEPL%\gpush.cmd
 					}
 				FileAppend,git commit -a -m "%PUSHNOTES%"`n,%DEPL%\gpush.cmd
 				fileappend,popd`n,%DEPL%\gpush.cmd
