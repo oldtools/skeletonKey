@@ -3,7 +3,7 @@
 ;#NoTrayIcon
 #Persistent
 #SingleInstance Force
-
+	
 ;{;;;;;;, TOGGLE, ;;;;;;;;;
 SetWorkingDir %A_ScriptDir%
 Process, Exist,
@@ -2830,7 +2830,7 @@ if (ServerPush = 1)
 					}
 				guicontrol,,progb,40
 				StringReplace,skelhtml,skelhtml,[RSHA1],%ApndSHA%,All
-				StringReplace,skelhtml,skelhtml,[WEBURL],http://%GITUSER%.github.io,All
+				StringReplace,skelhtml,skelhtml,[WEBURL],https://%GITUSER%.github.io,All
 				StringReplace,skelhtml,skelhtml,[PAYPAL],%donation%
 				StringReplace,skelhtml,skelhtml,[GIT_USER],%GITUSER%,All
 				StringReplace,skelhtml,skelhtml,[GIT_SRC],%GITSRC%,All

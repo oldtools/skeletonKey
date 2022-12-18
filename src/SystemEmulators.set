@@ -39,7 +39,7 @@ Atari - 800 - PAL|Altirra|Atari800|atari++|Atari800winplus|gemulator|rainbow|MAM
 Atari - 800|Altirra|Atari800|atari++|Atari800winplus|rainbow|gemulator|MAME|:atari800_libretro.dll|mame_libretro.dll
 Atari - 8Bit|Altirra|Atari800|atari++|Atari800winplus|rainbow|gemulator|MAME|:atari800_libretro.dll|mame_libretro.dll
 Atari - Jaguar CD|ProjectTempest|MAME|:mame_libretro.dll
-Atari - Jaguar|virtualJaguar|jagulator|projecttempest|MAME|:virtualjaguar_libretro.dll|mame_libretro.dll
+Atari - Jaguar|BigPEmu|virtualJaguar|jagulator|projecttempest|MAME|:virtualjaguar_libretro.dll|mame_libretro.dll
 Atari - Lynx|Mednafen|Bizhawk|MAME|:mednafen_lynx_libretro.dll|handy_libretro.dll|mame_libretro.dll
 Atari - Falcon|Hatari|MAME|:mame_libretro.dll
 Atari - Portfolio|MAME|:mame_libretro.dll
@@ -78,6 +78,7 @@ Casio - PV-1000|pv1000|MAME|:mame_libretro.dll
 Casio - PV-2000|pv2000|MAME|:mame_libretro.dll
 Cave Systems - Cave|MAME|:fbalpha_libretro.dll|mame_libretro.dll
 Chess-Master - Diamond Modules|MAME|:mame_libretro.dll
+Cinematronics - Laserdisc|Hypseus|daphne|:daphne_libretro.dll
 Coleco - ADAM|adamemu|MAME|:mame_libretro.dll
 Coleco - ColecoVision|BlueMSX|dsp|colecovision|colem|meka|koleko|MAME|:mame_libretro.dll
 Coleco - Colecovision - PAL|BlueMSX|colecovision|colem|meka|koleko|dsp|vdmgr|cogwheel|MAME|:mame_libretro.dll
@@ -364,7 +365,7 @@ Sony - Playstation 2|pcsx2|Play|hpsx
 Sony - Playstation 3|rpcs3|nucleus|shortwave
 Sony - Playstation 4|gpcs4|PS4Delta
 Sony - Playstation Portable|PPSSPP|jpcsp|cpspemu|:ppsspp_libretro.dll
-Sony - Playstation Vita|BSL
+Sony - Playstation Vita|vita3k|BSL
 Sony - Playstation - PAL|epsxe|Mednafen|pcsxr|AdriPSX|Bizhawk|no$psx|psxfin|xebra|hpsx|:mednafen_psx_libretro.dll|pcsx_rearmed_libretro.dll|mednafen_psx_hw_libretro.dll|mame_libretro.dll
 Sony - Playstation|epsxe|Mednafen|pcsxr|AdriPSX|Bizhawk|no$psx|psxfin|xebra|hpsx|duckstation|:mednafen_psx_libretro.dll|pcsx_rearmed_libretro.dll|mednafen_psx_hw_libretro.dll|mame_libretro.dll
 Sony - Pocketstation|pkemu|pk201|xebra|MAME|:mame_libretro.dll

@@ -40,8 +40,6 @@ If you obtained source files for [RJ_PROJ] without executables, links to the nee
 
 The main program is compiled from the working.ahk file.  Other binaries needed should be compiled including all the files with an ".ahk" extension found in the root of the [RJ_PROJ] directory as well as those found in the "\bin" directory to their respective directories in Unicode-32bit with the Ahk2Exe compiler found in AutoHotKey's "Compiler" directory.
 
-The **[RJ_PROJ].exe** file contains all the files it needs and creates them in the directory it in which it is executed.
-
 ###########################################
 
 License information:

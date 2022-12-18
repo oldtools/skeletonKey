@@ -40,6 +40,7 @@ babbage2nd<babbage2nd/babbage2nd.7z
 BeebEm<BeebEm/BeebEm.7z<BeebEm.exe<UserData\Preferences.cfg<|<UserData\BeebState\*.*
 bem<bem/bem.7z<b-em.exe<b-em.cfg<
 bgb<bgb/bgb.7z<bgb.exe<bgb.ini<*.srm<*.sn1
+BigPEmu<BigPEmu/BigPEmu.7z<BigPEmu.exe<BigPEmuConfig.bigpcfg<|<*.bigpeep
 Bizhawk<Bizhawk/Bizhawk.7z<EmuHawk.exe<
 blastem<blastem/blastem.7z<blastem.exe<
 Bliss<Bliss/bliss.7z<Bliss32.exe<
@@ -126,7 +127,7 @@ ex80<ex80/ex80.7z
 exodus<exodus/exodus.7z<exodus.exe<settings.xml<SaveStates\*<
 familybasic<familybasic/familybasic.7z
 faux1<faux1/faux1.7z<faux1.exe<
-FBNeo<FBNeo/FBNeo-[ARCH].7z<FBNeo.exe<|<|<|<|<|<|
+FBNeo<FBNeo/FBNeo-[ARCH].7z<fbalpha.exe<|<|<|<|<|<|
 fceux<fceux/fceux-[ARCH].7z<fceux.exe<
 FinalBurnAlpha<FinalBurnAlpha/FinalBurnAlpha-[ARCH].7z<fbalpha.exe<config\*.ini|config\games\[ROMNAME]*.fs<|cfg\[ROMNAME]*.cfg|<savestates\[ROMNAME]*.fs<config\games\[ROMNAME]*.nv
 firegb<firegb/firegb.7z<FireGB.exe<
@@ -134,6 +135,7 @@ FishNChips<FishNChips/FishNChips.7z<Fish 'N' Chips.exe<
 FlashPlayer<FlashPlayer/FlashPlayer.7z<FlashPlayer.exe<
 FlashRun<FlashRun/FlashRun.7z<FlashRun.exe<Settings.ini
 flycast<flycast/flycast.7z<flycast.exe<emu.cfg<|<vmu_save_*.bin
+flycast-dojo<flycast-dojo/flycast-dojo.7z<flycast.exe<emu.cfg<|<vmu_save_*.bin
 fm16pi<fm16pi/fm16pi.7z
 fm77<fm77/fm77.7z<fm77.exe<fm77.ini<
 fm77av40<fm77av40/fm77av40.7z<fm77av40.exe<fm77av40.ini<

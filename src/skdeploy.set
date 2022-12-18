@@ -28,7 +28,6 @@ VIFileVersion [CURV]
 InstallDir "$DOCUMENTS\[RJ_PROJ]"
 InstallDirRegKey HKLM "Software\[RJ_PROJ]" "Install_Dir"
 
-
 LicenseText "Anon, I" "I Agree"
 LicenseData "[SOURCE]\ReadMe.md"
 
@@ -71,10 +70,40 @@ Section "" ; empty string makes it hidden, so would starting with -
   ; write uninstall strings
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\[RJ_PROJ]" "[RJ_PROJ]" "[RJ_PROJ] (remove only)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\[RJ_PROJ]" "UninstallString" '"$INSTDIR\[RJ_PROJ]-uninst.exe"'
-
+  SectionEnd  
+  Section "" 
   SetOutPath $INSTDIR
-
-  File "[DBP]\[RJ_PROJ].exe"
+  File "[SOURCE]\readme.md"
+  SectionEnd
+  Section "" 
+  SetOutPath $INSTDIR\src
+  File /r "[SOURCE]\src\*.set"
+  File /r "[SOURCE]\src\*.ahk"
+  SectionEnd
+  Section "" 
+  SetOutPath $INSTDIR\rj
+  File /r "[SOURCE]\rj\*.set"
+  File /r "[SOURCE]\rj\*.get"
+  File /r "[SOURCE]\rj\*.ret"
+  File /r "[SOURCE]\rj\*.amgp"
+  File /r "[SOURCE]\rj\*.xpadderprofile"
+  SectionEnd
+  Section "" 
+  SetOutPath $INSTDIR\bin
+  File /r "[SOURCE]\bin\*.exe"
+  File /r "[SOURCE]\bin\*.sfx"
+  File /r "[SOURCE]\bin\*.txt"
+  SectionEnd
+  Section "" 
+  SetOutPath $INSTDIR\site
+  File /r "[SOURCE]\site\*.png"
+  File /r "[SOURCE]\site\*.ico"
+  File /r "[SOURCE]\site\*.svg"
+  File /r "[SOURCE]\site\*.html"
+  File /r "[SOURCE]\site\*.otf"
+  File /r "[SOURCE]\site\*.ttf"
+  SectionEnd
+  Section "" 
   WriteUninstaller "[RJ_PROJ]-uninst.exe"  
   Nop ; for fun
 
@@ -82,7 +111,7 @@ SectionEnd
 
 Section "Desktop Shortcuts"
 
-  CreateShortCut "$DESKTOP\[RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ].exe" "" "$INSTDIR\site\key.ico"
+  CreateShortCut "$DESKTOP\[RJ_PROJ].lnk" "$INSTDIR\bin\[RJ_PROJ].exe" "" "$INSTDIR\site\key.ico"
 
 SectionEnd
 
@@ -92,7 +121,7 @@ SectionIn RO
 
 Call CSCTest
 
-  ExecWait '"$INSTDIR\[RJ_PROJ].exe"'
+  ExecWait '"$INSTDIR\bin\[RJ_PROJ].exe"'
   Sleep 500
   BringToFront
 
@@ -103,8 +132,8 @@ Function "CSCTest"
   CreateDirectory "$SMPROGRAMS\[RJ_PROJ]"
   SetOutPath $INSTDIR ; for working directory
   CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\Uninstall [RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ]-uninst.exe" ; use defaults for parameters, icon, etc.
-  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\[RJ_PROJ].lnk" "$INSTDIR\[RJ_PROJ].exe"
-  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\Update.lnk" "$INSTDIR\Update.exe"
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\[RJ_PROJ].lnk" "$INSTDIR\bin\[RJ_PROJ].exe"
+  CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\Update.lnk" "$INSTDIR\bin\Update.exe"
   CreateShortCut "$SMPROGRAMS\[RJ_PROJ]\PortableUtil.lnk" "$INSTDIR\bin\PortableUtil.exe"
 
 FunctionEnd

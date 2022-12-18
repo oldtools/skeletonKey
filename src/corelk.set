@@ -125,8 +125,6 @@ PokeMini|Nintendo - Pokemon Mini (PokeMini)|NPOK|pokemini
 PrBoom|Doom (PrBoom)|PRBOOM|prboom
 ProSystem|Atari - 7800 (ProSystem)|AT78|prosystem
 QUASI88|NEC - PC-8000 / PC-8800 series (QUASI88)|NPC88|quasi88
-Quake II Game Engine|vitaQuake 2 [Xatrix]|QUAKE2|vitaquake2-xatrix
-Quake II Game Engine|vitaQuake 2 [Zaero]|QUAKE2|vitaquake2-zaero
 QuickNES|Nintendo - NES / Famicom (QuickNES)|NNES|quicknes
 RACE|SNK - Neo Geo Pocket / Color (RACE)|NEPKTC|race
 REminiscence|Flashback (REminiscence)|FLSHBK|reminiscence
@@ -192,6 +190,5 @@ melonDS|Nintendo - DS (melonDS)|NNDS|melonds
 theodore|Thomson - MO/TO (Theodore)|TMO8|theodore
 uzem|Uzebox (Uzem)|UZEM|uzem
 vecx|GCE - Vectrex (vecx)|GVEXTR|vecx
-vitaQuake 2|Quake 2 (vitaQuake 2)|VITAQ|vitaquake2
-vitaQuake 3|Quake III: Arena (vitaQuake 3)|VITAQ|vitaquake3
 x1|Sharp X1 (X Millenium)|SHARPX1|x1|0
+Vita3k|Sony - Playstation Vita|SPVITA|vita3k

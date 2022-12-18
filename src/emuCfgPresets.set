@@ -2062,13 +2062,44 @@ EMUEXT="."
 BIOSPTH="reicast\data|"
 FIRMWARE="DC - Flash (All).bin:E0D202A2|DC - VMS BIOS (Full).bin:C7C77B3C>|DC101d_us.bin:05EFF2BB>|DC_boot.bin:89F2B1A1>|DC_flash.bin:C611B498>|DC_nvmem.bin:05EFF2BB>|fsca-table.bin:5D905DE4>|DC - BIOS (All).bin:61D5613F|"
 
+
 [flycast]
 RJPRECFG=copy /y "*.cfg" "%EMUL%"|copy /y ".Mem\vmu_save*.bin" "%EMUL%"
 RJPOSTCFG=copy /y "%EMUL%\*.cfg" "%GAMDIR%"|move /y "%EMUL%\vmu_save*.bin" "%GAMDIR%\.Mem"
 RJRUNDIR=0
 RJLNCHP=0
-URLPTH=reicast/reicast[ARCH].7z
-EXENAM=reicast.exe
+URLPTH=flycast/flycast.7z
+EXENAM=flycast.exe
+CFGPTH=emu.cfg
+MEMPTH=vmu_save_*.bin
+BIOS=R
+RJEMUARGS=
+RJEMUOPTS=<
+RJQUOTES=1
+RJPATH=1
+RJEXT=1
+RJROMINJ=
+RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
+RJEXTRARC=0
+PEREMUCFG=1
+RJZIPPEEK=1
+options=<
+arguments=
+NICEFLD=0
+RJARCLOC=0
+RJCONSOLID=Individuate
+RJROMXT= 
+EMUEXT="."
+BIOSPTH="flycast\data|"
+FIRMWARE="1_01d_02.bin:A2564FAD|1_004_01.bin:545481F|1_011_01.bin:2186E0E5|1_022_01.bin:786168F9|DC - BIOS (All).bin:61D5613F|DC - Flash (All).bin:E0D202A2|DC - VMS BIOS (Full).bin:C7C77B3C>|DC101d_us.bin:05EFF2BB>|DC_boot.bin:89F2B1A1>|DC_flash.bin:C611B498>|DC_nvmem.bin:05EFF2BB>|fsca-table.bin:5D905DE4>|naomi_boot.bin:D2A1C6BF|vmu_save_A1.bin:7EE8CDCD>|bios.ic23:5D5687C7|bios.ic23_l:E5693CE3|bios0.ic23:719B2B0B|bios1.ic23:D3E80A9F|dcnaodev.bios:7A50FAB9|eeprom-naomi-main-default.bin:FEA29CBB|epr-21576d.bin:3B2AFA7B|epr-21576e.bin:08C0ADD7|epr-21576g.bin:D2A1C6BF|epr-21576h.bin:D4895685|epr-21577d.bin:60DDCBBE|epr-21577e.bin:CF36E97B|epr-21577g.bin:25F64AF7|epr-21578d.bin:DFD5F42A|epr-21578e.bin:087F09A3|epr-21578g.ic27:55413214|epr-21578h.ic27:7B452946|fpr-23489c.ic14:BC38BEA1|epr-21576.ic27:9DAD3495|epr-21576b.ic27:755A6E07|epr-21576d.ic27:3B2AFA7B|epr-21576e.ic27:08C0ADD7|epr-21576g.ic27:D2A1C6BF|epr-21576h.ic27:D4895685|epr-21577d.ic27:60DDCBBE|epr-21577e.ic27:CF36E97B|epr-21577g.ic27:25F64AF7|epr-21578b.ic27:6C9AAD83|epr-21578d.ic27:DFD5F42A|epr-21578e.ic27:087F09A3|epr-22850.ic27:28AA539D|epr-22851.ic27:62483677|epr-23605.bin:5731E446|epr-23605a.bin:7BC3FC2D|epr-23605b.bin:3A3242D4|epr-23605c.bin:297EA6ED|epr-23607.bin:2B55ADD2|epr-23607b.bin:F308C5E9|epr-23608.bin:929CC3A6|epr-23608b.bin:A554B1E3|epr-23608c.bin:6EF1DD8E|"
+
+[flycast-dojo]
+RJPRECFG=copy /y "*.cfg" "%EMUL%"|copy /y ".Mem\vmu_save*.bin" "%EMUL%"
+RJPOSTCFG=copy /y "%EMUL%\*.cfg" "%GAMDIR%"|move /y "%EMUL%\vmu_save*.bin" "%GAMDIR%\.Mem"
+RJRUNDIR=0
+RJLNCHP=0
+URLPTH=flycast-dojo/flycast-dojo.7z
+EXENAM=flycast.exe
 CFGPTH=emu.cfg
 MEMPTH=vmu_save_*.bin
 BIOS=R
@@ -2201,7 +2232,7 @@ RJEXTRARC=0
 RJZIPPEEK=0
 RJLNCHP=0
 URLPTH=FBNeo/FBNeo-[ARCH].7z
-EXENAM=FBNeo.exe
+EXENAM=fbalpha.exe
 CFGPTH=config\*.ini|config\games\[ROMNAME]*.fs
 STATEPTH=|cfg\[ROMNAME]*.cfg|
 MEMPTH=savestates\[ROMNAME]*.fs
@@ -7881,6 +7912,35 @@ RJROMXT=
 EMUEXT="."
 BIOSPTH="daphne|"
 
+[Hypseus]
+URLPTH=Hypseus/Hypseus.7z
+EXENAM=Hypseus.exe
+CFGPTH=hypinput.ini
+RJEMUARGS=
+RJEMUOPTS=<
+RJPRECFG=copy /y "%GAMDIR%\hypinput.ini" "%EMUL%"
+RJPOSTCFG=copy /y "%EMUL%\hypinput.ini" "%GAMDIR%"
+RJQUOTES=1
+RJPATH=1
+RJRUNDIR=1
+RJEXT=1
+RJROMINJ=
+RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
+RJEXTRARC=0
+PEREMUCFG=1
+RJZIPPEEK=1
+RJLNCHP=0
+options=<singe vldp -blend_sprites -gamepad -vertical_stretch -fullscreen_window -framefile "%ROMF%\%ROM%.txt" -script "%ROMF%\%ROM%.singe"
+arguments=
+BIOS=
+NICEFLD=0
+MEMPTH=
+RJARCLOC=0
+RJCONSOLID=Individuate
+RJROMXT= 
+EMUEXT="."
+BIOSPTH="Hypseus|"
+
 [nlmsx]
 URLPTH=nlmsx/nlmsx.7z
 EXENAM=nlmsx.exe
@@ -8289,6 +8349,35 @@ RJCONSOLID=Individuate
 RJROMXT= 
 EMUEXT="."
 BIOSPTH="turboengine|"
+
+[BigPEmu]
+URLPTH=BigPEmu/BigPEmu.7z
+EXENAM=BigPEmu.exe
+RJEMUARGS=
+RJEMUOPTS=<
+RJPRECFG=copy /y "%GAMDIR%\*.bigpeep" "%APPDATA%\BigPEmu"|"%GAMDIR%\*.bigpcfg" "%APPDATA%\BigPEmu"
+RJPOSTCFG=copy /y "%APPDATA%\BigPEmu\*.bigpcfg" "%GAMDIR%"
+RJQUOTES=1
+RJPATH=1
+RJRUNDIR=1
+RJEXT=1
+RJROMINJ=
+RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
+RJEXTRARC=0
+PEREMUCFG=1
+RJZIPPEEK=1
+RJLNCHP=0
+CFGPTH=
+options=<
+arguments=
+BIOS=
+NICEFLD=0
+MEMPTH=
+RJARCLOC=0
+RJCONSOLID=Individuate
+RJROMXT= 
+EMUEXT="."
+BIOSPTH="BigPEmu|"
 
 [jagulator]
 URLPTH=jagulator/jagulator.7z
@@ -16132,6 +16221,35 @@ FIRMWARE=
 RJROMXT=""
 BIOSPTH="retroarch\system"
 
+[dosbox_pure_libretro]
+EMUEXT=".exe,.com,.bat,.conf,.cue,.iso"
+RJEMUARGS=
+RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
+RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
+RJQUOTES=0
+NICEFLD=0
+RJPATH=1
+RJRUNDIR=0
+URLPTH=[BUILDBOT]/dosbox_pure_libretro.dll.zip
+EXENAM=dosbox_pure_libretro.dll
+RJEXT=1
+MEMPTH=
+RJEXTRARC=0
+RJARCLOC=0
+RJROMINJ=
+RJCONSOLID=Individuate
+RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
+PEREMUCFG=1
+RJZIPPEEK=1
+RJLNCHP=0
+RJEMUOPTS=<-L cores\dosbox_pure_libretro.dll<
+CFGPTH=retroarch.cfg
+options=<-L cores\dosbox_pure_libretro.dll<
+arguments=
+FIRMWARE=
+RJROMXT=""
+BIOSPTH="retroarch\system"
+
 [duckstation_libretro]
 FIRMWARE="scph5502.bin:4D9E7C86|"
 EMUEXT=".cue,.bin,.img,.chd,.m3u"
@@ -20917,180 +21035,6 @@ FIRMWARE=
 RJROMXT=""
 BIOSPTH="retroarch\system"
 
-[vitaquake2-rogue_libretro]
-EMUEXT=".pak"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitaquake2-rogue_libretro.dll.zip
-EXENAM=vitaquake2-rogue_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitaquake2-rogue_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitaquake2-rogue_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
-[vitaquake2-xatrix_libretro]
-EMUEXT=".pak"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitaquake2-xatrix_libretro.dll.zip
-EXENAM=vitaquake2-xatrix_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitaquake2-xatrix_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitaquake2-xatrix_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
-[vitaquake2-zaero_libretro]
-EMUEXT=".pak"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitaquake2-zaero_libretro.dll.zip
-EXENAM=vitaquake2-zaero_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitaquake2-zaero_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitaquake2-zaero_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
-[vitaquake2_libretro]
-EMUEXT=".pak"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitaquake2_libretro.dll.zip
-EXENAM=vitaquake2_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitaquake2_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitaquake2_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
-[vitaquake3_libretro]
-EMUEXT=".pk3"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitaquake3_libretro.dll.zip
-EXENAM=vitaquake3_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitaquake3_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitaquake3_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
-[vitavoyager_libretro]
-EMUEXT=".pk3"
-RJEMUARGS=
-RJPRECFG=copy /Y "retroarch*.cfg" "%EMUL%"
-RJPOSTCFG=copy /Y "%EMUL%\retroarch*.cfg" "%GAMDIR%"
-RJQUOTES=0
-NICEFLD=0
-RJPATH=1
-RJRUNDIR=0
-URLPTH=[BUILDBOT]/vitavoyager_libretro.dll.zip
-EXENAM=vitavoyager_libretro.dll
-RJEXT=1
-MEMPTH=
-RJEXTRARC=0
-RJARCLOC=0
-RJROMINJ=
-RJCONSOLID=Individuate
-RJSUBDS=.cheats:1|.patches:1|.snaps:1|.sstates:1|.Man:1|.Mem:1|.cfg:1|.ctrl:1|.hi:1|.ini:1|.inp:1|
-PEREMUCFG=1
-RJZIPPEEK=1
-RJLNCHP=0
-RJEMUOPTS=<-L cores\vitavoyager_libretro.dll<
-CFGPTH=retroarch.cfg
-options=<-L cores\vitavoyager_libretro.dll<
-arguments=
-FIRMWARE=
-RJROMXT=""
-BIOSPTH="retroarch\system"
-
 [x1_libretro]
 FIRMWARE="xmil\IPLROM.X1T|"
 EMUEXT=".dx1,.zip,.2d,.2hd,.tfd,.d88,.88d,.hdm,.xdf,.dup,.tap,.cmd"
@@ -21259,7 +21203,7 @@ RJZIPPEEK=0
 RJLNCHP=0
 SHORTNM=MAMARC
 SUPEMU=mame_arcade|MAME|FinalBurnalpha|FBNeo|calice|ace|zinc
-_libretroSUPCORE=mame2014.dll|mame2010_libretro.dll|mame2003_plus_libretro.dll|mame2003_libretro.dll|mame2000_libretro.dll|mame2016_libretro.dll|mame_libretro.dll
+SUPCORE=mame2014.dll|mame2010_libretro.dll|mame2003_plus_libretro.dll|mame2003_libretro.dll|mame2000_libretro.dll|mame2016_libretro.dll|mame_libretro.dll
 LNCHPRM=$|0|0|0|0|0
 FENAM=arcade
 RJROMXT=,.zip,.chd,.7z,.cmd
@@ -21573,13 +21517,13 @@ FENAM=atarijaguarcd
 FEPARAM=>[ROMPATH]>
 
 [Atari - Jaguar]
-RJEMUPRESET=virtualJaguar
+RJEMUPRESET=BigPEmu
 RJMAMENM=jaguar
 RJROMXT=.bin,.rom,.abs,.jag,.j64,.prg,.cof,.zip
 MAME?RJEMUOPTS=<jaguar -cart<
 RJZIPPEEK=0
 SHORTNM=ATJAG
-SUPEMU=virtualJaguar|jagulator|projecttempest|MAME
+SUPEMU=BigPEmu|virtualJaguar|jagulator|projecttempest|MAME
 SUPCORE=virtualjaguar_libretro.dll
 LNCHPRM=$|1|1|1|1|0
 FENAM=atarijaguar
@@ -23471,10 +23415,11 @@ FENAM=model3
 FEPARAM=[ROMNAME]
 
 [Sega - NAOMI]
-RJEMUPRESET=Demul
+RJEMUPRESET=flycast
 RJMAMENM=naomi
-RJROMXT=.zip
+RJROMXT=.zip,.chd,.lst,.bin,.cue
 Demul?RJEMUOPTS=<-run=naomi -rom=
+flycast?RJEMUOPTS=<
 SETLST=
 NICEFLDR=1
 RJRUNDIR=0
@@ -23485,7 +23430,7 @@ RJQUOTES=0
 RJEXTRARC=0
 MAME?RJEMUOPTS=<naomi -[RJRTYP]<|<naomi -cdrm<|<naomi2 -cdrm<|<naomigd -gdrm<
 SHORTNM=SNAOMI
-SUPEMU=Demul|redream|flycast|reicast|NullDC|mame_arcade|MAME|Makaron
+SUPEMU=flycast|reicast|Demul|redream|NullDC|mame_arcade|MAME|Makaron
 SUPCORE=flycast_libretro.dll|mame2014_libretro.dll|mame2010_libretro.dll|mame2003_plus_libretro.dll|mame2003_libretro.dll|mame2000_libretro.dll|mame2016_libretro.dll
 LNCHPRM=$|0|0|0|0|0
 FENAM=naomi
@@ -23695,7 +23640,7 @@ FEPARAM=>[ROMPATH]>
 [Sony - Playstation Vita]
 RJEMUPRESET=vita3k
 SHORTNM=SPLAYV
-SUPEMU=BSL
+SUPEMU=vita3k
 RJROMXT=.psv,.pkg,.vpk
 SUPCORE=
 LNCHPRM=$|1|1|1|1|0
@@ -27197,9 +27142,19 @@ LNCHPRM=$|1|1|0|1|0
 FEPARAM=>[ROMPATH]>
 FENAM=altair8800
 
+[Cinematronics - Laserdisc]
+SHORTNM=CINLD
+FENAM=cinld
+FEPARAM=>[ROMPATH]>
+RJROMXT=.txt
+SUPEMU=Hypseus|daphne
+SUPCORE=daphne_libretro.dll
+LNCHPRM=$|1|1|0|1|0
+
+
 [ALG - American Laser Games]
-SUPEMU=daphne
-SUPCORE=mame_libretro.dll
+SUPEMU=Hypseus|daphne
+SUPCORE=daphne_libretro.dll|mame_libretro.dll
 SHORTNM=ALAZG
 LNCHPRM=$|1|1|0|1|0
 FEPARAM=>[ROMPATH]>
@@ -27439,6 +27394,18 @@ EXENAM=VirtualCloneDrive.exe
 URLPTH=antimicro/antimicro-[ARCH].7z
 EXENAM=antimicro.exe
 
+[AntimicroX]
+URLPTH=antimicroX/antimicroX.7z
+EXENAM=antimicroX.exe
+
+[KeySticks]
+URLPTH=KeySticks/KeySticks.7z
+EXENAM=Keysticks.exe
+
+[JoyXOff]
+URLPTH=JoyXOff/JoyXOff.7z
+EXENAM=Joyxoff.exe
+
 [Xinput_Drivers]
 URLPTH=Xinput_Drivers/Xbox360-[ARCH]Eng.7z
 EXENAM=Xbox360_[ARCH]Eng.exe
@@ -27503,54 +27470,1084 @@ URLPTH=Joy2Key/Joy2Key.7z
 [x360ce]
 URLPTH=x360ce/x360ce-[ARCH].7z
 
-[Daphne - Daphne Laser Disc]
-FENAM=daphne
-FEPARAM=>[ROMPATH]>
+[SYSTEMS]
+MAME - Arcade
+FB Alpha - Arcade Games
+Konami - System 573 Satellite Terminal
+MAME - System
+APF - Imagination Machine
+Acorn - Archimedes
+Acorn - BBC
+Acorn - Electron
+Adobe - Flash
+Amstrad - CPC
+Amstrad - GX4000
+Apple - IIe
+Apple - II
+Apple - IIgs
+Apple - Macintosh
+Atari - 2600
+Atari - 5200
+Atari - 7800
+Atari - 800
+Atari - 800 - PAL
+Atari - 8Bit
+Atari - Jaguar CD
+Atari - Jaguar
+Atari - Lynx
+Atari - ST
+Atari - XE
+Bally - Astrocade
+Bandai - WonderSwan Color
+Bandai - WonderSwan
+BIOS - BIOS
+Camputers - Lynx
+Capcom Play System - CPS III
+Capcom Play System - CPS II
+Capcom Play System - CPS
+Casio - Loopy
+Casio - PB-1000
+Casio - PV-1000
+Casio - PV-2000
+Cave Systems - Cave
+Coleco - ADAM
+Coleco - ColecoVision
+Commodore - 64
+Commodore - Amiga CD32
+Commodore - Amiga CDTV
+Commodore - Amiga
+Commodore - Amiga 1000
+Commodore - Amiga 1200
+Commodore - Amiga 2000
+Commodore - Amiga 3000
+Commodore - C16
+Commodore - PET
+Commodore - VIC-20
+DGS - Dragon 32-64
+Microsoft - DOS
+Emerson - Arcadia 2001
+Enterprise - 128
+Enterprise - 64
+Entex - Adventure Vision
+Epoch - Super Cassette Vision
+Fairchild - Channel F
+Fujitsu - FM-7
+Funtech - Super Acan
+GCE - Vectrex
+Galeco - Galeco
+Hartung - Game Master
+Sega - Hikaru
+IBM - PC Jr
+Interon - VC4000
+Jupiter Cantab - Jupiter Ace
+Konami
+Konami - System 573
+Konami - System 573 Satelite Terminal
+Konami - Bemani System 573 Analog
+Konami - Bemani System 573 Digital
+Leapfrog - Leapster Learning Game System
+MGT - Sam Coupe
+Magnavox - Odyssey2
+Magnavox - Odyssey3
+Magnavox - Odyssey
+Mattel - Aquarius
+Mattel - Intellivision
+Creatronic - Mega Duck
+Memotech - MTX
+Microsoft - MSX TurboR
+Microsoft - MSX Turbo
+Microsoft - MSX2
+Microsoft - MSX2+
+Microsoft - MSX
+Microsoft - XBOX 360
+Microsoft - XBOX ONE
+eBooks - PDFs - Texts
+Video - Media
+Television - Series
+Movies - Films
+Microsoft - XBOX
+Sega - Chihiro
+Fujitsu - FM Towns
+NEC - PC Engine SuperGrafx
+NEC - PC Engine - TurboGrafx 16
+NEC - PC Engine - JAP
+NEC - PC Engine CD - TurboGrafx CD
+NEC - PC-6001
+NEC - PC-FX
+NEC - PC88
+NEC - PC88-VA
+NEC - PC8801
+NEC - PC9821
+NEC - PC98
+Nintendo - Nintendo 64DD
+Nintendo - Nintendo 64
+iQue - iQue
+Nintendo - New Nintendo 3DS
+Nintendo - Nintendo 3DS
+Nintendo - Nintendo DSi
+Nintendo - Nintendo DS
+Nintendo - Nintendo DS Decrypted
+Nintendo - Nintendo Entertainment System
+Nintendo - Famicom
+Fukutake Publishing - StudyBox
+Nintendo - Family Computer Disk System
+Nintendo - e-Reader
+Nintendo - Game Boy Advance
+Nintendo - Game Boy Color
+Nintendo - Game Boy
+Nintendo - GameCube
+Nintendo - Satellaview
+Nintendo - Virtual Boy
+Nintendo - Wii U
+Nintendo - WiiWare
+Nintendo - Kiosk Compact Flash
+Nintendo - Wii
+Nintendo - Pokemon Mini
+Nintendo - Super Famicom
+Nintendo - Super Game Boy
+Nintendo - Super Nintendo Entertainment System
+Nokia - N-Gage
+Philips - CD-I
+Philips - P2000
+Philips - VG-5000
+Philips - Videopac+
+PopCap - PopCap
+RCA - CHIP 8
+RCA - Superchip
+RCA - Studio II
+SNK - Neo Geo CD
+SNK - Hyper Neo-Geo 64
+SNK - Neo Geo AES
+SNK - Neo Geo MVS
+SNK - Neo Geo Pocket Color
+SNK - Neo Geo Pocket
+ZAPiT Games - Game Wave Family Entertainment System
+Sammy - Atomiswave
+ScummVM - ScummVM
+Sega - SC-3000
+Sega - SF-7000
+Sega - SG-1000
+Ouya - Ouya
+Android - Android
+EasyRPG - EasyRPG
+Sega - STV
+Streets Of Rage - Remake
+Sega - Saturn
+Sega - 32X
+Sega - Dreamcast
+Sega - Game Gear
+Sega - Master System - Mark III
+Sega - Mega Drive - Genesis
+Sega - Mega-CD - Sega CD
+Sega - Model 2
+Sega - Model 3
+Sega - NAOMI
+Sega - Beena
+Sega - PICO
+Sega - Super Control Station
+Sharp - MZ-700
+Sharp - MZ-800
+Sharp - X1
+Sharp - X68000
+Sinclair - QL
+Sinclair - ZX Spectrum +3
+Sinclair - ZX80
+Sinclair - ZX81
+Sony - Playstation 2
+Sony - Playstation 4
+Sony - Playstation 3
+Sony - Playstation Portable
+Sony - Playstation Mobile
+Sony - Playstation Vita
+Sony - Playstation
+Sony - Playstation - PAL
+Sony - Pocketstation
+Sord - M5
+SpectraVision - Spectravideo
+Taito - Taito Type X
+Tangerine - Microtan 65
+Tangerine - Oric Atmos
+The 3DO Company - 3DO
+Thomson - M05
+Thomson - To7
+Thomson - To8
+Tiger - Game.com
+Tomy - KISS-Site
+University of Cambridge - EDSAC
+Mattel - Hyperscan
+VM Labs - Nuon
+NEC - PC98 - Touhou
+VTech - CreatiVision
+VTech - Laser 200
+VTech - Laser 310
+VTech - Mobigo
+VTech - V.Smile
+VideoBrain - FamilyComputer
+Watara - SuperVision
+Open - Beats of Rage
+Microsoft - Windows 3x
+Windows - Games
+WRITENAMETOBAT
+Sega - 32X - PAL
+Sega - 32X - JAP
+Atari - 2600 - PAL
+Atari - 800 - PAL
+Luxor - ABC 80
+Luxor - ABC 1600
+Coleco - ADAM
+Northstar - Advantage
+Entex - Adventure Vision
+Rockwell - AIM 65
+Patisonic - Aleste 520EX
+Matra - Alice 32
+Matra - Alice 90
+Triumph-Adler - Alphatronic PC
+Altos - Series 5
+Ampro - Little Z80 Board
+NEC - Advanced Personal Computer
+APF - Imagination Machine
+APF - M-1000
+Apogee - BK-01
+Apollo - Apollo
+Apple - I
+Apple - III
+ACT - Apricot PC-Xi
+Acorn - Atom
+Otrona - Attache
+BNPO - Bashkiria-2M
+BBC - Micro Model A
+BBC - Micro Model B
+BBC - Bridge Companion
+BBC - Master
+BBC - Master Compact
+Elektronika - BK-0010
+Bondwell - Bondwell 12
+Bondwell - Bondwell 14
+Bondwell - Bondwell 2
+Commodore BX256-80HP
+Commodore - 65
+Commodore - CBM-II
+Commodore - PET - 8096
+Commodore - PET - 8296
+Texas Instruments - Compact Computer 40
+EACA - Colour Genie EG2000
+Chess-Master - Diamond Modules
+Memorex - Video Information System
+Tandy - Radio Shack - Color Computer
+Coleco - Colecovision - PAL
+Compucolor - Compucolor II
+Telenova - Compis
+COMX - 35
+Yamaha - Sega - Copera
+Palson - CX 3000 Tele Computer
+DAI - Personal Computer
+Voltmace - Database
+Dragon - Alpha
+Dragon - Beta
+Dimension - 68000
+NCR - Decision Mate V
+Ithaca InterSystems - DPS-1
+DGS - Dragon
+Acorn - FileStore
+ES PEVM - EC 1841
+Tatung - Einstein TC-01
+Epson - CPM Systems
+Exelvision - EXL 100
+Fidelity - Fidelity SCC
+Fujitsu - FM-77AV
+Galaksija - Galaksija Plus
+Bit Corp - Gamate
+Sega - Game Gear - JAP
+TimeTop - GameKing
+TimeTop - GameKing 3
+Epoch - Game Pocket Computer
+VTech - Genius 6
+Gimix - 6809 System
+VTech - Genius Junior Movie
+VTech - PreComputer 1000
+VTech - Genius Leader 6000SL
+VTech - Genius Leader Color
+GamePark - GP32
+JPM - Give Us A Break
+TRQ - Video Computer H-21
+Northstar - Horizon
+HP - Integral PC
+HP - HP-85 Option
+HP - HP 9835A-B Option
+HP - HP 9845A-S Option
+HP - HP 9845B-T-C Option
+Hawthorne Technology - TinyGiant HT68k
+Itautec - I-7000
+IBM - PC 5140
+IBM - PC 5150
+IBM - PC 5170
+IBM - Displaywriter
+IBM - PC Jr
+Interact - Family Computer
+Mattel - Intellivision ECS
+ZPA Novy Bor - IQ 151
+Mattel - Juice Box
+Tiger - K28 7-232
+Kaypro - Kaypro II
+VEB Mikroelektronik - KC 85
+MOS Technology - KIM-1
+Korvet - PK8020 Korvet
+Texas Instruments - Language Tutor
+VTech - Laser 2001
+LeapFrog - My First LeapPad
+LeapFrog - LeapPad
+Apple - Lisa
+Apple - Lisa 2
+V. I. Lenin - PK-01 Lviv
+Sord - M5
+Olivetti - M20
+Apple - Macintosh
+Sanyo - MBC-200 - 1200
+Sanyo - MBC-55x
+Tandy - MC-10
+NPO - Elektronika MS 1502
+Morrow Designs - Micro Decision MD-2
+Sega - Mega Drive - PAL
+Amstrad - Mega PC
+Sega - MegaTech
+Milton Bradley - MicroVision
+Mikro - Mikro-80
+Lianozovo Electromechanical Factory - Mikrosha
+VTech - PreComputer 1000
+MikroMikko - MikroMikko 1
+Thomson - M05
+Thomson - MO6
+Acetronic - MPU-1000
+Morrow Designs - Morrow MPZ80
+Nichibutsu - My Vision
+Sharp - MZ-2000
+Sharp - MZ-2500
+Sharp - MZ-700
+Sharp - MZ-800
+Nintendo - Nintendo Entertainment System - PAL
+NeXT - NeXTStation
+Research Machines - Nimbus
+LSI - Octopus
+Ondra - Ondra ViLi
+PEL Varazdin - Orao
+Orion - Orion Pro
+Orion - Orion 128
+Osborne - Osborne-1
+Osborne - Osborne-2
+SAM SKB VM - Partner-01.01
+Koei - PasoGo
+Casio - PB-2000C
+Amstrad - PC1512 SD
+Amstrad - PC1640 SD
+NEC - PC-8201(A) Option
+Amstrad - PcW
+Amstrad - PcW16
+Elektronska Industrija Nis - PeCom 32
+Elektronska Industrija Nis - PeCom 64
+Technosys - Aamber Pegasus
+Hanimex - Pencil II
+Sanyo - PHC-25
+Konami - Picno
+Mobile - Symbian
+Mobile - Palm OS
+Mobile - J2ME
+Commodore - PET
+Bandai - Playdia
+Apple - Bandai - Pippin
+Commodore - Plus-4
+Tesla - PMD-85
+Benesse - Pocket Challenge V2
+Benesse - Pocket Challenge W
+Atari - Portfolio
+Electronmash - Poisk-1
+Tomy - Prin-C
+Olivetti - Prodest PC 128
+Olivetti - Prodest PC 128S
+Conitec - PROF-80
+Conitec - PROF-180
+Kontron - PSI98
+Psion - Organiser I
+Psion - Organiser II
+Peripheral Technology - PT68K2
+EPSON - PX-4
+EPSON - PX-8
+Mikroelektronika - Pyldin-601
+Epson - QX-10
+ROLM - CBX 9751
+Soviet - Radio-86RK
+DEC - Rainbow 100
+Rowtron - Television Computer System
+Bandai - Gundam RX-78
+Sage Technology - Sage II
+San Bergmans - Izabella Malcolm - SITCOM
+Sony - SMC777
+Mephisto - Super Mondial II
+Sega - Mark III - JPN
+Sega - Master System - PAL
+Nintendo - Super Nintendo Entertainment System - PAL
+Bandai - Super Note Club
+Texas Instruments - Speak and Read
+Texas Instruments - Speak and Spell
+Video Technology - Socrates
+Small Systems Engineering - SSE Softbox
+Processor Technology Corporation - SOL-20
+Exidy - Sorcerer
+Samsung - SPC-1000
+Samsung - SPC-1500
+Soviet - Specialist
+RCA Studio II - Victory MPT-02
+Sega - Titan Video
+ADC - Super Six
+Dick Smith Electronics - Super-80
+Bandai - Super Vision 8000
+Spectravision - SVI-318
+Sega - Visual Memory Unit
+Tandy - 1000
+Tandy - 200 Option
+Tandy - 2000
+Tandy - 6000
+Tandberg - TDV 2324
+Tektronix - Tektronix 4052
+Texas Instruments - TI-73
+Texas Instruments - TI-74
+Texas Instruments - TI-80
+Texas Instruments - TI-81
+Texas Instruments - TI-82
+Texas Instruments - TI-83
+Texas Instruments - TI-92
+Texas Instruments - TI-95
+Texas Instruments - TI-99-4A
+Texas Instruments - TI-99
+Tiki Data A-S - TIKI 100
+Timex - Sinclair TS-2068 DOCK
+Texas Instruments - Touch and Tell
+Thomson - TO7
+Thomson - TO7 - TO7-70
+Thomson - TO7 - TO7-70A
+Thomson - TO8
+Tandy - TRS-80 Model II
+Tandy - TRS-80 Model 100 Option
+Tomy - Tutor - Pyuuta
+Unisonic - Champion 2711
+Soviet - UT-88
+Belogic - Uzebox
+Visual Technology - Visual 1050
+Soviet - Vector 06c
+Philips - VG-5000
+Commodore - VIC-10 - Max Machine - UltiMax
+Commodore - VIC-10
+Commodore - VIC-1001
+Victor Business Products - Victor 9000 - ACT Sirius 1
+JungleTac Sport - Vii
+RCA - VIP
+Toshiba - Pasopia
+Toshiba - Visicom
+Osborne 4 - Vixen
+Dick Smith Electronics - VZ-200-300
+Wang Laboratories - Wang PC
+PPG - Waveterm A
+Millennium Systems - Wicat
+WaveMate - Bullet
+Canon - X-07
+Xerox - 820
+Nuova Elettronica - Z80NE
+Cambridge Computers - Z88
+Telcon - Zorba
+Agat - 7
+Atari - Falcon
+Commodore - Amiga a500
+Commodore - BX256-80HP
+Cybiko - Cybiko
+Cybiko - Xtreme
+DEC - PDP-1
+DEC - PDP-7
+Fujitsu - FM-8
+Infocom - Z-Machine
+Luxor - Video Entertainment System
+MITS - Altair 8800
+ALG - American Laser Games
+Incredible Technologies - Eagle
+MCA - Laserdisc Arcade
+Microkey - Primo
+Nascom - I-II
+Nintendo - Sufami Turbo
+Nintendo - Nintendo Switch
+Tsukuda - Othello Multivision
+Panasonic - JR-200
+Robotron - KC Compact
+Robotron - Z9001
+Sega - Model 1
+Seiko - Ruputer
+Signetics - Pipbug
+Tiger - Gizmondo
+Videoton - TV-Computer
+V. I. Lenin - L'vov-Lviv
+VTech - Laser 100
+Commodore - C128
+Zeebo - Zeebo
+Cinematronics - Laserdisc
+
+[EMULATORS]
+1964
+3dmoo
+3DNes
+3doplay
+4DO
+ace
+ActiveGS
+AdriPSX
+AdviEmulator
+aes4all
+agat
+aipc
+alice32
+Altirra
+Anex86
+apemuw
+apfemu
+Apollo
+apple1
+AppleWin
+aprnes
+aqemu
+arcade64
+arcem
+archie
+Arculator
+Arnimedes
+arnold
+ASCD
+atari++
+Atari800
+Atari800win
+atari800winplus
+atariplusplus
+atom
+atomulator
+aurex
+babbage2nd
+BeebEm
+bem
+bgb
+BigPEmu
+Bizhawk
+blastem
+Bliss
+BlueMSX
+bmjr
+boycottadv
+BSL
+bsnes
+bws
+byuu
+c4pc
+calcem
+calice
+callus
+caprice32
+ccs31
+CD-I
+CEMU
+chankast
+Citra
+classic99
+cogwheel
+colecovision
+Colem
+comeback64
+coolcv
+cpce
+cps3emulator
+cpspemu
+creativision
+creativisionemulator
+Cxbx
+cxbxreloaded
+daphne
+Hypseus
+DCAlice
+dcexel
+dchector
+dcmicrocolor
+dcmo5
+dcmoto
+dcvg5k
+decaf
+dega
+Demul
+DesMume
+dgen
+dhector
+dinoboy
+directvms
+dmgboy
+Dolphin
+Dolwin
+DOSBox-X
+DOSBox
+DosPlus
+dream64
+dreamvmu
+duckstation
+dsp
+easyrpg
+EdsacSim
+eightyone
+einweggerat
+EKA2L1
+ElectrEm
+elf
+elkulator
+em7
+emma02
+emu2001
+EmuZ2000
+emu64
+EMU7800
+emu
+EmuCon
+emukon
+enter
+ep128emu
+ep32
+ePSXe
+euphoric
+ex68
+ex80
+exodus
+familybasic
+faux1
+FBNeo
+fceux
+FinalBurnAlpha
+firegb
+FishNChips
+FlashPlayer
+FlashRun
+flycast
+flycast-dojo
+fm16pi
+fm77
+fm77av40
+fm77av40ex
+fm77av
+fm7
+fm8
+FMBochs
+FMBocks
+fmr30_i286
+fmr30_i86
+fmr50_i286
+fmr50_i386
+fmr50_i486
+fmr60
+fmr70
+fmr80
+fmsx
+fp1100
+fp200
+freedo
+frodo
+Frotz
+FS-UAE
+fsa1
+funnymu
+Fusion
+galaxywin
+gamecomemu
+gamegear
+gbeplus
+gearsystem
+geepee32
+gemulator
+genesisplus
+Genieous
+gens
+gensgs
+gensplus
+gest
+gpcs4
+gSport
+hatari
+hc20
+hc40
+hc80
+hola
+homelab
+horizon
+hoxs64
+hpsx
+HT1080Z
+hu6280
+hugo
+hx20
+hyper64
+ideas
+infovectrex
+intv
+Ishiiruka
+jagulator
+javacpc
+joyce
+jpcsp
+jr100
+jum52
+jvz200
+jx
+jynx
+jzintv
+kat5200
+kcemu
+Kegs32
+kegs
+KEmulator
+kigb
+kindred
+koleko
+koyote
+kronos
+lisa
+lisaem
+m2emulator
+m5
+M71
+m88
+m88x
+macmini
+Makaron
+Mame
+Mame_arcade
+Mame_system
+map1010
+mastersystem
+Mednafen-server
+Mednafen
+medusa
+meka
+melonDS
+mesadx
+mesen-s
+Mesen
+Mess
+mgba
+micro64
+minimon
+minivmac
+minus4
+modelb
+modeller
+msx1
+msx2
+msx2p
+mtxemu
+multi8
+mupdf
+mupen64plus
+mupen64plusplus
+mx88
+mycomz80a
+mz1200
+mz1500
+mz2200
+mz2500
+mz2800
+mz3500
+mz5500
+mz6500
+mz700
+mz700win
+mz800
+mz80a
+mz80b
+mz80k
+mzxx
+nanowasp
+ncdz
+nebula
+Neko
+neocd
+neocdsdl
+neopop
+NeoRaine
+nestopia
+neusnem
+next
+ngae
+nlmsx
+no$2k6
+no$c64
+no$cpc
+No$GBA
+no$gmb
+no$msx
+no$nes
+no$psx
+no$sns
+no$zx
+noods
+Nostalgia
+nova
+nucleus
+NullDC
+o2em
+Ootake
+openbeatsofrage
+openmsx
+oricutron
+osmose
+oswan
+ParaJVE
+pasopia7
+pasopia7lcd
+pasopia
+pc100
+pc2001
+pc6001
+pc6001mk2
+pc6001mk2sr
+PC6001VW
+PC6001VX
+pc6601
+pc6601sr
+pc8001mk2sr
+pc8201
+pc8201a
+pc8801ma
+pc9801
+pc9801e
+pc9801u
+pc9801vf
+pc9801vm
+pc98do
+pc98ha
+pc98lt
+pcae
+PCEJin
+pcemacplus
+pcengine
+pcsp
+Pcsx2
+pcsxr
+pcsxredux
+phc20
+phc25
+phoenix
+PicoDrive
+pk201
+pkemu
+Play!
+pmd85
+pokemini
+pom1
+potator
+PPSSPP
+Project64
+project64k
+ProjectTempest
+ProSystem
+PS4Delta
+psxfin
+psxjin
+pv1000
+pv2000
+px7
+pyuta
+qc10
+qc10cms
+ql2k
+race
+rainbow
+raine
+rascalboyadv
+realityboy
+redream
+redsquirrel
+regen
+reicast
+retroArch
+rocknes
+rpcemu
+rpcs3
+rx78
+ryujinx
+sainT
+sameboy
+sc3000
+scummvm
+scv
+sharpchip8
+sheepshaver
+SimCoupe
+SIMH
+SL9821
+smb80te
+smc70
+smc777
+snes9k
+snes9x
+SNESGT
+softvms
+sorcerer
+speccy
+spudace
+SSF
+steem
+Stella
+stem
+StreetsOfRageRemake
+sugarbox
+supergcube
+Supermodel
+SWFOpener
+t2k
+takeda
+tgbdual
+ti994w
+tilem
+tk80bs
+tk85
+tronds
+tunix
+turboengine
+twombit
+TypeXtra
+ubee512
+ultimo
+Unz
+Tsugaru
+vace3d
+vace
+vaeg
+vaquarius
+vb64
+vbarr
+vbjin
+vdmgr
+vecxgl
+vgb
+vgba
+vic20emu
+videoplayer
+virtpanajr
+virtu
+virtualapf
+virtualinteract
+virtualjaguar
+VirtuaNes
+virtuanesplus
+VisualBoyAdvance-M
+VisualBoyAdvance
+vita3k
+vivanono
+vpanajr
+vvctre
+vzem
+wataroo
+win994a
+WinAPE
+WinArcadia
+WinBox
+wincpc
+winfellow
+WinKawaks
+winTVC
+WinUAE
+WinVICE
+winvz300
+winx1
+WinX68k
+x07
+x1
+X1turbo
+x1twin
+x86Box
+x88
+xe
+xebra
+xemu
+XM6
+XM7
+xm8
+xqemu
+Xroar
+Yabause
+yalky
+yape
+ys6464a
+yuzu
+z26
+z80tvgame_i8255
+z80tvgame_z80pio
+zboy
+zesarux
+zinc
+zmz
+Zsnes
+ZXSpin
 
 [FRONTENDS]
+Advanced_Emulator_Launcher
+Advanced_Launcher
+IAGL
+ROM_Collection_Browser
+XBMC_Kodi
 CabrioFE
 EmulationStation
 attractMode
 Hyperspin
+ICE
+WMC
 SimpleTouchFE
 RetroFE
 Pegasus
 
 [UTILITIES]
-DS4Windows|DS4Windows
-Daemon_Tools|Daemon_Tools
-VirtualCloneDrive|VirtualCloneDrive
-WinCDEmu|WinCDEmu
-displaychanger|displaychanger
-Xinput_Drivers|Xinput_Drivers
+DS4Windows
+Daemon_Tools
+VirtualCloneDrive
+WinCDEmu
+displaychanger
+Xinput_Drivers
+Visual_C++_Runtimes
+DirectX
+XOutput
 
 [KEYMAPPERS]
-Antimicro|Antimicro
-Xpadder|Xpadder
-Joy2Key|Joy2Key
-ViGEmBus|ViGEmBus
+AntimicroX
+Antimicro
+KeySticks
+JoyXOff
+reWASD
+Xpadder
+Joy2Key
+ViGEmBus
+Joy2Key
+jsm
+SCP
+360Button
+x360ce
 
 [PROGRAMS]
 Antimicro|Antimicro
-DS4Windows|DS4Windows
-Daemon_Tools|Daemon_Tools
-DirectX|DirectX
-Visual_C++_Runtimes|allvcs
-Xinput_Drivers|Xinput_Drivers
-Xpadder|Xpadder
-ViGEmBus|ViGEmBus
-displaychanger|displaychanger
-CabrioFE|CabrioFE
-SimpleTouchFE|SimpleTouchFE
-attractMode|attractMode
-EmulationStation|EmulationStation
-Hyperspin|Hyperspin
-Pegasus|Pegasus
-RetroFE|RetroFE
-VirtualCloneDrive|VirtualCloneDrive
-WinCDEmu|WinCDEmu
-360Button|360Button
-Joy2Key|Joy2Key
+DS4Windows
+Daemon_Tools
+DirectX
+allvcs
+Xinput_Drivers
+Xpadder
+ViGEmBus
+displaychanger
+CabrioFE
+SimpleTouchFE
+attractMode
+EmulationStation
+Hyperspin
+Pegasus
+RetroFE
+VirtualCloneDrive
+WinCDEmu
+360Button
+Joy2Key
 
 [PLAYLISTS]
 sysposb=|Atari - 2600|Atari - 7800|Atari - 800|Atari - Jaguar|Atari - Lynx|Atari - ST|Bandai - WonderSwan|Bandai - WonderSwan Color|Casio - Loopy|Casio - PV-1000|Coleco - ColecoVision|Commodore - 64|Commodore - 64 (PP)|Commodore - 64 (Tapes)|Commodore - Amiga|Commodore - Amiga|Commodore - Plus-4|Commodore - VIC-20|Emerson - Arcadia|Entex - Adventure Vision|FB Alpha - Arcade Games|Fairchild - Channel F|Funtech - Super Acan|GCE - Vectrex|GCE - Vectrex|GamePark - GP32|Hartung - Game Master|Leapfrog - Leapster Learning Game System|MAME - Arcade|MAME2003|MAME2010|Magnavox - Odyssey2|Magnavox - Odyssey2|Magnavox - Odyssey2|Microsoft - DOS|Microsoft - MSX|Microsoft - MSX2|NEC - PC Engine - TurboGrafx 16|NEC - PC Engine CD - TurboGrafx CD|NEC - PC Engine SuperGrafx|NEC - PC-FX|NEC - PC98|Nintendo - Famicom Disk System|Nintendo - Famicom System|Nintendo - Game Boy|Nintendo - Game Boy Advance|Nintendo - Game Boy Advance(e-Cards)|Nintendo - Game Boy Color|Nintendo - Nintendo 3DS|Nintendo - Nintendo 64|Nintendo - Nintendo 64DD|Nintendo - Nintendo DS|Nintendo - Nintendo DS Decrypted|Nintendo - Nintendo Entertainment System|Nintendo - Pokemon Mini|Nintendo - Satellaview|Nintendo - Satellaview|Nintendo - Sufami Turbo|Nintendo - Super Nintendo Entertainment System|Nintendo - Virtual Boy|Nokia - N-Gage|RCA - Studio II|RCA - Studio II|SNK - Neo Geo|SNK - Neo Geo MVS|SNK - Neo Geo Pocket|ScummVM|Sega - 32X|Sega - Dreamcast|Sega - Game Gear|Sega - Master System - Mark III|Sega - Mega Drive - Genesis|Sega - Mega-CD - Sega CD|Sega - PICO|Sega - SG-1000|Sega - Saturn|Sharp - X68000|Sinclair - ZX 81|Sinclair - ZX Spectrum|Sony - Playstation|Sony - Playstation 2|Sony - Playstation Portable|The 3DO Company - 3DO|Tiger - Game com|VTech - CreatiVision|VTech - V.Smile|TurboGrafx 16

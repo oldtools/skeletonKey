@@ -7,13 +7,13 @@ IALTH=[IALTH]
 SOURCEHOST=[SOURCEHOST]
 IP_LOOKUP=[IPLK]
 UPDATEFILE=[UPDATEFILE]
-RASTABLE=1.10.3
+RASTABLE=1.14.0
 
 [SOURCES]
 
 [REPOSITORIES]
-buildBotCore=http://buildbot.libretro.com
-BLDBOT= http://buildbot.libretro.com/nightly/windows/x86%ARCHR%
-imgrepo= http://raw.githubusercontent.com/libretro/libretro-thumbnails/master
-SHADERHOST= http://raw.githubusercontent.com/libretro/shader-previews/master/
-curlobby= http://lobby.libretro.com/list|http://playarch.online/list
+buildBotCore=https://buildbot.libretro.com
+BLDBOT= https://buildbot.libretro.com/nightly/windows/x86%ARCHR%
+imgrepo= https://raw.githubusercontent.com/libretro/libretro-thumbnails/master
+SHADERHOST= https://raw.githubusercontent.com/libretro/shader-previews/master/
+curlobby= https://lobby.libretro.com/list|http://playarch.online/list
